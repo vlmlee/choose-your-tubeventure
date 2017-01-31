@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 
 export default class Edit extends Component {
 	render() {
@@ -10,7 +10,3 @@ export default class Edit extends Component {
 		);
 	}
 }
-
-Edit.propTypes = {
-	params: PropTypes.obj.isRequired,
-};

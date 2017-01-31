@@ -21,13 +21,29 @@ app.get('/video/:id', (req, res) => {
 		}
 
 		let collection = db.collection('videos');
-
 		collection.find({ id: req.params.id }).toArray((err, content) => {
+			if (err) throw new Error('Video not found.');
 			res.json({ content: content });
 		});
-
 		db.close();
 	});
+});
+
+app.post('/video/:id', (req, res) => {
+	MongoClient.connect(url, (err, db) => {
+		if (err) throw new Error('Unable to connect to database.');
+
+		let collection = db.collection('videos');
+		collection.insert({ 
+			id: req.params.id, 
+			name: req.body.name, 
+			pausepoints: req.body.pausepoints,
+			resumepoints: req.body.pausepoints,
+			seekpoints: req.body.seekpoints,
+			breakpoints: req.body.breakpoints 
+		});
+		db.close();
+	})
 });
 
 app.use(function(req, res, next) {
