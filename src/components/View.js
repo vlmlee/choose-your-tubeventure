@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import YouTube from 'react-youtube';
+import classnames from 'classnames';
 import { Link } from 'react-router';
 
 export default class View extends Component {
@@ -11,6 +12,7 @@ export default class View extends Component {
             decision: 0,
             pauseBreak: [ 10, 20, 34 ],
             goTo: [ 23, 27, 36 ],
+            hidden: true
         };
         this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
@@ -25,7 +27,7 @@ export default class View extends Component {
 
         // fetch('http://localhost:9001/videos/:id').then(response => {
         //     this.setState({
-        //         pauseBreak: reponse.decision[0].pauseBreak,
+        //         pauseBreak: response.decision[0].pauseBreak,
         //         goto: response.decision[0].goto
         //     });
         // });
@@ -37,12 +39,21 @@ export default class View extends Component {
 
     playVideo(e) {
         const currentTime = e.target.getCurrentTime();
-        this.setState({ player: e.target, time: currentTime });
+        if (this.state.player) {
+            this.setState({ time: currentTime, hidden: true });
+        } else {
+            this.setState({
+                player: e.target,
+                time: currentTime,
+                hidden: true
+            });
+        }
         this.timer = setInterval(this.tick, 1000);
     }
 
     pauseVideo() {
         this.state.player.pauseVideo();
+        this.setState({ hidden: false });
     }
 
     seekVideo(time) {
@@ -55,6 +66,10 @@ export default class View extends Component {
         //     .then(response => {
         //         this.setState({ pauseBreak: response.decision.pauseBreak })
         //     });
+    }
+
+    cleanUp() {
+        clearInterval(this.timer);
     }
 
     tick() {
@@ -76,6 +91,11 @@ export default class View extends Component {
             }
         };
 
+        const classes = classnames({
+            hidden: this.state.hidden,
+            decisions: true,
+        });
+
         return (
             <div>
                 <Link to={`/edit/${this.props.params.id}`}>
@@ -86,7 +106,10 @@ export default class View extends Component {
                     className="player"
                     opts={opts}
                     onPlay={this.playVideo}
-                    onPause={this.retrieveNextState} />
+                    onPause={this.retrieveNextState}
+                    onEnd={this.cleanUp} />
+
+                <section className={classes}>
                     { this.state.player ?
                         this.state.goTo.map(i => (
                             <input key={i}
@@ -94,6 +117,7 @@ export default class View extends Component {
                                 onClick={() => this.seekVideo(i)}
                                 value={`go to ${i}`} />
                     )) : "" }
+                </section>
             </div>
         );
     }
