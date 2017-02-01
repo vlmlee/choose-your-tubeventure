@@ -8,21 +8,30 @@ export default class View extends Component {
         this.state = {
             player: '',
             time: 0,
+            decision: 0,
             pauseBreak: [ 10, 20, 34 ],
-            goTo: [ 23, 27, 36]
+            goTo: [ 23, 27, 36 ],
         };
         this.playVideo = this.playVideo.bind(this);
-        this.tick = this.tick.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
-        this.seekTo = this.seekTo.bind(this);
+        this.seekVideo = this.seekVideo.bind(this);
+        this.tick = this.tick.bind(this);
     }
 
     componentDidMount() {
+        // fetch video id, first pause break,
+        // and gotos. Something like...
 
+        // fetch('http://localhost:9001/videos/:id').then(response => {
+        //     this.setState({
+        //         pauseBreak: reponse.decision[0].pauseBreak,
+        //         goto: response.decision[0].goto
+        //     });
+        // });
     }
 
     componentWillUnmount() {
-
+        clearInterval(this.timer);
     }
 
     playVideo(e) {
@@ -35,17 +44,23 @@ export default class View extends Component {
         this.state.player.pauseVideo();
     }
 
-    seekTo(time) {
+    seekVideo(time) {
         this.state.player.seekTo(time, true);
+    }
+
+    retrieveNextState() {
+        fetch('http://localhost:9001/videos/' + {this.props.params.id} + '/' + {this.state.decision})
+            .then(response => {
+                this.setState({ pauseBreak: response.decision.pauseBreak })
+            });
     }
 
     tick() {
         this.setState({ time: this.state.time + 1 });
-
         if (parseInt(this.state.time, 10) === this.state.pauseBreak[0]) {
             this.pauseVideo();
             clearInterval(this.timer);
-            this.setState({ pauseBreak: this.state.pauseBreak.slice(1) });
+            this.setState({ pauseBreak: this.state.pauseBreak.slice(1), decision: this.state.decision + 1 });
         }
     }
 
@@ -59,6 +74,7 @@ export default class View extends Component {
                 disablekb: 1,
             }
         };
+
         return (
             <div>
                 View { this.state.timerTime ? this.state.timerTime : '' }
@@ -69,7 +85,8 @@ export default class View extends Component {
                     videoId={this.props.params.id}
                     className="player"
                     opts={opts}
-                    onPlay={this.playVideo} />
+                    onPlay={this.playVideo}
+                    onPause={this.retrieveNextState} />
                     { this.state.player ?
                         this.state.goTo.map(i => (
                             <input key={i}
