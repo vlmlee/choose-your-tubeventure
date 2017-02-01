@@ -15,6 +15,7 @@ export default class View extends Component {
         this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
         this.seekVideo = this.seekVideo.bind(this);
+        this.retrieveNextState = this.retrieveNextState.bind(this);
         this.tick = this.tick.bind(this);
     }
 
@@ -45,21 +46,21 @@ export default class View extends Component {
     }
 
     seekVideo(time) {
-        this.state.player.seekTo(time, true);
+        this.state.player.seekTo(time, true).playVideo();
     }
 
     retrieveNextState() {
-        fetch('http://localhost:9001/videos/' + {this.props.params.id} + '/' + {this.state.decision})
-            .then(response => {
-                this.setState({ pauseBreak: response.decision.pauseBreak })
-            });
+        clearInterval(this.timer);
+        // fetch('http://localhost:9001/videos/' + {this.props.params.id} + '/' + {this.state.decision})
+        //     .then(response => {
+        //         this.setState({ pauseBreak: response.decision.pauseBreak })
+        //     });
     }
 
     tick() {
         this.setState({ time: this.state.time + 1 });
         if (parseInt(this.state.time, 10) === this.state.pauseBreak[0]) {
             this.pauseVideo();
-            clearInterval(this.timer);
             this.setState({ pauseBreak: this.state.pauseBreak.slice(1), decision: this.state.decision + 1 });
         }
     }
@@ -77,7 +78,6 @@ export default class View extends Component {
 
         return (
             <div>
-                View { this.state.timerTime ? this.state.timerTime : '' }
                 <Link to={`/edit/${this.props.params.id}`}>
                     {this.props.params.id}
                 </Link>
@@ -91,7 +91,7 @@ export default class View extends Component {
                         this.state.goTo.map(i => (
                             <input key={i}
                                 type="button"
-                                onClick={() => this.seekTo(i)}
+                                onClick={() => this.seekVideo(i)}
                                 value={`go to ${i}`} />
                     )) : "" }
             </div>
