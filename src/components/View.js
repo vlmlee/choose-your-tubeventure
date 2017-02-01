@@ -9,10 +9,12 @@ export default class View extends Component {
             player: '',
             time: 0,
             pauseBreak: [ 10, 20, 34 ],
+            goTo: [ 23, 27, 36]
         };
         this.playVideo = this.playVideo.bind(this);
         this.tick = this.tick.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
+        this.seekTo = this.seekTo.bind(this);
     }
 
     componentDidMount() {
@@ -24,27 +26,30 @@ export default class View extends Component {
     }
 
     playVideo(e) {
-        const currentTime = e.target.currentTime();
+        const currentTime = e.target.getCurrentTime();
         this.setState({ player: e.target, time: currentTime });
         this.timer = setInterval(this.tick, 1000);
     }
 
-    pauseVideo(e) {
+    pauseVideo() {
         this.state.player.pauseVideo();
+    }
+
+    seekTo(time) {
+        this.state.player.seekTo(time, true);
     }
 
     tick() {
         this.setState({ time: this.state.time + 1 });
 
-        if (parseInt(this.state.time) === this.state.pauseBreak[0]) {
+        if (parseInt(this.state.time, 10) === this.state.pauseBreak[0]) {
             this.pauseVideo();
             clearInterval(this.timer);
-            this.setState({ pauseBreak: this.state.pauseBreak.unshift() });
+            this.setState({ pauseBreak: this.state.pauseBreak.slice(1) });
         }
     }
 
     render() {
-        console.log(this.state.time);
         const opts = {
             height: '390',
             width: '640',
@@ -65,6 +70,13 @@ export default class View extends Component {
                     className="player"
                     opts={opts}
                     onPlay={this.playVideo} />
+                    { this.state.player ?
+                        this.state.goTo.map(i => (
+                            <input key={i}
+                                type="button"
+                                onClick={() => this.seekTo(i)}
+                                value={`go to ${i}`} />
+                    )) : "" }
             </div>
         );
     }
