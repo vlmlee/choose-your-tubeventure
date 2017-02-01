@@ -42,11 +42,8 @@ app.post('/video/:id', (req, res) => {
         let collection = db.collection('videos');
         collection.insert({ 
             id: req.params.id, 
-            name: req.body.name, 
-            pausepoints: req.body.pausepoints,
-            resumepoints: req.body.pausepoints,
-            seekpoints: req.body.seekpoints,
-            breakpoints: req.body.breakpoints 
+            name: req.body.name,
+            decisions: req.body.decisions,
         });
         db.close();
     })

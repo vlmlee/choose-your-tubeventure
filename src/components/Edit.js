@@ -18,7 +18,7 @@ export default class Edit extends Component {
     }
 
     tryMagicWord(e) {
-        if (secret && e.key === 'ENTER') {
+        if (this.state.secret && e.key === 'ENTER') {
             try {
                 fetch('http://localhost:9001/secret').then(response => {
                     if (response.allowed) {
@@ -27,7 +27,7 @@ export default class Edit extends Component {
                     this.setState({ error: 'Looks like you have the wrong password! '});
                 });
             } catch (err) {
-                this.setState( error: err.message );
+                this.setState({ error: err.message });
             }
         }
     }

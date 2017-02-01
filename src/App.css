@@ -1,3 +1,11 @@
 .App {
   text-align: center;
 }
+
+.hidden {
+  opacity: 0;
+}
+
+.decisions {
+  transition: opacity 0.75s linear;
+}

@@ -10,10 +10,11 @@ export default class View extends Component {
             player: '',
             time: 0,
             decision: 0,
-            pauseBreak: [ 10, 20, 34 ],
-            goTo: [ 23, 27, 36 ],
+            pauseAt: [ 10, 20, 34 ],
+            goTo: [ 15, 27, 36 ],
             hidden: true
         };
+
         this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
         this.seekVideo = this.seekVideo.bind(this);
@@ -27,7 +28,7 @@ export default class View extends Component {
 
         // fetch('http://localhost:9001/videos/:id').then(response => {
         //     this.setState({
-        //         pauseBreak: response.decision[0].pauseBreak,
+        //         pauseAt: response.decision[0].pauseAt,
         //         goto: response.decision[0].goto
         //     });
         // });
@@ -40,12 +41,15 @@ export default class View extends Component {
     playVideo(e) {
         const currentTime = e.target.getCurrentTime();
         if (this.state.player) {
-            this.setState({ time: currentTime, hidden: true });
+            this.setState({
+                time: currentTime,
+                hidden: true,
+            });
         } else {
             this.setState({
                 player: e.target,
                 time: currentTime,
-                hidden: true
+                hidden: true,
             });
         }
         this.timer = setInterval(this.tick, 1000);
@@ -64,7 +68,7 @@ export default class View extends Component {
         clearInterval(this.timer);
         // fetch('http://localhost:9001/videos/' + {this.props.params.id} + '/' + {this.state.decision})
         //     .then(response => {
-        //         this.setState({ pauseBreak: response.decision.pauseBreak })
+        //         this.setState({ pauseAt: response.decision.pauseAt })
         //     });
     }
 
@@ -74,9 +78,10 @@ export default class View extends Component {
 
     tick() {
         this.setState({ time: this.state.time + 1 });
-        if (parseInt(this.state.time, 10) === this.state.pauseBreak[0]) {
+        if (parseInt(this.state.time, 10) === this.state.pauseAt[0]) {
             this.pauseVideo();
-            this.setState({ pauseBreak: this.state.pauseBreak.slice(1), decision: this.state.decision + 1 });
+            clearInterval(this.timer);
+            this.setState({ pauseAt: this.state.pauseAt.slice(1), decision: this.state.decision + 1 });
         }
     }
 
@@ -91,11 +96,10 @@ export default class View extends Component {
             }
         };
 
-        const classes = classnames({
+        const classes = classnames('decisions', {
             hidden: this.state.hidden,
-            decisions: true,
         });
-
+        console.log(this.state.pauseAt);
         return (
             <div>
                 <Link to={`/edit/${this.props.params.id}`}>
@@ -108,7 +112,6 @@ export default class View extends Component {
                     onPlay={this.playVideo}
                     onPause={this.retrieveNextState}
                     onEnd={this.cleanUp} />
-
                 <section className={classes}>
                     { this.state.player ?
                         this.state.goTo.map(i => (
