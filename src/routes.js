@@ -8,13 +8,13 @@ import Create from './components/Create.js';
 import NotFound from './components/NotFound.js';
 
 const Routes = (props) => (
-	<Router {...props}>
-		<Route path="/" component={App} />
-		<Route path="/edit/:id" component={Edit} />
-		<Route path="/view/:id" component={View} />
-		<Route path="/create" component={Create} />
-		<Route path="*" component={NotFound} />
-	</Router>
+    <Router {...props}>
+        <Route path="/" component={App} />
+        <Route path="/edit/:id" component={Edit} />
+        <Route path="/view/:id" component={View} />
+        <Route path="/create" component={Create} />
+        <Route path="*" component={NotFound} />
+    </Router>
 );
 
 export default Routes;
