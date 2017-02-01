@@ -9,19 +9,17 @@ export default class Create extends Component {
     }
 
     createAdventure() {
-        const headers = new Header();
         const form = new FormData(ReactDOM.findDOMNode(this.refs.form));
-        headers.append("Content-Type", "application/json");
 
         const opts = {
             method: 'POST',
-            headers: headers,
+            headers: ("Content-Type", "application/json"),
             body: form,
             mode: 'cors',
             cache: 'default'
         };
 
-        fetch('http://localhost:9001/videos/' + {this.props.params.id}, opts)
+        fetch('http://localhost:9001/videos/' + this.props.params.id, opts)
     }
 
     render() {
@@ -29,7 +27,7 @@ export default class Create extends Component {
             <div>
                 This is where the creation form is.
                 <form className="adventure-form"
-                    onSubmit={this.createAdventure} />
+                    onSubmit={this.createAdventure}>
                     <input
                         type="text"
                         onChange=""
@@ -44,7 +42,7 @@ export default class Create extends Component {
                         defaultValue="Enter a decision" />
                     <input
                         type="button"
-                        value="submit" >
+                        value="submit" />
                 </form>
             </div>
         );

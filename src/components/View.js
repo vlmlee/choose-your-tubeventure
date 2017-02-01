@@ -99,7 +99,6 @@ export default class View extends Component {
         const classes = classnames('decisions', {
             hidden: this.state.hidden,
         });
-        console.log(this.state.pauseAt);
         return (
             <div>
                 <Link to={`/edit/${this.props.params.id}`}>
