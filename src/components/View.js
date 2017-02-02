@@ -22,10 +22,13 @@ export default class View extends Component {
         this.tick = this.tick.bind(this);
     }
 
+    componentWillMount() {
+
+    }
+
     componentDidMount() {
         // fetch video id, first pause break,
-        // and gotos. Something like...
-
+        // and gotos. Something like..
         // fetch('http://localhost:9001/videos/:id').then(response => {
         //     this.setState({
         //         pauseAt: response.decision[0].pauseAt,
@@ -99,8 +102,9 @@ export default class View extends Component {
         const classes = classnames('decisions', {
             hidden: this.state.hidden,
         });
+
         return (
-            <div>
+            <section>
                 <Link to={`/edit/${this.props.params.id}`}>
                     {this.props.params.id}
                 </Link>
@@ -120,7 +124,7 @@ export default class View extends Component {
                                 value={`go to ${i}`} />
                     )) : "" }
                 </section>
-            </div>
+            </section>
         );
     }
 }
