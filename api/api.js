@@ -15,9 +15,20 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+app.get('/edit/:id', (req, res) => {
+    MongoClient.connect(url, (err, db) => {
+        if (err) return next(err);
+        if (db.collection('adventures').findOne({ _id: req.params.id }).count() > 0) {
+            res.json({ allowed: true });
+        } else {
+            res.json({ allowed: false });
+        }
+    });
 });
 
 app.get('/search/:name', (req, res) => {
@@ -33,7 +44,7 @@ app.get('/search/:name', (req, res) => {
     });
 });
 
-app.get('/adventures/:id', (req, res) => {
+app.get('/retrieve/:id', (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         db.collection('adventures').find({ id: req.params.id })
@@ -45,7 +56,7 @@ app.get('/adventures/:id', (req, res) => {
     });
 });
 
-app.post('/adventures/:id', (req, res) => {
+app.post('/create/:id', (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         db.collection('adventures').insert({

@@ -13,22 +13,19 @@ export default class Edit extends Component {
         this.tryMagicWord = this.tryMagicWord.bind(this);
     }
 
-    handleMagicWord(e) {
-        this.setState({ secret: e.target.value });
-    }
-
     tryMagicWord(e) {
         if (this.state.secret && e.key === 'ENTER') {
-            try {
-                fetch('http://localhost:9001/secret').then(response => {
-                    if (response.allowed) {
-                        this.setState({ allowed: true, error: '' });
-                    }
+            fetch(`http://localhost:9001/edit/${this.props.params.id}`).then(response => {
+                if (response.allowed) {
+                    this.setState({ allowed: true, error: '' });
+                } else {
                     this.setState({ error: 'Looks like you have the wrong password! '});
-                });
-            } catch (err) {
+                }
+            }).catch(err => {
                 this.setState({ error: err.message });
-            }
+            });
+        } else {
+            this.setState({ secret: e.target.value });
         }
     }
 
@@ -40,9 +37,9 @@ export default class Edit extends Component {
                 { this.state.allowed ? <h1>Show</h1> : (
                     <input
                         type="password"
-                        className="magicWord"
+                        className="magic-word"
                         onKeyPress={this.tryMagicWord}
-                        onChange={this.handleMagicWord} />
+                        placeholder="" />
                 )}
             </div>
         );

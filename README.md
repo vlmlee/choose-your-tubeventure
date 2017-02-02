@@ -10,7 +10,8 @@ Database schema:
     name: String,
     createdAt: Date,
     creator: {
-        name: String
+        name: String,
+        secret: String,
     },
     youtubeId: String,
     firstDecision: {

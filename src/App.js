@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import './App.css';
 
 class App extends Component {
@@ -7,6 +8,7 @@ class App extends Component {
         this.state = {
             searchTerm: '',
             results: '',
+            error: '',
         };
     }
 
@@ -16,11 +18,12 @@ class App extends Component {
                 .then(response => {
                     this.setState({
                         searchTerm: '',
-                        results: response.content
+                        results: response.content,
+                        error: '',
                     });
                 })
                 .catch(err => {
-                    throw new Error(err.message);
+                    this.setState({ error: err.message });
                 });
         } else {
             this.setState({ searchTerm: e.target.value });

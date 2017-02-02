@@ -8,7 +8,7 @@ export default class View extends Component {
         super();
         this.state = {
             player: '',
-            time: 0,
+            currentTime: 0,
             decision: 0,
             pauseAt: [ 10, 20, 34 ],
             goTo: [ 15, 27, 36 ],
@@ -23,7 +23,11 @@ export default class View extends Component {
     }
 
     componentWillMount() {
-
+        // fetch('http://localhost:9001/retrieve/:id').then(response => {
+        //      this.setState({
+        //          ...
+        //      })
+        // })
     }
 
     componentDidMount() {
@@ -45,13 +49,13 @@ export default class View extends Component {
         const currentTime = e.target.getCurrentTime();
         if (this.state.player) {
             this.setState({
-                time: currentTime,
+                currentTime: currentTime,
                 hidden: true,
             });
         } else {
             this.setState({
                 player: e.target,
-                time: currentTime,
+                currentTime: currentTime,
                 hidden: true,
             });
         }
@@ -80,11 +84,14 @@ export default class View extends Component {
     }
 
     tick() {
-        this.setState({ time: this.state.time + 1 });
-        if (parseInt(this.state.time, 10) === this.state.pauseAt[0]) {
+        this.setState({ currentTime: this.state.currentTime + 1 });
+        if (parseInt(this.state.currentTime, 10) === this.state.pauseAt[0]) {
             this.pauseVideo();
             clearInterval(this.timer);
-            this.setState({ pauseAt: this.state.pauseAt.slice(1), decision: this.state.decision + 1 });
+            this.setState({
+                pauseAt: this.state.pauseAt.slice(1),
+                decision: this.state.decision + 1
+            });
         }
     }
 
@@ -108,6 +115,7 @@ export default class View extends Component {
                 <Link to={`/edit/${this.props.params.id}`}>
                     {this.props.params.id}
                 </Link>
+
                 <YouTube
                     videoId={this.props.params.id}
                     className="player"
@@ -115,6 +123,7 @@ export default class View extends Component {
                     onPlay={this.playVideo}
                     onPause={this.retrieveNextState}
                     onEnd={this.cleanUp} />
+
                 <section className={classes}>
                     { this.state.player ?
                         this.state.goTo.map(i => (
