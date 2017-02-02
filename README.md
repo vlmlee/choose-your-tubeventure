@@ -1,7 +1,52 @@
 # Choose your tubeventure!
 
-## Create your own content
+### Create your own content
 
-## Explore your imagination
+Database schema:
 
-## Adventure quest!
+```
+{
+    _id: String,
+    name: String,
+    createdAt: Date,
+    creator: {
+        name: String
+    },
+    youtubeId: String,
+    firstDecision: {
+        name: String,
+        pauseTime: Number,
+        choices: [
+            {
+                choice: Number,
+                name: String,
+                desc: String,
+                goto: Number,
+                nextPauseTime: Number
+            },
+            // ...
+        ]
+    },
+    decisions: [
+        {
+            name: String,
+            pauseTime: Number,
+            choices: [
+                {
+                    choice: Number,
+                    name: String,
+                    desc: String,
+                    goto: Number,
+                    nextPauseTime: Number
+                },
+                // ...
+            ]
+        },
+       // ...
+    ]
+}
+```
+
+### Explore your imagination
+
+### Adventure quest!
