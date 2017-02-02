@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import './App.css';
 
 class App extends Component {
-    constructor() {
+    constructor(props) {
         super(props);
         this.state = {
             searchTerm: '',
@@ -41,15 +41,15 @@ class App extends Component {
                     placeholder="Search for an adventure"
                     value={this.state.searchTerm} />
 
+                <h1>Search Results</h1>
                 { this.state.results ? (
-                    <h1>Search Results</h1>
                     <section className="search-results">
-                        this.state.results.map(i => (
+                        { this.state.results.map(i => (
                             <Link key={i._id}
                                 to={"/view/" + i._id}>
                                 {i.name}
                             </Link>
-                        ))
+                        )) }
                     </section>
                 ) : '' }
             </section>

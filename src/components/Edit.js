@@ -17,7 +17,7 @@ export default class Edit extends Component {
         if (this.state.secret && e.key === 'ENTER') {
             fetch(`http://localhost:9001/edit/${this.props.params.id}`).then(response => {
                 if (response.allowed) {
-                    this.setState({ allowed: true, error: '' });
+                    this.setState({ secret: '', allowed: true, error: '' });
                 } else {
                     this.setState({ error: 'Looks like you have the wrong password! '});
                 }
