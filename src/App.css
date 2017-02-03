@@ -1,3 +1,9 @@
+input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
 .App {
   text-align: center;
 }
@@ -6,6 +12,24 @@
   opacity: 0;
 }
 
+.YTplayer {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
 .decisions {
+  -webkit-transition: opacity 0.75s linear;
   transition: opacity 0.75s linear;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.choices {
+    padding: 20px;
+    margin: 0 20px;
+    font-size: 18px;
+    background-color: white;
+    border: 1px solid lightblue;
+    border-radius: 5px;
 }

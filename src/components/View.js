@@ -130,6 +130,7 @@ export default class View extends Component {
                         this.state.goTo.map(i => (
                             <input key={i}
                                 type="button"
+                                className="choices"
                                 onClick={() => this.seekVideo(i)}
                                 value={`go to ${i}`} />
                     )) : "" }
