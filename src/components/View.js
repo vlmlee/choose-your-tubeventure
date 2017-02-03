@@ -7,9 +7,19 @@ export default class View extends Component {
     constructor() {
         super();
         this.state = {
-            player: '',
+            // Adventure states, doesn't change while
+            // the youtube video plays.
+            YTplayer: '',
+            name: '',
+            createdAt: '',
+            creator: '',
+            youtubeId: '',
+            firstDecision: '',
+            decisions: '',
+
+            // YTplayer states, will change as video plays
+            choices: '',
             currentTime: 0,
-            decision: 0,
             pauseAt: [ 10, 20, 34 ],
             goTo: [ 15, 27, 36 ],
             hidden: true
@@ -23,22 +33,17 @@ export default class View extends Component {
     }
 
     componentWillMount() {
-        // fetch('http://localhost:9001/retrieve/:id').then(response => {
-        //      this.setState({
-        //          ...
-        //      })
-        // })
-    }
-
-    componentDidMount() {
         // fetch video id, first pause break,
         // and gotos. Something like..
-        // fetch('http://localhost:9001/videos/:id').then(response => {
+        // fetch('http://localhost:9001/adventure/:id').then(response => {
         //     this.setState({
         //         pauseAt: response.decision[0].pauseAt,
         //         goto: response.decision[0].goto
         //     });
         // });
+    }
+
+    componentDidMount() {
     }
 
     componentWillUnmount() {
@@ -47,14 +52,14 @@ export default class View extends Component {
 
     playVideo(e) {
         const currentTime = e.target.getCurrentTime();
-        if (this.state.player) {
+        if (this.state.YTplayer) {
             this.setState({
                 currentTime: currentTime,
                 hidden: true,
             });
         } else {
             this.setState({
-                player: e.target,
+                YTplayer: e.target,
                 currentTime: currentTime,
                 hidden: true,
             });
@@ -63,20 +68,16 @@ export default class View extends Component {
     }
 
     pauseVideo() {
-        this.state.player.pauseVideo();
+        this.state.YTplayer.pauseVideo();
         this.setState({ hidden: false });
     }
 
     seekVideo(time) {
-        this.state.player.seekTo(time, true).playVideo();
+        this.state.YTplayer.seekTo(time, true).playVideo();
     }
 
     retrieveNextState() {
         clearInterval(this.timer);
-        // fetch('http://localhost:9001/videos/' + {this.props.params.id} + '/' + {this.state.decision})
-        //     .then(response => {
-        //         this.setState({ pauseAt: response.decision.pauseAt })
-        //     });
     }
 
     cleanUp() {
@@ -118,14 +119,14 @@ export default class View extends Component {
 
                 <YouTube
                     videoId={this.props.params.id}
-                    className="player"
+                    className="YTplayer"
                     opts={opts}
                     onPlay={this.playVideo}
                     onPause={this.retrieveNextState}
                     onEnd={this.cleanUp} />
 
                 <section className={classes}>
-                    { this.state.player ?
+                    { this.state.YTplayer ?
                         this.state.goTo.map(i => (
                             <input key={i}
                                 type="button"

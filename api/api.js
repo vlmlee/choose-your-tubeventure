@@ -20,7 +20,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/edit/:id', (req, res) => {
+app.get('/validate/:id', (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         if (db.collection('adventures').findOne({ _id: req.params.id }).count() > 0) {
@@ -44,7 +44,7 @@ app.get('/search/:name', (req, res) => {
     });
 });
 
-app.get('/retrieve/:id', (req, res) => {
+app.get('/adventure/:id', (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         db.collection('adventures').find({ id: req.params.id })
@@ -56,7 +56,7 @@ app.get('/retrieve/:id', (req, res) => {
     });
 });
 
-app.post('/create/:id', (req, res) => {
+app.post('/adventure/:id', (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         db.collection('adventures').insert({
@@ -79,13 +79,13 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
-        res.send(err.message));
+        res.send(err.message);
     });
 }
 
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.send(err.message));
+    res.send(err.message);
 });
 
 module.exports = app;

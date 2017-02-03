@@ -15,9 +15,11 @@ export default class Edit extends Component {
 
     tryMagicWord(e) {
         if (this.state.secret && e.key === 'ENTER') {
-            fetch(`http://localhost:9001/edit/${this.props.params.id}`).then(response => {
+            fetch(`http://localhost:9001/validate/${this.props.params.id}`).then(response => {
                 if (response.allowed) {
                     this.setState({ secret: '', allowed: true, error: '' });
+
+                    // TODO: also populate a form with current info
                 } else {
                     this.setState({ error: 'Looks like you have the wrong password! '});
                 }

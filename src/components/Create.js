@@ -4,7 +4,13 @@ import ReactDOM from 'react-dom';
 export default class Create extends Component {
     constructor() {
         super();
+        this.state = {
+            name: '',
+            decision: '',
+            choices: '',
+        };
         this.createAdventure = this.createAdventure.bind(this);
+        this.playtest = this.playtest.bind(this);
     }
 
     createAdventure() {
@@ -18,7 +24,11 @@ export default class Create extends Component {
             cache: 'default'
         };
 
-        fetch('http://localhost:9001/create/' + this.props.params.id, opts);
+        fetch('http://localhost:9001/adventure/' + this.props.params.id, opts);
+    }
+
+    playtest() {
+
     }
 
     render() {
