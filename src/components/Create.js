@@ -6,11 +6,45 @@ export default class Create extends Component {
         super();
         this.state = {
             name: '',
+            creator: '',
+            secret: '',
+            confirmSecret: '',
             decision: '',
             choices: '',
         };
+
+        this.handleUserInfo = this.handleUserInfo.bind(this);
+        this.addStart = this.addStart.bind(this);
+        this.addDecision = this.addDecision.bind(this);
+        this.removeDecision = this.removeDecision.bind(this);
+        this.addEnding = this.addEnding.bind(this);
+        this.removeEnding = this.removeEnding.bind(this);
         this.createAdventure = this.createAdventure.bind(this);
         this.playtest = this.playtest.bind(this);
+    }
+
+    handleUserInfo() {
+
+    }
+
+    addStart() {
+
+    }
+
+    addDecision() {
+
+    }
+
+    removeDecision() {
+
+    }
+
+    addEnding() {
+
+    }
+
+    removeEnding() {
+
     }
 
     createAdventure() {
@@ -18,9 +52,8 @@ export default class Create extends Component {
 
         const opts = {
             method: 'POST',
-            headers: ("Content-Type", "application/json"),
+            headers: { "Content-Type", "application/json" },
             body: form,
-            mode: 'cors',
             cache: 'default'
         };
 

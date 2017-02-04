@@ -34,7 +34,7 @@ app.post('/validate/:id', (req, res) => {
     const id = new ObjectID(req.params.id);
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
-        const count = db.collection('adventures')
+        db.collection('adventures')
             .find({ _id: id, secret: req.body.secret })
             .count()
             .then(count => {
@@ -44,6 +44,7 @@ app.post('/validate/:id', (req, res) => {
                     res.json({ allowed: false });
                 }
             });
+        db.close();
     });
 });
 
