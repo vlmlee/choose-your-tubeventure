@@ -2,11 +2,16 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const mongodb = require('mongodb');
+const ObjectID = mongodb.ObjectID;
+const bodyParser = require('body-parser');
 
 const app = express();
 
 const MongoClient = mongodb.MongoClient,
     url = "mongodb://localhost:27017/tubeventure";
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
@@ -16,18 +21,29 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', "GET, PUT, POST, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+    if ('OPTIONS' == req.method) {
+        res.sendStatus(200);
+    } else {
+        next();
+    }
 });
 
-app.get('/validate/:id', (req, res) => {
+app.post('/validate/:id', (req, res) => {
+    const id = new ObjectID(req.params.id);
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
-        if (db.collection('adventures').findOne({ _id: req.params.id }).count() > 0) {
-            res.json({ allowed: true });
-        } else {
-            res.json({ allowed: false });
-        }
+        const count = db.collection('adventures')
+            .find({ _id: id, secret: req.body.secret })
+            .count()
+            .then(count => {
+                if (count > 0) {
+                    res.json({ allowed: true });
+                } else {
+                    res.json({ allowed: false });
+                }
+            });
     });
 });
 

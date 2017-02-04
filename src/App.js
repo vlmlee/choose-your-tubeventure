@@ -20,7 +20,6 @@ class App extends Component {
 
     handleSearchAdventure(e) {
         if (e.key === 'Enter') {
-            console.log('hi');
             fetch(`http://localhost:9001/search/${this.state.searchTerm}`)
                 .then(response => {
                     return response.json();
