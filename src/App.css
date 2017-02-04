@@ -49,3 +49,16 @@ input {
     background-color: white;
     border: 1px solid powderblue;
 }
+
+.collapse {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.panel {
+    /*margin: 10px;*/
+}
+
+.inner-text {
+    margin-bottom: 20px;
+}
