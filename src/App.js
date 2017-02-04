@@ -10,23 +10,31 @@ class App extends Component {
             results: '',
             error: '',
         };
+        this.handleSearchChange = this.handleSearchChange.bind(this);
+        this.handleSearchAdventure = this.handleSearchAdventure.bind(this);
+    }
+
+    handleSearchChange(e) {
+        this.setState({ searchTerm: e.target.value });
     }
 
     handleSearchAdventure(e) {
-        if (e.key === 'ENTER') {
+        if (e.key === 'Enter') {
+            console.log('hi');
             fetch(`http://localhost:9001/search/${this.state.searchTerm}`)
                 .then(response => {
+                    return response.json();
+                })
+                .then(responseJSON => {
                     this.setState({
                         searchTerm: '',
-                        results: response.content,
+                        results: responseJSON.content,
                         error: '',
                     });
                 })
                 .catch(err => {
                     this.setState({ error: err.message });
                 });
-        } else {
-            this.setState({ searchTerm: e.target.value });
         }
     }
 
@@ -37,6 +45,8 @@ class App extends Component {
 
                 <input
                     type="text"
+                    className="search-input"
+                    onChange={this.handleSearchChange}
                     onKeyPress={this.handleSearchAdventure}
                     placeholder="Search for an adventure"
                     value={this.state.searchTerm} />
@@ -46,6 +56,7 @@ class App extends Component {
                     <section className="search-results">
                         { this.state.results.map(i => (
                             <Link key={i._id}
+                                className="search-link"
                                 to={"/view/" + i._id}>
                                 {i.name}
                             </Link>

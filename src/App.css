@@ -6,6 +6,24 @@ input {
 
 .App {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-input {
+    width: 50%;
+    margin: 50px auto;
+    padding: 10px;
+    outline: none;
+    border: 1px solid powderblue;
+}
+
+.search-results {
+
+}
+
+.search-link {
+    margin: 20px auto;
 }
 
 .hidden {
@@ -24,10 +42,10 @@ input {
 }
 
 .choices {
-    padding: 20px;
+    padding: 10px;
     margin: 0 20px;
     font-size: 18px;
     border-radius: 5px;
     background-color: white;
-    border: 1px solid lightblue;
+    border: 1px solid powderblue;
 }

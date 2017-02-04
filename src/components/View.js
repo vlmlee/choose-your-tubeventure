@@ -713,12 +713,10 @@ export default class View extends Component {
                 disablekb: 1,
             }
         };
-
         const classes = classnames('decisions', {
             hidden: this.state.hidden,
         });
-        console.log(this.state.currentTime);
-        console.log(this.state.endTime);
+
         return (
             <section>
                 <Link to={`/edit/${this.props.params.id}`}>
