@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import YouTube from 'react-youtube';
+import moment from 'moment';
 import classnames from 'classnames';
 import { Link } from 'react-router';
 
@@ -592,9 +593,9 @@ export default class View extends Component {
             ],
 
             // YTplayer states, will change as video plays
-            choices: '',
             currentTime: 0,
             pauseAt: '',
+            choices: '',
             goto: '',
             hidden: true
         };
@@ -602,8 +603,8 @@ export default class View extends Component {
         this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
         this.gotoVideo = this.gotoVideo.bind(this);
-        this.retrieveNextState = this.retrieveNextState.bind(this);
         this.tick = this.tick.bind(this);
+        this.cleanUp = this.cleanUp.bind(this);
     }
 
     componentWillMount() {
@@ -618,6 +619,11 @@ export default class View extends Component {
     }
 
     componentDidMount() {
+        const start = this.state.start[0];
+        this.setState({
+            pauseAt: start.pauseTime,
+            choices: start.choices,
+        });
     }
 
     componentWillUnmount() {
@@ -646,28 +652,33 @@ export default class View extends Component {
         this.setState({ hidden: false });
     }
 
-    gotoVideo(time) {
-        this.state.YTplayer.seekTo(time, true).playVideo();
-    }
-
-    retrieveNextState() {
-        clearInterval(this.timer);
-    }
-
-    cleanUp() {
-        clearInterval(this.timer);
+    gotoVideo(time, nextPauseTime) {
+        const decisionTree = this.state.decisionTree;
+        if (decisionTree.endings.find(i => i.pauseTime = time)) {
+            this.cleanUp();
+        } else {
+            this.setState({
+                pauseAt: nextPauseTime,
+                choices: this.state.decisionTree.find(i => (
+                    i.pauseTime === nextPauseTime
+                )).choices,
+                hidden: true,
+            });
+            this.state.YTplayer.seekTo(time, true).playVideo();
+        }
     }
 
     tick() {
         this.setState({ currentTime: this.state.currentTime + 1 });
-        if (parseInt(this.state.currentTime, 10) === this.state.pauseAt[0]) {
+        if (parseInt(this.state.currentTime, 10) === this.state.pauseAt) {
             this.pauseVideo();
             clearInterval(this.timer);
-            this.setState({
-                pauseAt: this.state.pauseAt,
-                decision: this.state.decision + 1
-            });
         }
+    }
+
+    cleanUp() {
+        this.state.YTplayer.stopVideo();
+        clearInterval(this.timer);
     }
 
     render() {
@@ -684,13 +695,14 @@ export default class View extends Component {
         const classes = classnames('decisions', {
             hidden: this.state.hidden,
         });
-
         return (
             <section>
                 <Link to={`/edit/${this.props.params.id}`}>
                     {this.props.params.id}
                 </Link>
-
+                <h1>{this.state.name}</h1>
+                <h2>{this.state.creator}</h2>
+                <h2>{moment(this.state.createdAt).format('LLL')}</h2>
                 <YouTube
                     videoId={this.props.params.id}
                     className="YTplayer"
@@ -700,13 +712,13 @@ export default class View extends Component {
                     onEnd={this.cleanUp} />
 
                 <section className={classes}>
-                    { this.state.YTplayer ?
-                        this.state.goto.map(i => (
-                            <input key={i}
+                    { this.state.choices ?
+                        this.state.choices.map(i => (
+                            <input key={i.name}
                                 type="button"
                                 className="choices"
-                                onClick={() => this.gotoVideo(i)}
-                                value={`go to ${i}`} />
+                                onClick={() => this.gotoVideo(i.goto, i.nextPauseTime)}
+                                value={`go to ${i.goto}`} />
                     )) : "" }
                 </section>
             </section>
