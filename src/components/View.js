@@ -16,36 +16,34 @@ export default class View extends Component {
             name: 'Adventure 1',
             createdAt: new Date(),
             creator: 'Michael',
-            youtubeId: '9NgVdbIdD8w',
-            start: [
-                {
-                    name: 'start',
-                    desc: 'Choose one',
-                    interval: [7, 22],
-                    pauseTime: 5,
-                    choices: [
-                        {
-                            // level 0, choice 1
-                            name: '0-1',
-                            desc: 'Choice 1',
-                            goto: 7,
-                            nextPauseTime: 10,
-                        },
-                        {
-                            name: '0-2',
-                            desc: 'Choice 2',
-                            goto: 12,
-                            nextPauseTime: 15,
-                        },
-                        {
-                            name: '0-3',
-                            desc: 'Choice 3',
-                            goto: 17,
-                            nextPauseTime: 22,
-                        }
-                    ]
-                }
-            ],
+            youtubeId: '8_Ob_y2d91g',
+            start: {
+                name: 'start',
+                desc: 'Choose one',
+                interval: [7, 22],
+                pauseTime: 5,
+                choices: [
+                    {
+                        // level 0, choice 1
+                        name: '0-1',
+                        desc: 'Choice 1',
+                        goto: 7,
+                        nextPauseTime: 10,
+                    },
+                    {
+                        name: '0-2',
+                        desc: 'Choice 2',
+                        goto: 12,
+                        nextPauseTime: 15,
+                    },
+                    {
+                        name: '0-3',
+                        desc: 'Choice 3',
+                        goto: 17,
+                        nextPauseTime: 22,
+                    }
+                ]
+            },
             decisionTree: [
                 {
                     // level 1, branch 1
@@ -148,7 +146,7 @@ export default class View extends Component {
                             nextPauseTime: 107,
                         },
                         {
-                            name: '2-2-1',
+                            name: '2-2-2',
                             desc: 'Choice 2',
                             goto: 110,
                             nextPauseTime: 120,
@@ -544,51 +542,61 @@ export default class View extends Component {
                     name: 'ending-1',
                     desc: 'Ending 1',
                     pauseTime: 270,
+                    endTime: 272
                 },
                 {
                     name: 'ending-2',
                     desc: 'Ending 2',
                     pauseTime: 275,
+                    endTime: 278,
                 },
                 {
                     name: 'ending-3',
                     desc: 'Ending 3',
                     pauseTime: 280,
+                    endTime: 284,
                 },
                 {
                     name: 'ending-4',
                     desc: 'Ending 4',
                     pauseTime: 285,
+                    endTime: 289,
                 },
                 {
                     name: 'ending-5',
                     desc: 'Ending 5',
                     pauseTime: 290,
+                    endTime: 294,
                 },
                 {
                     name: 'ending-6',
                     desc: 'Ending 6',
                     pauseTime: 295,
+                    endTime: 299,
                 },
                 {
                     name: 'ending-7',
                     desc: 'Ending 7',
                     pauseTime: 300,
+                    endTime: 304,
                 },
                 {
                     name: 'ending-8',
                     desc: 'Ending 8',
                     pauseTime: 305,
+                    endTime: 309,
                 },
                 {
                     name: 'ending-9',
                     desc: 'Ending 9',
                     pauseTime: 310,
+                    endTime: 314,
                 },
                 {
                     name: 'ending 10',
                     desc: 'Ending 10',
                     pauseTime: 315,
+                    endTime: 319,
                 }
             ],
 
@@ -596,7 +604,7 @@ export default class View extends Component {
             currentTime: 0,
             pauseAt: '',
             choices: '',
-            goto: '',
+            endTime: '',
             hidden: true
         };
 
@@ -619,7 +627,7 @@ export default class View extends Component {
     }
 
     componentDidMount() {
-        const start = this.state.start[0];
+        const start = this.state.start;
         this.setState({
             pauseAt: start.pauseTime,
             choices: start.choices,
@@ -648,14 +656,15 @@ export default class View extends Component {
     }
 
     pauseVideo() {
+        clearInterval(this.timer);
         this.state.YTplayer.pauseVideo();
         this.setState({ hidden: false });
     }
 
     gotoVideo(time, nextPauseTime) {
-        const decisionTree = this.state.decisionTree;
-        if (decisionTree.endings.find(i => i.pauseTime = time)) {
-            this.cleanUp();
+        const end = this.state.endings.find(i => i.pauseTime === time);
+        if (end) {
+            this.gotoEnding(time, end.endTime);
         } else {
             this.setState({
                 pauseAt: nextPauseTime,
@@ -670,15 +679,28 @@ export default class View extends Component {
 
     tick() {
         this.setState({ currentTime: this.state.currentTime + 1 });
-        if (parseInt(this.state.currentTime, 10) === this.state.pauseAt) {
+        if (parseInt(this.state.currentTime, 10) === this.state.endTime) {
+            this.cleanUp();
+        } else if (parseInt(this.state.currentTime, 10) === this.state.pauseAt) {
             this.pauseVideo();
-            clearInterval(this.timer);
         }
     }
 
+    gotoEnding(time, endTime) {
+        this.state.YTplayer.seekTo(time).playVideo();
+        this.setState({
+            endTime: endTime,
+        });
+    }
+
     cleanUp() {
-        this.state.YTplayer.stopVideo();
         clearInterval(this.timer);
+        this.state.YTplayer.stopVideo();
+        this.setState({
+            pauseAt: this.state.start.pauseTime,
+            choices: this.state.start.choices,
+            endTime: '',
+        });
     }
 
     render() {
@@ -695,6 +717,8 @@ export default class View extends Component {
         const classes = classnames('decisions', {
             hidden: this.state.hidden,
         });
+        console.log(this.state.currentTime);
+        console.log(this.state.endTime);
         return (
             <section>
                 <Link to={`/edit/${this.props.params.id}`}>

@@ -14,8 +14,8 @@ input {
 
 .YTplayer {
     display: flex;
-    justify-content: center;
     margin: 0 auto;
+    justify-content: center;
 }
 
 .decisions {
@@ -27,7 +27,7 @@ input {
     padding: 20px;
     margin: 0 20px;
     font-size: 18px;
+    border-radius: 5px;
     background-color: white;
     border: 1px solid lightblue;
-    border-radius: 5px;
 }
