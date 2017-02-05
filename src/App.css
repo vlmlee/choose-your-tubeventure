@@ -42,6 +42,7 @@ input {
 }
 
 .choices {
+    outline: none;
     padding: 10px;
     margin: 0 20px;
     font-size: 18px;

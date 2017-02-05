@@ -3,6 +3,7 @@ import YouTube from 'react-youtube';
 import moment from 'moment';
 import classnames from 'classnames';
 import { Link } from 'react-router';
+import UserInfo from './presentational/UserInfo.js';
 
 export default class View extends Component {
     constructor() {
@@ -44,7 +45,7 @@ export default class View extends Component {
                     }
                 ]
             },
-            decisionTree: [
+            decisions: [
                 {
                     // level 1, branch 1
                     name: '1-1',
@@ -610,9 +611,11 @@ export default class View extends Component {
 
         this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
+        this.handleUserPause = this.handleUserPause.bind(this);
         this.gotoVideo = this.gotoVideo.bind(this);
         this.tick = this.tick.bind(this);
         this.cleanUp = this.cleanUp.bind(this);
+        this.resetVideo = this.resetVideo.bind(this);
     }
 
     componentWillMount() {
@@ -661,6 +664,10 @@ export default class View extends Component {
         this.setState({ hidden: false });
     }
 
+    handleUserPause() {
+        clearInterval(this.timer);
+    }
+
     gotoVideo(time, nextPauseTime) {
         const end = this.state.endings.find(i => i.pauseTime === time);
         if (end) {
@@ -668,7 +675,7 @@ export default class View extends Component {
         } else {
             this.setState({
                 pauseAt: nextPauseTime,
-                choices: this.state.decisionTree.find(i => (
+                choices: this.state.decisions.find(i => (
                     i.pauseTime === nextPauseTime
                 )).choices,
                 hidden: true,
@@ -690,6 +697,15 @@ export default class View extends Component {
         this.state.YTplayer.seekTo(time).playVideo();
         this.setState({
             endTime: endTime,
+        });
+    }
+
+    resetVideo() {
+        this.state.YTplayer.seekTo(0);
+        this.setState({
+            endTime: '',
+            pauseAt: this.state.start.pauseTime,
+            choices: this.state.start.choices,
         });
     }
 
@@ -719,19 +735,23 @@ export default class View extends Component {
 
         return (
             <section>
-                <Link to={`/edit/${this.props.params.id}`}>
-                    {this.props.params.id}
-                </Link>
-                <h1>{this.state.name}</h1>
-                <h2>{this.state.creator}</h2>
-                <h2>{moment(this.state.createdAt).format('LLL')}</h2>
                 <YouTube
                     videoId={this.props.params.id}
                     className="YTplayer"
                     opts={opts}
                     onPlay={this.playVideo}
-                    onPause={this.retrieveNextState}
+                    onPause={this.handleUserPause}
                     onEnd={this.cleanUp} />
+
+                <UserInfo
+                    name={this.state.name}
+                    creator={this.state.creator}
+                    createdAt={moment(this.state.createdAt).format('LLL')}>
+                </UserInfo>
+
+                <Link to={`/edit/${this.props.params.id}`}>
+                    {this.props.params.id}
+                </Link>
 
                 <section className={classes}>
                     { this.state.choices ?
