@@ -61,7 +61,7 @@ class App extends Component {
                     handleLinkChange={this.handleLinkChange}
                     youtubeId={this.state.youtubeId} />
 
-                <Link to={"/create/" + link}>Create an adventure</Link>
+                <Link className="create-link" to={"/create/" + link}>CREATE</Link>
 
                 <SearchInput
                     handleSearchChange={this.handleSearchChange}
@@ -70,6 +70,7 @@ class App extends Component {
 
                 { this.state.results ? (
                     <section className="search-results">
+                        <h1 className="search-input-h1 search-results-heading">Search Results</h1>
                         { this.state.results.map(i => (
                             <Link key={i._id}
                                 className="search-link"

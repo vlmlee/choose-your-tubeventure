@@ -105,7 +105,6 @@ export default class Create extends Component {
     render() {
         return (
             <section>
-                <p>{this.state.youtubeId}</p>
                 <h1>Create Storyboard</h1>
                 <form className="adventure-form"
                     onSubmit={this.createAdventure}>
