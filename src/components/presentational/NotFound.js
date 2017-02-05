@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const NotFound = () => (
     <section className="not-found">
-        Not found.
+        <p>404 - Not Found</p>
     </section>
 );
 
