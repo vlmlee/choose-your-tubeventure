@@ -12,7 +12,7 @@ const Routes = (props) => (
         <Route path="/" component={App} />
         <Route path="/edit/:id" component={Edit} />
         <Route path="/view/:id" component={View} />
-        <Route path="/create" component={Create} />
+        <Route path="/create/:id" component={Create} />
         <Route path="*" component={NotFound} />
     </Router>
 );

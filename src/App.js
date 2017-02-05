@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import './App.css';
+import CreateInput from './components/presentational/CreateInput.js';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            youtubeId: '',
             searchTerm: '',
             results: '',
             error: '',
         };
+
+        this.handleLinkChange = this.handleLinkChange.bind(this);
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.handleSearchAdventure = this.handleSearchAdventure.bind(this);
+    }
+
+    handleLinkChange(e) {
+        this.setState({ youtubeId: e.target.value });
     }
 
     handleSearchChange(e) {
@@ -37,10 +45,23 @@ class App extends Component {
         }
     }
 
+    parseURL(url){
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&\?]*).*/;
+        var match = url.match(regExp);
+        return (match&&match[7].length === 11) ? match[7] : false;
+    }
+
     render() {
+        const link = this.state.youtubeId ?
+            this.parseURL(this.state.youtubeId) : '';
         return (
             <section className="App">
-                <Link to="/create">Create an adventure</Link>
+                <CreateInput
+                    handleLinkChange={this.handleLinkChange}
+                    youtubeId={this.state.youtubeId}>
+                </CreateInput>
+
+                <Link to={"/create/" + link}>Create an adventure</Link>
 
                 <input
                     type="text"

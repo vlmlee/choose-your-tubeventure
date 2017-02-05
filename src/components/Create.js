@@ -12,6 +12,7 @@ export default class Create extends Component {
             creator: '',
             secret: '',
             confirmSecret: '',
+            youtubeId: '',
             decision: '',
             choices: '',
             activeKey: ['4'],
@@ -29,6 +30,10 @@ export default class Create extends Component {
         this.playtest = this.playtest.bind(this);
         this.autosave = this.autosave.bind(this);
         this.throttleAutosave = this.throttleAutosave.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({ youtubeId: this.props.params.id });
     }
 
     handleUserInfo() {
@@ -100,12 +105,13 @@ export default class Create extends Component {
     render() {
         return (
             <section>
+                <p>{this.state.youtubeId}</p>
                 <h1>Create Storyboard</h1>
                 <form className="adventure-form"
                     onSubmit={this.createAdventure}>
                     <input
                         type="text"
-                        onChange=""
+                        onChange={this.handleNameChange}
                         defaultValue="Enter a name" />
                     <input
                         type="button"
