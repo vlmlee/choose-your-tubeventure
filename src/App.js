@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import './App.css';
 import CreateInput from './components/presentational/CreateInput.js';
+import SearchInput from './components/presentational/SearchInput.js';
 
 class App extends Component {
     constructor(props) {
@@ -58,17 +59,13 @@ class App extends Component {
             <section className="App">
                 <CreateInput
                     handleLinkChange={this.handleLinkChange}
-                    youtubeId={this.state.youtubeId}>
-                </CreateInput>
+                    youtubeId={this.state.youtubeId} />
 
                 <Link to={"/create/" + link}>Create an adventure</Link>
 
-                <input
-                    type="text"
-                    className="search-input"
-                    onChange={this.handleSearchChange}
-                    onKeyPress={this.handleSearchAdventure}
-                    placeholder="Search for an adventure"
+                <SearchInput
+                    handleSearchChange={this.handleSearchChange}
+                    handleSearchAdventure={this.handleSearchAdventure}
                     value={this.state.searchTerm} />
 
                 <h1>Search Results</h1>
