@@ -8,6 +8,7 @@ const SearchInput = ({ handleSearchChange, handleSearchAdventure, value }) => (
             onKeyPress={handleSearchAdventure}
             placeholder="Search for an adventure"
             value={value} />
+        <h1 className="search-input-h1">Search Results</h1>
     </section>
 );
 

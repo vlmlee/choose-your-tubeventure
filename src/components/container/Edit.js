@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AdventureInfo from '../presentational/AdventureInfo.js';
 
 export default class Edit extends Component {
     constructor() {
@@ -33,7 +34,6 @@ export default class Edit extends Component {
                 .then(responseJSON => {
                     if (responseJSON.allowed) {
                         this.setState({ secret: '', allowed: true, error: '' });
-                        // TODO: also populate a form with current info
                     } else {
                         this.setState({ error: 'Looks like you have the wrong password! '});
                     }
@@ -48,18 +48,19 @@ export default class Edit extends Component {
 
     render() {
         return (
-            <div>
+            <section>
                 <h1>{this.props.params.id}</h1>
                 <p>What's the magic word?</p>
-                { this.state.allowed ? <h1>Show</h1> : (
-                    <input
-                        type="password"
+                { this.state.allowed ? (
+                    <AdventureInfo
+                        name={this.state.name}
+                        author={this.state.author} /> )
+                : (<input type="password"
                         className="magic-word"
                         onChange={this.handleMagicWord}
                         onKeyPress={this.tryMagicWord}
-                        placeholder="" />
-                )}
-            </div>
+                        placeholder="" />) }
+            </section>
         );
     }
 }

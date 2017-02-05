@@ -68,7 +68,6 @@ class App extends Component {
                     handleSearchAdventure={this.handleSearchAdventure}
                     value={this.state.searchTerm} />
 
-                <h1>Search Results</h1>
                 { this.state.results ? (
                     <section className="search-results">
                         { this.state.results.map(i => (

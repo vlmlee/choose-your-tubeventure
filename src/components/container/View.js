@@ -3,7 +3,7 @@ import YouTube from 'react-youtube';
 import moment from 'moment';
 import classnames from 'classnames';
 import { Link } from 'react-router';
-import UserInfo from './presentational/UserInfo.js';
+import UserInfo from '../presentational/UserInfo.js';
 
 export default class View extends Component {
     constructor() {
@@ -746,8 +746,7 @@ export default class View extends Component {
                 <UserInfo
                     name={this.state.name}
                     creator={this.state.creator}
-                    createdAt={moment(this.state.createdAt).format('LLL')}>
-                </UserInfo>
+                    createdAt={moment(this.state.createdAt).format('LLL')} />
 
                 <Link to={`/edit/${this.props.params.id}`}>
                     {this.props.params.id}

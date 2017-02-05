@@ -4,6 +4,7 @@ const path = require('path');
 const mongodb = require('mongodb');
 const ObjectID = mongodb.ObjectID;
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use(function(req, res, next) {
 
 app.post('/validate/:id', (req, res) => {
     const id = new ObjectID(req.params.id);
+    // bcrypt req.body.secret and then compare
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         db.collection('adventures')

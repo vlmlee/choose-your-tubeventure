@@ -13,7 +13,7 @@
 }
 
 .create-section-h1 {
-    font-size: 32px;
+    font-size: 28px;
 }
 
 .input {
@@ -31,16 +31,17 @@
     appearance: none;
 }
 
-.search-section {
-
+.search-input-h1 {
+    margin-top: 30px;
+    font-size: 28px;
 }
 
 .search-results {
-
+    margin: 10px auto;
 }
 
 .search-link {
-    margin: 20px auto;
+    margin: 10px auto;
 }
 
 /*********
@@ -95,3 +96,9 @@
 /*************
 *  NOTFOUND  *
 *************/
+
+.not-found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
