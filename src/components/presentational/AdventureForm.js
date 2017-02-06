@@ -1,31 +1,43 @@
 import React, { PropTypes } from 'react';
 
 const AdventureForm = ({
-    createAdventure,
+    name,
+    creator,
+    description,
+    youtubeId,
     handleNameChange,
+    handleCreatorChange,
+    handleDescChange,
+    handleSecretChange,
     createBreakpoint,
     createEnding,
-    youtubeId
+    createAdventure
 }) => (
     <section className="adventure-form">
         <section className="adventure-info">
             <input type="text"
                 className="adventure-form-input"
                 onChange={handleNameChange}
-                placeholder="Enter a name for this adventure" />
+                placeholder="Enter a name for this adventure"
+                value={name} />
             <input type="text"
                 className="adventure-form-input"
-                onChange={handleNameChange}
-                placeholder="Created by" />
+                onChange={handleCreatorChange}
+                placeholder="Created by"
+                value={creator} />
             <input type="text"
                 className="adventure-form-input"
-                onChange={handleNameChange}
-                placeholder="Add a description" />
+                onChange={handleDescChange}
+                placeholder="Add a description"
+                value={description} />
             <input type="text"
-                className="adventure-form-input adventure-form-italic"
-                onChange={handleNameChange}
+                className="adventure-form-input adventure-form-youtube"
                 placeholder="Youtube ID"
                 value={"Youtube ID: " + youtubeId} />
+            <input type="password"
+                className="adventure-form-input adventure-form-secret"
+                onChange={handleSecretChange}
+                placeholder="Enter a secret word" />
         </section>
         <input type="button"
             className="adventure-form-submit"

@@ -213,8 +213,14 @@ input::placeholder {
     clear: both;
 }
 
-.adventure-form-italic {
+.adventure-form-youtube {
     font-style: italic;
+    width: 290px;
+}
+
+.adventure-form-secret {
+    width: 290px;
+    margin-left: 10px;
 }
 
 .adventure-form-submit {

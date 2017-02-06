@@ -14,19 +14,15 @@ export default class Create extends Component {
             creator: '',
             description: '',
             secret: '',
-            confirmSecret: '',
             youtubeId: '',
             decisions: [],
             endings: [],
         };
 
-        this.handleUserInfo = this.handleUserInfo.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
-        this.addStart = this.addStart.bind(this);
-        this.addDecision = this.addDecision.bind(this);
-        this.removeDecision = this.removeDecision.bind(this);
-        this.addEnding = this.addEnding.bind(this);
-        this.removeEnding = this.removeEnding.bind(this);
+        this.handleCreatorChange = this.handleCreatorChange.bind(this);
+        this.handleDescChange = this.handleDescChange.bind(this);
+        this.handleSecretChange = this.handleSecretChange.bind(this);
         this.createAdventure = this.createAdventure.bind(this);
 
         this.createBreakpoint= this.createBreakpoint.bind(this);
@@ -42,32 +38,28 @@ export default class Create extends Component {
         this.setState({ youtubeId: this.props.params.id });
     }
 
-    handleUserInfo() {
-
+    handleNameChange(e) {
+        this.setState({
+            name: e.target.value,
+        });
     }
 
-    handleNameChange() {
-
+    handleCreatorChange(e) {
+        this.setState({
+            creator: e.target.value,
+        });
     }
 
-    addStart() {
-
+    handleDescChange(e) {
+        this.setState({
+            description: e.target.value,
+        });
     }
 
-    addDecision() {
-
-    }
-
-    removeDecision() {
-
-    }
-
-    addEnding() {
-
-    }
-
-    removeEnding() {
-
+    handleSecretChange(e) {
+        this.setState({
+            secret: e.target.value,
+        });
     }
 
     createAdventure(e) {
@@ -88,12 +80,16 @@ export default class Create extends Component {
         const decisions = this.state.decisions;
         decisions.push({
             name: 'name',
+            pauseTime: '',
             choices: [{
                 id: _.uniqueId(),
                 heading: 'header',
                 description: '<-- Click here to change',
                 editMode: false,
+                goto: '',
+                nextPauseTime: '',
             }],
+            editMode: false,
         });
         this.setState({
             decisions,
@@ -104,12 +100,16 @@ export default class Create extends Component {
         const endings = this.state.endings;
         endings.push({
             name: 'name',
+            pauseTime: '',
             choices: [{
                 id: _.uniqueId,
                 heading: 'ending',
                 description: '<-- Click here to change',
                 editMode: false,
+                goto: '',
+                endTime: '',
             }],
+            editMode: false,
         });
         this.setState({
             endings,
@@ -190,11 +190,18 @@ export default class Create extends Component {
             <section>
                 <Header text="CREATE STORYBOARD" />
 
-                <AdventureForm createAdventure={this.createAdventure}
+                <AdventureForm
+                    name={this.state.name}
+                    creator={this.state.creator}
+                    description={this.state.description}
+                    youtubeId={this.props.params.id}
                     handleNameChange={this.handleNameChange}
+                    handleCreatorChange={this.handleCreatorChange}
+                    handleDescChange={this.handleDescChange}
+                    handleSecretChange={this.handleSecretChange}
+                    createAdventure={this.createAdventure}
                     createBreakpoint={this.createBreakpoint}
-                    createEnding={this.createEnding}
-                    youtubeId={this.props.params.id} />
+                    createEnding={this.createEnding} />
 
                 <section className="decisions-section">
                     { this.state.decisions.length > 0 &&
@@ -203,6 +210,7 @@ export default class Create extends Component {
                                 index={index}
                                 choices={i.choices}
                                 addChoice={this.addChoice.bind(this)}
+                                addPauseTime={this.addPauseTime.bind(this)}
                                 removeChoice={this.removeChoice.bind(this)}
                                 handleChoiceChange={this.handleChoiceChange.bind(this)}
                                 handleEditMode={this.handleEditMode}
