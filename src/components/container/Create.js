@@ -39,27 +39,19 @@ export default class Create extends Component {
     }
 
     handleNameChange(e) {
-        this.setState({
-            name: e.target.value,
-        });
+        this.setState({ name: e.target.value });
     }
 
     handleCreatorChange(e) {
-        this.setState({
-            creator: e.target.value,
-        });
+        this.setState({ creator: e.target.value });
     }
 
     handleDescChange(e) {
-        this.setState({
-            description: e.target.value,
-        });
+        this.setState({ description: e.target.value });
     }
 
     handleSecretChange(e) {
-        this.setState({
-            secret: e.target.value,
-        });
+        this.setState({ secret: e.target.value });
     }
 
     createAdventure(e) {
@@ -91,9 +83,7 @@ export default class Create extends Component {
             }],
             editMode: false,
         });
-        this.setState({
-            decisions,
-        });
+        this.setState({ decisions, });
     }
 
     createEnding() {
@@ -111,9 +101,13 @@ export default class Create extends Component {
             }],
             editMode: false,
         });
-        this.setState({
-            endings,
-        });
+        this.setState({ endings, });
+    }
+
+    addPauseTime(e, index) {
+        const decisions = this.state.decisions;
+        decisions[index].pauseTime = e.target.value;
+        this.setState({ decisions, });
     }
 
     addChoice(index) {
@@ -124,50 +118,43 @@ export default class Create extends Component {
             description: '<-- Click here to change',
             editMode: false,
         });
-        this.setState({
-            decisions,
-        });
+        this.setState({ decisions, });
     }
 
     removeChoice(index, j_index) {
         const decisions = this.state.decisions;
         decisions[index].choices.splice(j_index, 1);
-        this.setState({
-            decisions,
-        });
+        this.setState({ decisions, });
 
         if (decisions[index].choices.length === 0) {
             decisions.splice(index, 1);
-            this.setState({
-                decisions,
-            });
+            this.setState({ decisions, });
         }
     }
 
     handleChoiceChange(e, index, j_index) {
         const decisions = this.state.decisions;
         decisions[index].choices[j_index].description = e.target.value;
-        this.setState({
-            decisions,
-        });
+        this.setState({ decisions, });
     }
 
     handleEditMode(index, j_index) {
         const decisions = this.state.decisions;
-        decisions[index].choices[j_index].editMode = true;
-        this.setState({
-            decisions,
-        });
+        if (!j_index) decisions[index].editMode = true;
+        else decisions[index].choices[j_index].editMode = true;
+
+        this.setState({ decisions, });
     }
 
     handleEndEditMode(e, index, id) {
         if (e.key === 'Enter') {
             const decisions = this.state.decisions;
-            const choice = decisions[index].choices.find(i => i.id === id);
-            choice.editMode = false;
-            this.setState({
-                decisions,
-            });
+            if (!id) {
+                decisions[index].editMode = false;
+            } else {
+                decisions[index].choices.find(i => i.id === id).editMode = false;
+            }
+            this.setState({ decisions, });
         }
     }
 
@@ -208,6 +195,9 @@ export default class Create extends Component {
                         ( this.state.decisions.map((i, index) => (
                             <Decision key={index}
                                 index={index}
+                                pauseTime={i.pauseTime}
+                                description={i.description}
+                                editMode={i.editMode}
                                 choices={i.choices}
                                 addChoice={this.addChoice.bind(this)}
                                 addPauseTime={this.addPauseTime.bind(this)}

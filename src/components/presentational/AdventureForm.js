@@ -31,6 +31,7 @@ const AdventureForm = ({
                 placeholder="Add a description"
                 value={description} />
             <input type="text"
+                readOnly
                 className="adventure-form-input adventure-form-youtube"
                 placeholder="Youtube ID"
                 value={"Youtube ID: " + youtubeId} />

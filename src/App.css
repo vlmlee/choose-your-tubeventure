@@ -261,7 +261,7 @@ input::placeholder {
     float: right;
     appearance: none;
     padding: 8px 14px;
-    margin-top: -14px;
+    margin-top: -4px;
     letter-spacing: 2.5px;
     font-size: 8px;
     font-family: 'Roboto';
@@ -290,6 +290,21 @@ input::placeholder {
     border: 1px solid #d9d9d9;
 }
 
+.choice-pause {
+    display: inline-block;
+    outline: none;
+    appearance: none;
+    border: 1px solid #e9e9e9;
+    border-radius: 5px;
+    padding: 8px;
+    width: 360px;
+}
+
+.decision-description {
+    margin-bottom: -20px;
+    cursor: pointer;
+}
+
 .choice-description {
     margin-top: 10px;
     height: 40px;
@@ -304,8 +319,28 @@ input::placeholder {
     text-shadow: 1px 1px 0px #efefef;
 }
 
+.breakpoint-type {
+    font-weight: 500;
+    border-bottom: 1px solid white;
+    transition: border 0.23s ease-in;
+    padding-bottom: 2px;
+}
+
+.breakpoint-type:hover {
+    border-bottom: 1px solid red;
+}
+
+.hidden-help {
+    opacity: 0;
+    transition: opacity .24s ease-in-out;
+}
+
+.breakpoint-type:hover + .hidden-help {
+    opacity: 1;
+}
+
 .collapse {
-    margin: 20px auto 40px;
+    margin: 30px auto 40px;
 }
 
 .panel {
