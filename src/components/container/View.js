@@ -538,7 +538,7 @@ export default class View extends Component {
                     ]
                 },
             ],
-            endings: [
+            end: [
                 {
                     name: 'ending-1',
                     desc: 'Ending 1',
@@ -669,7 +669,7 @@ export default class View extends Component {
     }
 
     gotoVideo(time, nextPauseTime) {
-        const end = this.state.endings.find(i => i.pauseTime === time);
+        const end = this.state.end.find(i => i.pauseTime === time);
         if (end) {
             this.gotoEnding(time, end.endTime);
         } else {

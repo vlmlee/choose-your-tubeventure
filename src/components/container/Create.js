@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Collapse, { Panel } from 'rc-collapse';
 import Header from '../presentational/Header.js';
+import AdventureForm from '../presentational/AdventureForm.js';
 import _ from 'underscore';
 import 'rc-collapse/assets/index.css';
 
@@ -109,20 +110,11 @@ export default class Create extends Component {
         return (
             <section>
                 <Header text="CREATE STORYBOARD" />
-                <form className="adventure-form"
-                    onSubmit={this.createAdventure}>
-                    <input
-                        type="text"
-                        onChange={this.handleNameChange}
-                        defaultValue="Enter a name" />
-                    <input
-                        type="button"
-                        value="Create Storyboard" />
-                </form>
-                <input
-                    type="button"
-                    onClick={this.createCollapsable}
-                    value="Add extension" />
+
+                <AdventureForm createAdventure={this.createAdventure}
+                    handleNameChange={this.handleNameChange}
+                    createCollapsable={this.createCollapsable} />
+
                 <Collapse
                     className="collapse"
                     accordion={false} >

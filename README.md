@@ -14,12 +14,13 @@ Database schema:
         secret: String,
     },
     youtubeId: String,
-    firstDecision: {
+    start: {
         name: String,
+        desc: String,
+        interval: Array,
         pauseTime: Number,
         choices: [
             {
-                choice: Number,
                 name: String,
                 desc: String,
                 goto: Number,
@@ -31,10 +32,11 @@ Database schema:
     decisions: [
         {
             name: String,
+            desc: String,
+            interval: Array,
             pauseTime: Number,
             choices: [
                 {
-                    choice: Number,
                     name: String,
                     desc: String,
                     goto: Number,
@@ -44,6 +46,15 @@ Database schema:
             ]
         },
        // ...
+    ],
+    end: [
+        {
+            name: String,
+            desc: String,
+            pauseTime: Number,
+            endTime: Number
+        },
+        // ...
     ]
 }
 ```
