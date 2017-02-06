@@ -18,7 +18,6 @@ export default class Create extends Component {
             youtubeId: '',
             decisions: [],
             endings: [],
-            editMode: false,
         };
 
         this.handleUserInfo = this.handleUserInfo.bind(this);
@@ -32,6 +31,7 @@ export default class Create extends Component {
 
         this.createBreakpoint= this.createBreakpoint.bind(this);
         this.createEnding = this.createEnding.bind(this);
+        this.handleEditMode = this.handleEditMode.bind(this);
 
         this.playtest = this.playtest.bind(this);
         this.autosave = this.autosave.bind(this);
@@ -89,7 +89,10 @@ export default class Create extends Component {
         decisions.push({
             name: 'name',
             choices: [{
-                heading: 'header'
+                id: _.uniqueId(),
+                heading: 'header',
+                description: '<-- Click here to change',
+                editMode: false,
             }],
         });
         this.setState({
@@ -102,8 +105,10 @@ export default class Create extends Component {
         endings.push({
             name: 'name',
             choices: [{
+                id: _.uniqueId,
                 heading: 'ending',
-                description: 'Nothing here'
+                description: '<-- Click here to change',
+                editMode: false,
             }],
         });
         this.setState({
@@ -114,7 +119,10 @@ export default class Create extends Component {
     addChoice(index) {
         const decisions = this.state.decisions;
         decisions[index].choices.push({
-            heading: 'new'
+            id: _.uniqueId,
+            heading: 'new',
+            description: '<-- Click here to change',
+            editMode: false,
         });
         this.setState({
             decisions,
@@ -144,16 +152,21 @@ export default class Create extends Component {
         });
     }
 
-    handleEditMode() {
+    handleEditMode(index, j_index) {
+        const decisions = this.state.decisions;
+        decisions[index].choices[j_index].editMode = true;
         this.setState({
-            editMode: true
+            decisions,
         });
     }
 
-    handleEndEditMode(e) {
+    handleEndEditMode(e, index, id) {
         if (e.key === 'Enter') {
+            const decisions = this.state.decisions;
+            const choice = decisions[index].choices.find(i => i.id === id);
+            choice.editMode = false;
             this.setState({
-                editMode: false
+                decisions,
             });
         }
     }
@@ -189,11 +202,10 @@ export default class Create extends Component {
                             <Decision key={index}
                                 index={index}
                                 choices={i.choices}
-                                editMode={this.state.editMode}
                                 addChoice={this.addChoice.bind(this)}
                                 removeChoice={this.removeChoice.bind(this)}
                                 handleChoiceChange={this.handleChoiceChange.bind(this)}
-                                handleEditMode={this.handleEditMode.bind(this)}
+                                handleEditMode={this.handleEditMode}
                                 handleEndEditMode={this.handleEndEditMode.bind(this)} /> ))
                         )}
 

@@ -29,7 +29,7 @@
 
 .home {
     position: absolute;
-    left: 100px;
+    left: 130px;
     top: 30px;
     background-size: 100% 100%;
     background-position: center center;
@@ -48,7 +48,7 @@
 
 .faq {
     position: absolute;
-    right: 150px;
+    right: 205px;
     top: 30px;
     background-size: 100% 100%;
     background-position: center center;
@@ -125,7 +125,7 @@ input::placeholder {
 }
 
 .create-link:hover {
-    transform: scale(1.05, 1.05);
+    transform: scale(1.02, 1.02);
 }
 
 .create-link:active {
@@ -232,10 +232,15 @@ input::placeholder {
     font-weight: 500;
     letter-spacing: 2.5px;
     text-shadow: 1px 1px 1px #444444;
+    transition: transform 0.2s ease-in;
 }
 
 .adventure-form-create {
-    background-color: #CF000F;
+    background-color: lightseagreen;
+}
+
+.adventure-form-submit:hover {
+    transform: scale(1.02, 1.02);
 }
 
 .decisions-section {
@@ -264,6 +269,7 @@ input::placeholder {
 
 .choice-button-remove {
     margin-top: 3px;
+    background-color: #CF000F;
 }
 
 .choice-input {

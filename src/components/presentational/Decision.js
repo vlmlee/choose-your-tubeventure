@@ -7,7 +7,6 @@ const Decision = ({
     addChoice,
     removeChoice,
     handleChoiceChange,
-    editMode,
     handleEditMode,
     handleEndEditMode
 }) => (
@@ -32,19 +31,22 @@ const Decision = ({
                                     <Panel key={j_index}
                                         className="panel"
                                         header={"Choice " + (j_index+1)}>
-                                        { editMode ?
+                                        { j.editMode ?
                                             ( <textarea
                                                 className="choice-input"
-                                                onKeyPress={handleEndEditMode}
+                                                onKeyPress={(e) => handleEndEditMode(e, index, j.id)}
                                                 onChange={(e) => handleChoiceChange(e, index, j_index)}
                                                 placeholder="Enter a description for this choice"
                                                 value={j.description} /> )
                                         : <div className="choice-description"
-                                             onClick={handleEditMode}><span className="choice-description-editable">Description: </span>{j.description} </div> }
+                                            onClick={() => handleEditMode(index, j_index)}>
+                                            <span className="choice-description-editable">
+                                                Description: </span>{j.description}
+                                        </div> }
                                         <input type="button"
                                             className="choice-button choice-button-remove"
                                             onClick={() => removeChoice(index, j_index)}
-                                            value="REMOVE CHOICE&mdash;" />
+                                            value="DELETE CHOICE&mdash;" />
                                     </Panel> ))
                             )}
                         </Collapse>
@@ -69,10 +71,22 @@ const Decision = ({
                                     <Panel key={j_index}
                                         className="panel"
                                         header={"Choice " + (j_index+1)}>
+                                        { j.editMode ?
+                                            ( <textarea
+                                                className="choice-input"
+                                                onKeyPress={(e) => handleEndEditMode(e, index, j.id)}
+                                                onChange={(e) => handleChoiceChange(e, index, j_index)}
+                                                placeholder="Enter a description for this choice"
+                                                value={j.description} /> )
+                                        : <div className="choice-description"
+                                            onClick={() => handleEditMode(index, j_index)}>
+                                            <span className="choice-description-editable">
+                                                Description: </span>{j.description}
+                                        </div> }
                                         <input type="button"
-                                            className="choice-button"
+                                            className="choice-button choice-button-remove"
                                             onClick={() => removeChoice(index, j_index)}
-                                            value="REMOVE CHOICE&mdash;" />
+                                            value="DELETE CHOICE&mdash;" />
                                     </Panel> ))
                             )}
                         </Collapse>
