@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Collapse, { Panel } from 'rc-collapse';
+import Header from '../presentational/Header.js';
 import _ from 'underscore';
 import 'rc-collapse/assets/index.css';
 
@@ -99,13 +100,15 @@ export default class Create extends Component {
     }
 
     throttleAutosave() {
-
+        this.autosave = this.autosave || _.throttle(state => {
+            // save state with fetch();
+        }, 5000);
     }
 
     render() {
         return (
             <section>
-                <h1>Create Storyboard</h1>
+                <Header text="CREATE STORYBOARD" />
                 <form className="adventure-form"
                     onSubmit={this.createAdventure}>
                     <input

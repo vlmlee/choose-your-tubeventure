@@ -12,7 +12,8 @@ const EditQuestion = ({ handleMagicWord, tryMagicWord }) => (
 );
 
 EditQuestion.propTypes = {
-    text: PropTypes.string.isRequired,
+    handleMagicWord: PropTypes.func.isRequired,
+    tryMagicWord: PropTypes.func.isRequired,
 };
 
 export default EditQuestion;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AdventureInfo from '../presentational/AdventureInfo.js';
 import EditQuestion from '../presentational/EditQuestion.js';
+import Header from '../presentational/Header.js';
 
 export default class Edit extends Component {
     constructor() {
@@ -49,13 +50,16 @@ export default class Edit extends Component {
 
     render() {
         return (
-            <section className="edit-section" >
-                { this.state.allowed ? (
-                    <AdventureInfo
-                        name={this.state.name}
-                        author={this.state.author} /> )
-                : ( <EditQuestion handleMagicWord={this.handleMagicWord}
-                        tryMagicWord={this.tryMagicWord} /> ) }
+            <section>
+                <Header text="EDIT STORYBOARD" />
+                    <section className="edit-section" >
+                        { this.state.allowed ? (
+                            <AdventureInfo
+                                name={this.state.name}
+                                author={this.state.author} /> )
+                        : ( <EditQuestion handleMagicWord={this.handleMagicWord}
+                                tryMagicWord={this.tryMagicWord} /> ) }
+                    </section>
             </section>
         );
     }

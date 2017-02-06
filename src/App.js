@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import './App.css';
 import CreateInput from './components/presentational/CreateInput.js';
 import SearchInput from './components/presentational/SearchInput.js';
+import Header from './components/presentational/Header.js';
 
 class App extends Component {
     constructor(props) {
@@ -53,10 +54,12 @@ class App extends Component {
     }
 
     render() {
-        const link = this.state.youtubeId ?
-            this.parseURL(this.state.youtubeId) : '';
+        const link = this.parseURL(this.state.youtubeId) || '';
         return (
             <section className="App">
+                <Header
+                    text="CHOOSE YOUR TUBEVENTURE"/>
+
                 <CreateInput
                     handleLinkChange={this.handleLinkChange}
                     youtubeId={this.state.youtubeId} />
@@ -75,7 +78,7 @@ class App extends Component {
                             <Link key={i._id}
                                 className="search-link"
                                 to={"/view/" + i._id}>
-                                {i.name}
+                                {i.name}: {i.description}
                             </Link>
                         )) }
                     </section>
