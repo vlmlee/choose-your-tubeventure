@@ -5,6 +5,7 @@ import App from './App.js';
 import Edit from './components/container/Edit.js';
 import View from './components/container/View.js';
 import Create from './components/container/Create.js';
+import FAQ from './components/presentational/FAQ.js';
 import NotFound from './components/presentational/NotFound.js';
 import Footer from './components/presentational/Footer.js';
 
@@ -15,6 +16,7 @@ const Routes = (props) => (
             <Route path="/edit/:id" component={Edit} />
             <Route path="/view/:id" component={View} />
             <Route path="/create/:id" component={Create} />
+            <Route path="/faq" component={FAQ} />
             <Route path="*" component={NotFound} />
         </Router>
     </section>

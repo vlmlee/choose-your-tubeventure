@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:200|Open+Sans:200');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400|Roboto:200');
 
 @font-face {
     font-family: 'Quicksand-Light';
@@ -29,7 +29,8 @@
 
 .home {
     position: absolute;
-    background-image: url('../public/images/home.svg');
+    left: 100px;
+    top: 30px;
     background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
@@ -45,12 +46,31 @@
     font-size: 20px;
 }
 
-.home p:hover {
+.faq {
+    position: absolute;
+    right: 150px;
+    top: 30px;
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+}
+
+.faq p {
+    padding-left: -82px;
+    line-height: 32px;
+    color: white;
+    font-size: 20px;
+}
+
+.home p:hover, .faq p:hover {
     color: royalblue;
 }
 
-@media (max-width: 1055px) {
-    .home {
+@media (max-width: 1200px) {
+    .home, .faq {
         display: none;
     }
 }
@@ -146,7 +166,7 @@ input::placeholder {
 
 .YTplayer {
     display: flex;
-    margin: 0 auto;
+    margin: 50px auto;
     justify-content: center;
 }
 
@@ -177,12 +197,12 @@ input::placeholder {
 }
 
 .adventure-info {
-    width: 420px;
+    width: 640px;
     margin: 35px auto 0;
 }
 
 .adventure-form-input {
-    width: 394px;
+    width: 614px;
     margin: 5px auto;
     padding: 11px;
     font-size: 14px;
@@ -191,6 +211,10 @@ input::placeholder {
     background-color: #f4f4f4;
     outline: none;
     clear: both;
+}
+
+.adventure-form-italic {
+    font-style: italic;
 }
 
 .adventure-form-submit {
@@ -210,13 +234,66 @@ input::placeholder {
     text-shadow: 1px 1px 1px #444444;
 }
 
-.collapsable-section {
-    margin-bottom: 50px;
+.adventure-form-create {
+    background-color: #CF000F;
+}
+
+.decisions-section {
+    width: 80%;
+    margin: 0 auto 50px;
+    font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.choice-button {
+    float: right;
+    appearance: none;
+    padding: 8px 14px;
+    margin-top: -14px;
+    letter-spacing: 2.5px;
+    font-size: 8px;
+    font-family: 'Roboto';
+    text-shadow: 1px 1px 1px #444444;
+    color: white;
+    background-color: cornflowerblue;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+}
+
+.choice-button-remove {
+    margin-top: 3px;
+}
+
+.choice-input {
+    display: inline-block;
+    position: relative;
+    height: 50px;
+    width: 70%;
+    outline: none;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 7px;
+    border: 1px solid #d9d9d9;
+}
+
+.choice-description {
+    margin-top: 10px;
+    height: 40px;
+    float: left;
+    font-size: 14px;
+}
+
+.choice-description-editable {
+    color: dodgerblue;
+    cursor: pointer;
+    letter-spacing: 1.4px;
+    text-shadow: 1px 1px 0px #efefef;
 }
 
 .collapse {
-    width: 70%;
-    margin: 20px auto;
+    margin: 20px auto 40px;
 }
 
 .panel {

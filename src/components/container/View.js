@@ -4,6 +4,7 @@ import moment from 'moment';
 import classnames from 'classnames';
 import { Link } from 'react-router';
 import UserInfo from '../presentational/UserInfo.js';
+import Header from '../presentational/Header.js';
 import Footer from '../presentational/Footer.js';
 
 export default class View extends Component {
@@ -539,7 +540,7 @@ export default class View extends Component {
                     ]
                 },
             ],
-            end: [
+            endings: [
                 {
                     name: 'ending-1',
                     desc: 'Ending 1',
@@ -670,7 +671,7 @@ export default class View extends Component {
     }
 
     gotoVideo(time, nextPauseTime) {
-        const end = this.state.end.find(i => i.pauseTime === time);
+        const end = this.state.endings.find(i => i.pauseTime === time);
         if (end) {
             this.gotoEnding(time, end.endTime);
         } else {
@@ -736,6 +737,7 @@ export default class View extends Component {
 
         return (
             <section>
+                <Header text={this.state.name} />
                 <YouTube
                     videoId={this.props.params.id}
                     className="YTplayer"

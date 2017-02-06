@@ -9,6 +9,11 @@ const Header = ({text}) => (
             </div>
         </Link>
         {text}
+        <Link to={'/faq'}>
+            <div className="faq">
+                <p>FAQ</p>
+            </div>
+        </Link>
     </section>
 );
 
