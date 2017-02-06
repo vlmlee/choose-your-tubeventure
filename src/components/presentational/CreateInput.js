@@ -8,7 +8,7 @@ const CreateSection = ({handleLinkChange, youtubeId}) => (
         <input type="text"
             className="input"
             onChange={handleLinkChange}
-            placeholder="Enter in a youtube link"
+            placeholder="Enter a youtube link"
             value={youtubeId} />
     </section>
 );

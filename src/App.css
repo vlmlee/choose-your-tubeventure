@@ -210,12 +210,18 @@ input::placeholder {
     text-shadow: 1px 1px 1px #444444;
 }
 
+.collapsable-section {
+    margin-bottom: 50px;
+}
+
 .collapse {
-    width: 90%;
+    width: 70%;
     margin: 20px auto;
 }
 
-.panel {}
+.panel {
+
+}
 
 .inner-text {
     margin-bottom: 20px;
@@ -268,13 +274,10 @@ footer {
     width: 100%;
 }
 
-footer p {
+.footer-content {
+    margin: 0 auto;
     position: relative;
     text-align: center;
     font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
     font-size: 12px;
-}
-
-.footer-content {
-    margin: 0 auto;
 }

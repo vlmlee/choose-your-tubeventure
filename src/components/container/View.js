@@ -4,6 +4,7 @@ import moment from 'moment';
 import classnames from 'classnames';
 import { Link } from 'react-router';
 import UserInfo from '../presentational/UserInfo.js';
+import Footer from '../presentational/Footer.js';
 
 export default class View extends Component {
     constructor() {
@@ -762,6 +763,7 @@ export default class View extends Component {
                                 value={`go to ${i.goto}`} />
                     )) : "" }
                 </section>
+                <Footer />
             </section>
         );
     }

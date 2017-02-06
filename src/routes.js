@@ -17,7 +17,6 @@ const Routes = (props) => (
             <Route path="/create/:id" component={Create} />
             <Route path="*" component={NotFound} />
         </Router>
-        <Footer />
     </section>
 );
 

@@ -4,6 +4,7 @@ import './App.css';
 import CreateInput from './components/presentational/CreateInput.js';
 import SearchInput from './components/presentational/SearchInput.js';
 import Header from './components/presentational/Header.js';
+import Footer from './components/presentational/Footer.js';
 
 class App extends Component {
     constructor(props) {
@@ -83,6 +84,8 @@ class App extends Component {
                         )) }
                     </section>
                 ) : '' }
+
+                <Footer />
             </section>
         );
     }

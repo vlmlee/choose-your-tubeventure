@@ -15,12 +15,14 @@ export default class Create extends Component {
             secret: '',
             confirmSecret: '',
             youtubeId: '',
-            decision: '',
-            choices: '',
+            start: { },
+            decisions: [],
+            end: { },
             activeKey: ['4'],
         };
 
         this.handleUserInfo = this.handleUserInfo.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
         this.addStart = this.addStart.bind(this);
         this.addDecision = this.addDecision.bind(this);
         this.removeDecision = this.removeDecision.bind(this);
@@ -39,6 +41,10 @@ export default class Create extends Component {
     }
 
     handleUserInfo() {
+
+    }
+
+    handleNameChange() {
 
     }
 
@@ -64,13 +70,12 @@ export default class Create extends Component {
 
     createAdventure(e) {
         e.preventDefault();
-        const form = new FormData(ReactDOM.findDOMNode(this.refs.form));
 
         const opts = {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: form,
-            cache: 'default'
+            body: JSON.stringify({ }),
+            headers: { "Content-Type": "application/json",
+                "Accept": "application/json" }
         };
 
         fetch('http://localhost:9001/adventure/' + this.props.params.id, opts);
@@ -83,13 +88,15 @@ export default class Create extends Component {
     }
 
     createCollapsable() {
-        return (
-            <Collapse className="collapse"
-                accordion={false}>
-                <Panel header={`This is panel nest panel`} key="1">
-                </Panel>
-            </Collapse>
-        );
+        let decisions = this.state.decisions;
+        decisions.push({
+            name: 'name',
+            heading: 'heading',
+        });
+        console.log(this.state.decisions);
+        this.setState({
+            decisions: decisions
+        });
     }
 
     playtest() {
@@ -113,7 +120,23 @@ export default class Create extends Component {
 
                 <AdventureForm createAdventure={this.createAdventure}
                     handleNameChange={this.handleNameChange}
-                    createCollapsable={this.createCollapsable} />
+                    createCollapsable={this.createCollapsable}
+                    youtubeId={this.props.params.id} />
+
+                <section className="collapsable-section">
+                    { this.state.decisions.length > 0 &&
+                        ( this.state.decisions.map((i, index) => (
+                            <Collapse key={index}
+                                className="collapse"
+                                accordion={false}>
+                                <Panel key={index}
+                                    className="panel"
+                                    header={i.heading}>
+                                    <p>Hello</p>
+                                </Panel>
+                            </Collapse> ))
+                        )}
+                </section>
 
                 <Collapse
                     className="collapse"

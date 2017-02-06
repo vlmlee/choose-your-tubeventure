@@ -1,21 +1,42 @@
 import React, { PropTypes } from 'react';
 
-const AdventureForm = ({ createAdventure, handleNameChange, createCollapsable}) => (
+const AdventureForm = ({ createAdventure, handleNameChange, createCollapsable, youtubeId }) => (
     <section className="adventure-form">
-        <form onSubmit={createAdventure}>
+        <section className="adventure-info">
             <input type="text"
                 className="adventure-form-input"
                 onChange={handleNameChange}
                 placeholder="Enter a name" />
-            <input type="submit"
-                className="adventure-form-submit"
-                value="Create Adventure" />
-        </form>
-        <input
-            type="button"
+            <input type="text"
+                className="adventure-form-input"
+                onChange={handleNameChange}
+                placeholder="Created by" />
+            <input type="text"
+                className="adventure-form-input"
+                onChange={handleNameChange}
+                placeholder="Enter a description" />
+            <input type="text"
+                className="adventure-form-input"
+                onChange={handleNameChange}
+                placeholder="Youtube ID"
+                value={"Youtube ID: " + youtubeId} />
+        </section>
+        <input type="button"
+            className="adventure-form-submit"
+            onClick={createAdventure}
+            value="CREATE ADVENTURE" />
+        <input type="button"
+            className="adventure-form-submit"
             onClick={createCollapsable}
-            value="Add extension" />
+            value="ADD EXTENSION" />
     </section>
 );
+
+AdventureForm.propTypes = {
+    createAdventure: PropTypes.func.isRequired,
+    handleNameChange: PropTypes.func.isRequired,
+    createCollapsable: PropTypes.func.isRequired,
+    youtubeId: PropTypes.string.isRequired,
+};
 
 export default AdventureForm;
