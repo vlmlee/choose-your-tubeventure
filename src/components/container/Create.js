@@ -63,7 +63,6 @@ export default class Create extends Component {
                 headers: { "Content-Type": "application/json",
                     "Accept": "application/json" }
             };
-
             fetch('http://localhost:9001/adventure/' + this.props.params.id, opts);
         }
     }
@@ -71,12 +70,13 @@ export default class Create extends Component {
     createBreakpoint() {
         const decisions = this.state.decisions;
         decisions.push({
-            name: 'name',
+            id: _.uniqueId(),
+            name: '',
+            startTime: '',
             pauseTime: '',
             choices: [{
                 id: _.uniqueId(),
-                heading: 'header',
-                description: '<-- Click here to change',
+                description: '<- Click here to change',
                 editMode: false,
                 goto: '',
                 nextPauseTime: '',
@@ -89,12 +89,14 @@ export default class Create extends Component {
     createEnding() {
         const endings = this.state.endings;
         endings.push({
-            name: 'name',
+            id: _.uniqueId(),
+            name: '',
+            startTime: '',
             pauseTime: '',
             choices: [{
                 id: _.uniqueId,
-                heading: 'ending',
-                description: '<-- Click here to change',
+                heading: 'Ending',
+                description: '<- Click here to change',
                 editMode: false,
                 goto: '',
                 endTime: '',
@@ -104,18 +106,40 @@ export default class Create extends Component {
         this.setState({ endings, });
     }
 
+    handleBpNameChange(e, index) {
+        const decisions = this.state.decisions;
+        decisions[index].name = e.target.value;
+    }
+
     addPauseTime(e, index) {
         const decisions = this.state.decisions;
-        decisions[index].pauseTime = e.target.value;
-        this.setState({ decisions, });
+        if (~e.target.value.split('').indexOf(':')) {
+            const time = e.target.value.split(':');
+            const timeInSeconds = parseInt(time[0], 10)*60 + parseInt(time[1], 10);
+            decisions[index].pauseTime = timeInSeconds;
+        } else {
+            decisions[index].pauseTime = e.target.value;
+        }
+    }
+
+    addStartAndPauseTime(e, index) {
+        const decisions = this.state.decisions;
+        if (~e.target.value.split('').indexOf(':')) {
+            const time = e.target.value.split(/[\[,\]]/).filter(i => i !== '').map(i => i.split(':'));
+            decisions[index].startTime = parseInt(time[0][0], 10)*60 + parseInt(time[0][1], 10);
+            decisions[index].pauseTime = parseInt(time[1][0], 10) *60 + parseInt(time[1][1], 10);
+        } else {
+            const time = e.target.value.split(/[\[,\]]/).filter(i => i !== '');
+            decisions[index].startTime = parseInt(time[0], 10);
+            decisions[index].pauseTime = parseInt(time[1], 10);
+        }
     }
 
     addChoice(index) {
         const decisions = this.state.decisions;
         decisions[index].choices.push({
             id: _.uniqueId,
-            heading: 'new',
-            description: '<-- Click here to change',
+            description: '<- Click here to change',
             editMode: false,
         });
         this.setState({ decisions, });
@@ -125,7 +149,6 @@ export default class Create extends Component {
         const decisions = this.state.decisions;
         decisions[index].choices.splice(j_index, 1);
         this.setState({ decisions, });
-
         if (decisions[index].choices.length === 0) {
             decisions.splice(index, 1);
             this.setState({ decisions, });
@@ -140,9 +163,11 @@ export default class Create extends Component {
 
     handleEditMode(index, j_index) {
         const decisions = this.state.decisions;
-        if (!j_index) decisions[index].editMode = true;
-        else decisions[index].choices[j_index].editMode = true;
-
+        if (j_index === undefined) {
+            decisions[index].editMode = decisions[index].id;
+        } else {
+            decisions[index].choices[j_index].editMode = decisions[index].choices[j_index].id;
+        }
         this.setState({ decisions, });
     }
 
@@ -175,7 +200,7 @@ export default class Create extends Component {
     render() {
         return (
             <section>
-                <Header text="CREATE STORYBOARD" />
+                <Header text="STORYBOARD" />
 
                 <AdventureForm
                     name={this.state.name}
@@ -195,12 +220,17 @@ export default class Create extends Component {
                         ( this.state.decisions.map((i, index) => (
                             <Decision key={index}
                                 index={index}
+                                id={i.id}
+                                name={i.name}
+                                startTime={i.startTime}
                                 pauseTime={i.pauseTime}
                                 description={i.description}
                                 editMode={i.editMode}
                                 choices={i.choices}
                                 addChoice={this.addChoice.bind(this)}
                                 addPauseTime={this.addPauseTime.bind(this)}
+                                addStartAndPauseTime={this.addStartAndPauseTime.bind(this)}
+                                handleBpNameChange={this.handleBpNameChange.bind(this)}
                                 removeChoice={this.removeChoice.bind(this)}
                                 handleChoiceChange={this.handleChoiceChange.bind(this)}
                                 handleEditMode={this.handleEditMode}

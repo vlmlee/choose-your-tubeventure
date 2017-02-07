@@ -3,12 +3,17 @@ import Collapse, { Panel } from 'rc-collapse';
 
 const Decision = ({
     index,
+    id,
+    name,
+    startTime,
     pauseTime,
     editMode,
     choices,
     addChoice,
     removeChoice,
     addPauseTime,
+    addStartAndPauseTime,
+    handleBpNameChange,
     handleChoiceChange,
     handleEditMode,
     handleEndEditMode
@@ -16,16 +21,21 @@ const Decision = ({
     <section className="decision">
         <section>
             <section className="decision-description">
-                { editMode ?
-                    ( <input type="text"
-                        className="choice-pause"
-                        onKeyPress={(e) => handleEndEditMode(e, index)}
-                        onChange={(e) => addPauseTime(e, index)}
-                        placeholder="Enter the time (MM:SS or seconds) in which to pause for choices."
-                        value={pauseTime} /> )
-                : <section onClick={(e) => handleEditMode(index)}>
-                    <span className="breakpoint-type">{ index === 0 ? 'Start' : 'Decision' }: [{index === 0 ? 0 : pauseTime}, {pauseTime}]</span>
-                    { pauseTime !== '' || <span> &#8592; Click here to set a pause time - [startTime, pauseTime] </span> }
+                { editMode === id ?
+                    ( <span><input type="text"
+                            className="choice-description-input choice-name"
+                            onKeyPress={(e) => handleEndEditMode(e, index)}
+                            onChange={(e) => handleBpNameChange(e, index)}
+                            placeholder="Breakpoint name" />
+                        <input type="text"
+                            className="choice-description-input choice-pause"
+                            onKeyPress={(e) => handleEndEditMode(e, index)}
+                            onChange={(index ? (e) => addStartAndPauseTime(e, index) : (e) => addPauseTime(e, index))}
+                            placeholder="Enter the time (MM:SS or seconds) to pause for choices" />
+                        </span> )
+                : <section onClick={() => handleEditMode(index)}>
+                    <span className="breakpoint-type">{ index ? '(Decision) -' : '(Start) -' } { name } : [{index ? startTime : 0 }, {pauseTime}]</span>
+                    { pauseTime !== '' || <span> &#8592; Click here to set a { index ? 'start and' : '' } pause time - [startTime, pauseTime] </span> }
                 </section> }
             </section>
             <input type="button"
@@ -40,7 +50,7 @@ const Decision = ({
                         <Panel key={j_index}
                             className="panel"
                             header={"Choice " + (j_index+1)}>
-                            { j.editMode ?
+                            { j.editMode === j.id ?
                                 ( <textarea
                                     className="choice-input"
                                     onKeyPress={(e) => handleEndEditMode(e, index, j.id)}
@@ -64,7 +74,17 @@ const Decision = ({
 );
 
 Decision.propTypes = {
+    index: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     choices: PropTypes.array.isRequired,
+    addChoice: PropTypes.func.isRequired,
+    removeChoice: PropTypes.func.isRequired,
+    addPauseTime: PropTypes.func.isRequired,
+    addStartAndPauseTime: PropTypes.func.isRequired,
+    handleChoiceChange: PropTypes.func.isRequired,
+    handleEditMode: PropTypes.func.isRequired,
+    handleEndEditMode: PropTypes.func.isRequired,
 };
 
 export default Decision;

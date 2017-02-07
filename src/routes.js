@@ -7,7 +7,6 @@ import View from './components/container/View.js';
 import Create from './components/container/Create.js';
 import FAQ from './components/presentational/FAQ.js';
 import NotFound from './components/presentational/NotFound.js';
-import Footer from './components/presentational/Footer.js';
 
 const Routes = (props) => (
     <section>
