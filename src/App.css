@@ -29,7 +29,7 @@
 
 .home {
     position: absolute;
-    left: 130px;
+    left: 140px;
     top: 30px;
     background-size: 100% 100%;
     background-position: center center;
@@ -192,6 +192,10 @@ input::placeholder {
 *  CREATE  *
 ***********/
 
+.create-container {
+    min-width: 840px;
+}
+
 .adventure-form {
     width: 80%;
     text-align: center;
@@ -252,7 +256,7 @@ input::placeholder {
 }
 
 .decisions-section {
-    width: 80%;
+    width: 79%;
     margin: 0 auto 50px;
     font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
     font-weight: 400;
@@ -260,10 +264,12 @@ input::placeholder {
 }
 
 .choice-button {
+    display: block;
     float: right;
+    width: 120px;
     appearance: none;
     padding: 8px 14px;
-    margin-top: -4px;
+    margin-top: -10px;
     letter-spacing: 2.5px;
     font-size: 8px;
     font-family: 'Roboto';
@@ -273,21 +279,27 @@ input::placeholder {
     border: none;
     border-radius: 6px;
     outline: none;
+    clear: right;
 }
 
 .choice-button-remove {
-    margin-top: 3px;
+    margin-top: 5px;
     background-color: #CF000F;
+}
+
+.choice-buttom-edit {
+    margin-top: 5px;
 }
 
 .choice-input {
     display: inline-block;
     position: relative;
-    height: 50px;
-    width: 70%;
+    height: 30px;
+    width: 100%;
     outline: none;
-    font-size: 14px;
+    font-size: 12px;
     padding: 5px 10px;
+    margin: 5px 0;
     border-radius: 7px;
     border: 1px solid #d9d9d9;
 }
@@ -313,8 +325,9 @@ input::placeholder {
 
 .decision-description {
     margin-bottom: -24px;
-    cursor: pointer;
     font-weight: 500;
+    color: #666;
+    cursor: pointer;
 }
 
 .choice-box {
@@ -334,6 +347,11 @@ input::placeholder {
     cursor: pointer;
     letter-spacing: 1.4px;
     text-shadow: 1px 0px 0px #efefef;
+}
+
+.choice-editable-box {
+    float: left;
+    margin-bottom: 15px;
 }
 
 .breakpoint-type {
