@@ -29,13 +29,13 @@
 
 .home {
     position: absolute;
-    left: 140px;
+    left: 11%;
     top: 30px;
     background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
     height: 30px;
-    width: 30px;
+    width: auto;
     margin: 5px;
 }
 
@@ -48,13 +48,13 @@
 
 .faq {
     position: absolute;
-    right: 205px;
+    right: 13%; /* 11% + width */
     top: 30px;
     background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
     height: 30px;
-    width: 30px;
+    width: auto;
     margin: 5px;
 }
 
@@ -261,7 +261,7 @@ input::placeholder {
 }
 
 .decisions-section {
-    width: 79%;
+    width: 78%;
     margin: 0 auto;
     font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande";
     font-weight: 400;

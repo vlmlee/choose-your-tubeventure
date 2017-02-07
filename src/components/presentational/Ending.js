@@ -35,7 +35,7 @@ const Ending = ({
                         </span> )
                 : <section onClick={() => handleEditMode('endings', index)}>
                     <span className="breakpoint-type">(Ending {(index + 1)}) - { name } : [{startTime}, {pauseTime}]</span>
-                    { pauseTime !== '' || <span> &#8592; Click here to set a start and pause time - [start time, pause time] </span> }
+                    { pauseTime !== '' || <span> &#8594; Click here to set a start and pause time - [start time, pause time] </span> }
                 </section> }
             </section>
             <input type="button"

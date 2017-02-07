@@ -26,6 +26,8 @@ export default class Create extends Component {
         this.playtest = this.playtest.bind(this);
         this.autosave = this.autosave.bind(this);
         this.throttleAutosave = this.throttleAutosave.bind(this);
+
+        this.autosave();
     }
 
     componentDidMount() {
@@ -159,7 +161,19 @@ export default class Create extends Component {
     }
 
     autosave() {
-
+        const stateClone = _.clone(this.state);
+        const self = this;
+        setTimeout(() => {
+            const unchanged = _.isEqual(stateClone, this.state);
+            if (!unchanged) {
+                // self.createAdventure();
+                console.log('changed');
+                self.autosave();
+            } else {
+                console.log('unchanged');
+                self.autosave();
+            }
+        }, 300000);
     }
 
     throttleAutosave() {
