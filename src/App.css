@@ -177,6 +177,10 @@ input::placeholder {
     text-align: center;
 }
 
+.endings {
+    margin-top: 50px;
+}
+
 .choices {
     outline: none;
     padding: 10px 20px;

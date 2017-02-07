@@ -19,14 +19,8 @@ export default class Create extends Component {
             endings: [],
         };
 
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleCreatorChange = this.handleCreatorChange.bind(this);
-        this.handleDescChange = this.handleDescChange.bind(this);
-        this.handleSecretChange = this.handleSecretChange.bind(this);
+        this.handleUserInfoChange = this.handleUserInfoChange.bind(this);
         this.createAdventure = this.createAdventure.bind(this);
-
-        this.createBreakpoint= this.createBreakpoint.bind(this);
-        this.createEnding = this.createEnding.bind(this);
         this.handleEditMode = this.handleEditMode.bind(this);
 
         this.playtest = this.playtest.bind(this);
@@ -38,25 +32,8 @@ export default class Create extends Component {
         this.setState({ youtubeId: this.props.params.id });
     }
 
-    // Can change these to generics
-    handleChange(e, stateProp) {
+    handleUserInfoChange(e, stateProp) {
         this.setState({ [stateProp]: e.target.value });
-    }
-
-    handleNameChange(e) {
-        this.setState({ name: e.target.value });
-    }
-
-    handleCreatorChange(e) {
-        this.setState({ creator: e.target.value });
-    }
-
-    handleDescChange(e) {
-        this.setState({ description: e.target.value });
-    }
-
-    handleSecretChange(e) {
-        this.setState({ secret: e.target.value });
     }
 
     createAdventure(e) {
@@ -72,118 +49,104 @@ export default class Create extends Component {
         }
     }
 
-    createBreakpoint() {
-        const decisions = this.state.decisions;
-        decisions.push({
+    createBreakpoint(stateProp) {
+        const stateProps = this.state[stateProp];
+        stateProps.push({
             id: _.uniqueId(),
             name: '',
             startTime: '',
             pauseTime: '',
             choices: [{
                 id: _.uniqueId(),
-                description: '<- Click here to change',
+                description: '',
                 editMode: false,
                 goto: '',
                 nextPauseTime: '',
             }],
             editMode: false,
         });
-        this.setState({ decisions, });
+        this.setState({ [stateProp]: stateProps });
     }
 
-    createEnding() {
-        const endings = this.state.endings;
-        endings.push({
-            id: _.uniqueId(),
-            name: '',
-            startTime: '',
-            pauseTime: '',
-            choices: [{
-                id: _.uniqueId,
-                heading: 'Ending',
-                description: '<- Click here to change',
-                editMode: false,
-                goto: '',
-                endTime: '',
-            }],
-            editMode: false,
-        });
-        this.setState({ endings, });
+    handlePropChange(e, stateProp, prop, index) {
+        const stateProps = this.state[stateProp];
+        stateProps[index][prop] = e.target.value;
     }
 
-    handleBpNameChange(e, index) {
-        const decisions = this.state.decisions;
-        decisions[index].name = e.target.value;
-    }
-
-    addPauseTime(e, index) {
-        const decisions = this.state.decisions;
+    addPauseTime(e, stateProp, index) {
+        const stateProps = this.state[stateProp];
         if (~e.target.value.split('').indexOf(':')) {
             const time = e.target.value.split(':');
             const timeInSeconds = parseInt(time[0], 10)*60 + parseInt(time[1], 10);
-            decisions[index].pauseTime = timeInSeconds;
+            stateProps[index].pauseTime = timeInSeconds;
         } else {
-            decisions[index].pauseTime = e.target.value;
+            stateProps[index].pauseTime = e.target.value;
         }
     }
 
-    addStartAndPauseTime(e, index) {
-        const decisions = this.state.decisions;
+    addStartAndPauseTime(e, stateProp, index) {
+        const stateProps = this.state[stateProp];
         if (~e.target.value.split('').indexOf(':')) {
             const time = e.target.value.split(/[\[,\]]/).filter(i => i !== '').map(i => i.split(':'));
-            decisions[index].startTime = parseInt(time[0][0], 10)*60 + parseInt(time[0][1], 10);
-            decisions[index].pauseTime = parseInt(time[1][0], 10) *60 + parseInt(time[1][1], 10);
+            stateProps[index].startTime = parseInt(time[0][0], 10)*60 + parseInt(time[0][1], 10);
+            stateProps[index].pauseTime = parseInt(time[1][0], 10) *60 + parseInt(time[1][1], 10);
         } else {
             const time = e.target.value.split(/[\[,\]]/).filter(i => i !== '');
-            decisions[index].startTime = parseInt(time[0], 10);
-            decisions[index].pauseTime = parseInt(time[1], 10);
+            stateProps[index].startTime = parseInt(time[0], 10);
+            stateProps[index].pauseTime = parseInt(time[1], 10);
         }
     }
 
-    addChoice(index) {
-        const decisions = this.state.decisions;
-        decisions[index].choices.push({
+    addChoice(stateProp, index) {
+        const stateProps = this.state[stateProp];
+        stateProps[index].choices.push({
             id: _.uniqueId,
-            description: '<- Click here to change',
+            description: '',
             editMode: false,
+            goto: '',
+            nextPauseTime: '',
         });
-        this.setState({ decisions, });
+        this.setState({ [stateProp]: stateProps });
     }
 
-    removeChoice(index, j_index) {
-        const decisions = this.state.decisions;
-        decisions[index].choices.splice(j_index, 1);
-        if (decisions[index].choices.length === 0) {
-            decisions.splice(index, 1);
+    removeChoice(stateProp, index, j_index) {
+        const stateProps = this.state[stateProp];
+        stateProps[index].choices.splice(j_index, 1);
+        if (stateProps[index].choices.length === 0) {
+            stateProps.splice(index, 1);
         }
-        this.setState({ decisions, });
+        this.setState({ [stateProp]: stateProps });
     }
 
-    handleChoiceChange(e, index, j_index, stateProp) {
-        const decisions = this.state.decisions;
-        decisions[index].choices[j_index][stateProp] = e.target.value;
-        this.setState({ decisions, });
+    handleChoiceChange(e, index, j_index, stateProp, prop) {
+        const stateProps = this.state[stateProp];
+        stateProps[index].choices[j_index][prop] = e.target.value;
+        this.setState({ [stateProp]: stateProps });
     }
 
-    handleEditMode(index, j_index) {
-        const decisions = this.state.decisions;
-        if (j_index === undefined) {
-            decisions[index].editMode = decisions[index].id;
+    handleEditMode(stateProp, index, j_index, flag) {
+        const stateProps = this.state[stateProp];
+        if (flag) {
+            stateProps[index].choices[j_index].editMode = false;
+            this.setState({ [stateProp]: stateProps });
+            return;
+        } else if (j_index === undefined) {
+            stateProps[index].editMode = stateProps[index].id;
         } else {
-            decisions[index].choices[j_index].editMode = decisions[index].choices[j_index].id;
+            stateProps[index].choices[j_index].editMode = stateProps[index].choices[j_index].id;
         }
-        this.setState({ decisions, });
+        this.setState({ [stateProp]: stateProps });
     }
 
-    handleEndEditMode(e, index, id) {
-        if (e.key === 'Enter') {
-            const decisions = this.state.decisions;
+    handleEndEditMode(e, stateProp, index, id, save) {
+        if (save || e.key === 'Enter') {
+            const stateProps = this.state[stateProp];
             if (!id) {
-                decisions[index].editMode = false;
+                stateProps[index].editMode = false;
             } else {
-                decisions[index].choices.find(i => i.id === id).editMode = false;
+                stateProps[index].choices.find(i => i.id === id).editMode = false;
             }
-            this.setState({ decisions, });
+            this.setState({ [stateProp]: stateProps });
         }
     }
 
@@ -203,7 +166,7 @@ export default class Create extends Component {
 
     render() {
         return (
-            <section>
+            <section className="create-container">
                 <Header text="STORYBOARD" />
 
                 <AdventureForm
@@ -211,13 +174,9 @@ export default class Create extends Component {
                     creator={this.state.creator}
                     description={this.state.description}
                     youtubeId={this.props.params.id}
-                    handleNameChange={this.handleNameChange}
-                    handleCreatorChange={this.handleCreatorChange}
-                    handleDescChange={this.handleDescChange}
-                    handleSecretChange={this.handleSecretChange}
+                    handleUserInfoChange={this.handleUserInfoChange}
                     createAdventure={this.createAdventure}
-                    createBreakpoint={this.createBreakpoint}
-                    createEnding={this.createEnding} />
+                    createBreakpoint={this.createBreakpoint.bind(this)} />
 
                 <section className="decisions-section">
                     { this.state.decisions.length > 0 &&
@@ -234,7 +193,7 @@ export default class Create extends Component {
                                 addChoice={this.addChoice.bind(this)}
                                 addPauseTime={this.addPauseTime.bind(this)}
                                 addStartAndPauseTime={this.addStartAndPauseTime.bind(this)}
-                                handleBpNameChange={this.handleBpNameChange.bind(this)}
+                                handlePropChange={this.handlePropChange.bind(this)}
                                 removeChoice={this.removeChoice.bind(this)}
                                 handleChoiceChange={this.handleChoiceChange.bind(this)}
                                 handleEditMode={this.handleEditMode}
@@ -244,8 +203,22 @@ export default class Create extends Component {
                     {this.state.endings.length > 0 &&
                         ( this.state.endings.map((i, index) => (
                             <Ending key={index}
-                                index={index + 1}
-                                choices={i.choices} />
+                                index={index}
+                                id={i.id}
+                                name={i.name}
+                                startTime={i.startTime}
+                                pauseTime={i.pauseTime}
+                                description={i.description}
+                                editMode={i.editMode}
+                                choices={i.choices}
+                                addChoice={this.addChoice.bind(this)}
+                                addPauseTime={this.addPauseTime.bind(this)}
+                                addStartAndPauseTime={this.addStartAndPauseTime.bind(this)}
+                                handlePropChange={this.handlePropChange.bind(this)}
+                                removeChoice={this.removeChoice.bind(this)}
+                                handleChoiceChange={this.handleChoiceChange.bind(this)}
+                                handleEditMode={this.handleEditMode}
+                                handleEndEditMode={this.handleEndEditMode.bind(this)} />
                         )))}
                 </section>
             </section>

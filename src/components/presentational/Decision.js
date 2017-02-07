@@ -14,7 +14,7 @@ const Decision = ({
     addPauseTime,
     addStartAndPauseTime,
     handleChoiceChange,
-    handleBpNameChange,
+    handlePropChange,
     handlePauseTimeChange,
     handleEditMode,
     handleEndEditMode
@@ -25,23 +25,23 @@ const Decision = ({
                 { editMode === id ?
                     ( <span><input type="text"
                             className="choice-description-input choice-name"
-                            onKeyPress={(e) => handleEndEditMode(e, index)}
-                            onChange={(e) => handleBpNameChange(e, index)}
+                            onKeyPress={(e) => handleEndEditMode(e, 'decisions', index)}
+                            onChange={(e) => handlePropChange(e, 'decisions', 'name', index)}
                             placeholder="Breakpoint name" />
                         <input type="text"
                             className="choice-description-input choice-pause"
-                            onKeyPress={(e) => handleEndEditMode(e, index)}
-                            onChange={(index ? (e) => addStartAndPauseTime(e, index) : (e) => addPauseTime(e, index))}
-                            placeholder="Enter the time (MM:SS or seconds) to pause for choices" />
+                            onKeyPress={(e) => handleEndEditMode(e, 'decisions', index)}
+                            onChange={(index ? (e) => addStartAndPauseTime(e, 'decisions', index) : (e) => addPauseTime(e, 'decisions', index))}
+                            placeholder="Enter the pause time (MM:SS or seconds) for these choices" />
                         </span> )
-                : <section onClick={() => handleEditMode(index)}>
+                : <section onClick={() => handleEditMode('decisions', index)}>
                     <span className="breakpoint-type">{ index ? '(Decision) -' : '(Start) -' } { name } : [{index ? startTime : 0 }, {pauseTime}]</span>
                     { pauseTime !== '' || <span> &#8592; Click here to set a { index ? 'start and' : '' } pause time - [startTime, pauseTime] </span> }
                 </section> }
             </section>
             <input type="button"
                 className="choice-button"
-                onClick={() => addChoice(index)}
+                onClick={() => addChoice('decisions', index)}
                 value="ADD CHOICE+" />
             <Collapse
                 className="collapse"
@@ -52,47 +52,56 @@ const Decision = ({
                             className="panel"
                             header={"Choice " + (j_index+1)}>
                             { j.editMode === j.id ?
-                                ( <section>
-                                    <textarea
+                                ( <section className="choice-editable-box">
+                                    <input type="text"
                                         className="choice-input"
-                                        onKeyPress={(e) => handleEndEditMode(e, index, j.id)}
-                                        onChange={(e) => handleChoiceChange(e, index, j_index, 'description')}
+                                        onKeyPress={(e) => handleEndEditMode(e, 'decisions', index, j.id)}
+                                        onChange={(e) => handleChoiceChange(e, index, j_index, 'decisions', 'description')}
                                         placeholder="Enter a description for this choice"
                                         value={j.description} />
                                     <input type="text"
-                                        className=""
-                                        onKeyPress={(e) => handleEndEditMode(e, index, j.id)}
-                                        onChange={(e) => handleChoiceChange(e, index, j_index, 'goto')}
+                                        className="choice-input"
+                                        onKeyPress={(e) => handleEndEditMode(e, 'decisions', index, j.id)}
+                                        onChange={(e) => handleChoiceChange(e, index, j_index, 'decisions', 'goto')}
                                         placeholder="Enter a time to go to"
                                         value={j.goto} />
                                     <input type="text"
-                                        className=""
-                                        onKeyPress={(e) => handleEndEditMode(e, index, j.id)}
-                                        onChange={(e) => handleChoiceChange(e, index, j_index, 'pauseTime')}
+                                        className="choice-input"
+                                        onKeyPress={(e) => handleEndEditMode(e, 'decisions', index, j.id)}
+                                        onChange={(e) => handleChoiceChange(e, index, j_index, 'decisions', 'nextPauseTime')}
                                         placeholder="Enter the next pause time"
                                         value={j.nextPauseTime} />
-                                    </section> )
-                            : ( <section className="choice-box">
-                                <div className="choice-description"
-                                    onClick={() => handleEditMode(index, j_index)}>
-                                    <p>
-                                        <span className="choice-editable">Description: </span>{j.description}
-                                    </p>
-                                </div>
-                                <div className="choice-goto">
-                                    <p>
-                                        <span className="choice-editable">Go to: </span>{j.goto}
-                                    </p>
-                                </div>
-                                <div className="choice-next-pausetime">
-                                    <p>
-                                        <span className="choice-editable">Next pause time: </span>{j.nextPauseTime}
-                                    </p>
-                                </div>
-                            </section> ) }
+                                </section> )
+                            : ( <section className="choice-box"
+                                    onClick={() => handleEditMode('decisions', index, j_index)}>
+                                    <div className="choice-description">
+                                        <p>
+                                            <span className="choice-editable">Description: </span>{j.description}
+                                        </p>
+                                    </div>
+                                    <div className="choice-goto">
+                                        <p>
+                                            <span className="choice-editable">Go to: </span>{j.goto}
+                                        </p>
+                                    </div>
+                                    <div className="choice-next-pausetime">
+                                        <p>
+                                            <span className="choice-editable">Next pause time: </span>{j.nextPauseTime}
+                                        </p>
+                                    </div>
+                                </section> ) }
+                            { j.editMode === j.id ?
+                                ( <input type="button"
+                                        className="choice-button choice-button-edit"
+                                        onClick={() => handleEditMode('decisions', index, j_index, true)}
+                                        value="SAVE" /> )
+                            : ( <input type="button"
+                                    className="choice-button choice-button-edit"
+                                    onClick={() => handleEditMode('decisions', index, j_index)}
+                                    value="EDIT CHOICE" /> ) }
                             <input type="button"
                                 className="choice-button choice-button-remove"
-                                onClick={() => removeChoice(index, j_index)}
+                                onClick={() => removeChoice('decisions', index, j_index)}
                                 value="DELETE CHOICE&mdash;" />
                         </Panel> ))
                 )}

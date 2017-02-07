@@ -5,29 +5,25 @@ const AdventureForm = ({
     creator,
     description,
     youtubeId,
-    handleNameChange,
-    handleCreatorChange,
-    handleDescChange,
-    handleSecretChange,
+    handleUserInfoChange,
     createBreakpoint,
-    createEnding,
     createAdventure
 }) => (
     <section className="adventure-form">
         <section className="adventure-info">
             <input type="text"
                 className="adventure-form-input"
-                onChange={handleNameChange}
+                onChange={(e) => handleUserInfoChange(e, 'name')}
                 placeholder="Enter a name for this adventure"
                 value={name} />
             <input type="text"
                 className="adventure-form-input"
-                onChange={handleCreatorChange}
+                onChange={(e) => handleUserInfoChange(e, 'creator')}
                 placeholder="Created by"
                 value={creator} />
             <input type="text"
                 className="adventure-form-input"
-                onChange={handleDescChange}
+                onChange={(e) => handleUserInfoChange(e, 'description')}
                 placeholder="Add a description"
                 value={description} />
             <input type="text"
@@ -37,16 +33,16 @@ const AdventureForm = ({
                 value={"Youtube ID: " + youtubeId} />
             <input type="password"
                 className="adventure-form-input adventure-form-secret"
-                onChange={handleSecretChange}
+                onChange={(e) => handleUserInfoChange(e, 'secret')}
                 placeholder="Enter a secret word" />
         </section>
         <input type="button"
             className="adventure-form-submit"
-            onClick={createBreakpoint}
+            onClick={() => createBreakpoint('decisions')}
             value="ADD BREAKPOINT+" />
         <input type="button"
             className="adventure-form-submit"
-            onClick={createEnding}
+            onClick={() => createBreakpoint('endings')}
             value="ADD ENDING+" />
         <input type="button"
             className="adventure-form-submit adventure-form-create"
@@ -56,9 +52,13 @@ const AdventureForm = ({
 );
 
 AdventureForm.propTypes = {
-    createAdventure: PropTypes.func.isRequired,
-    handleNameChange: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    creator: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     youtubeId: PropTypes.string.isRequired,
+    handleUserInfoChange: PropTypes.func.isRequired,
+    createBreakpoint: PropTypes.func.isRequired,
+    createAdventure: PropTypes.func.isRequired,
 };
 
 export default AdventureForm;
