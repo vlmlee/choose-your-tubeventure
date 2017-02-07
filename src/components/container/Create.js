@@ -10,6 +10,7 @@ export default class Create extends Component {
     constructor() {
         super();
         this.state = {
+            _id: '',
             name: '',
             creator: '',
             secret: '',
@@ -20,34 +21,37 @@ export default class Create extends Component {
         };
 
         this.handleUserInfoChange = this.handleUserInfoChange.bind(this);
-        this.createAdventure = this.createAdventure.bind(this);
         this.handleEditMode = this.handleEditMode.bind(this);
         this.autosave = this.autosave.bind(this);
+        this.generateRandomId = this.generateRandomId.bind(this);
         this.playtest = this.playtest.bind(this);
 
         this.autosave();
     }
 
     componentDidMount() {
-        this.setState({ youtubeId: this.props.params.id });
+        this.setState({
+            youtubeId: this.props.params.id,
+            _id: this.generateRandomId()
+        });
     }
 
     handleUserInfoChange(e, stateProp) {
         this.setState({ [stateProp]: e.target.value });
     }
 
-    createAdventure(e) {
-        e.preventDefault();
-        if (this.state.name && this.state.author && this.state.description && this.state.youtubeId) {
-            const payload = _.clone
-
+    createAdventure() {
+        if (this.state.name && this.state.creator && this.state.description && this.state.youtubeId) {
+            const payload = _.cloneDeep(this.state);
             const opts = {
                 method: 'POST',
                 body: JSON.stringify({ data: payload }),
                 headers: { "Content-Type": "application/json",
                     "Accept": "application/json" }
             };
-            fetch('http://localhost:9001/adventure/' + this.props.params.id, opts);
+            fetch('http://localhost:9001/adventure/' + this.state._id, opts)
+            .then(response => console.log(response))
+            .catch(err => console.log(err));
         }
     }
 
@@ -169,7 +173,16 @@ export default class Create extends Component {
                 console.log('unchanged');
                 self.autosave();
             }
-        }, 3000);
+        }, 300000);
+    }
+
+    generateRandomId() {
+        let randomId = '';
+        for (let i = 0; i < 16; i++) {
+            randomId += 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
+                .charAt( Math.floor( Math.random() * (62) ));
+        }
+        return randomId;
     }
 
     render() {
@@ -183,7 +196,7 @@ export default class Create extends Component {
                     description={this.state.description}
                     youtubeId={this.props.params.id}
                     handleUserInfoChange={this.handleUserInfoChange}
-                    createAdventure={this.createAdventure}
+                    createAdventure={this.createAdventure.bind(this)}
                     createBreakpoint={this.createBreakpoint.bind(this)} />
 
                 <section className="decisions-section">

@@ -46,7 +46,7 @@ const AdventureForm = ({
             value="ADD ENDING+" />
         <input type="button"
             className="adventure-form-submit adventure-form-create"
-            onClick={createAdventure}
+            onClick={() => createAdventure()}
             value="CREATE ADVENTURE" />
     </section>
 );

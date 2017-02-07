@@ -79,12 +79,15 @@ app.get('/adventure/:id', (req, res) => {
 app.post('/adventure/:id', (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
-        db.collection('adventures').insert({
-            // Schema here
-            id: req.params.id,
-            name: req.body.name,
-            decisions: req.body.decisions,
-        });
+        db.collection('adventures').findOneAndUpdate(
+            { _id: req.params.id },
+            req.body.data,
+            { upsert: true },
+            (err, doc) => {
+                if (err) next(err);
+                res.send('Success');
+            }
+        );
         db.close();
     })
 });
