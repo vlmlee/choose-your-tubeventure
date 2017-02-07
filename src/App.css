@@ -314,20 +314,26 @@ input::placeholder {
 .decision-description {
     margin-bottom: -24px;
     cursor: pointer;
+    font-weight: 500;
 }
 
-.choice-description {
+.choice-box {
     margin-top: 10px;
-    height: 40px;
+    height: 80px;
     float: left;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 500;
 }
 
-.choice-description-editable {
+.choice-box div {
+    margin-bottom: 10px;
+}
+
+.choice-editable {
     color: dodgerblue;
     cursor: pointer;
     letter-spacing: 1.4px;
-    text-shadow: 1px 1px 0px #efefef;
+    text-shadow: 1px 0px 0px #efefef;
 }
 
 .breakpoint-type {

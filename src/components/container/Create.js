@@ -38,6 +38,11 @@ export default class Create extends Component {
         this.setState({ youtubeId: this.props.params.id });
     }
 
+    // Can change these to generics
+    handleChange(e, stateProp) {
+        this.setState({ [stateProp]: e.target.value });
+    }
+
     handleNameChange(e) {
         this.setState({ name: e.target.value });
     }
@@ -148,16 +153,15 @@ export default class Create extends Component {
     removeChoice(index, j_index) {
         const decisions = this.state.decisions;
         decisions[index].choices.splice(j_index, 1);
-        this.setState({ decisions, });
         if (decisions[index].choices.length === 0) {
             decisions.splice(index, 1);
-            this.setState({ decisions, });
         }
+        this.setState({ decisions, });
     }
 
-    handleChoiceChange(e, index, j_index) {
+    handleChoiceChange(e, index, j_index, stateProp) {
         const decisions = this.state.decisions;
-        decisions[index].choices[j_index].description = e.target.value;
+        decisions[index].choices[j_index][stateProp] = e.target.value;
         this.setState({ decisions, });
     }
 
