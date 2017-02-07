@@ -27,16 +27,16 @@ const Decision = ({
                             className="choice-description-input choice-name"
                             onKeyPress={(e) => handleEndEditMode(e, 'decisions', index)}
                             onChange={(e) => handlePropChange(e, 'decisions', 'name', index)}
-                            placeholder="Breakpoint name" />
+                            placeholder="Breakpoint title" />
                         <input type="text"
                             className="choice-description-input choice-pause"
                             onKeyPress={(e) => handleEndEditMode(e, 'decisions', index)}
                             onChange={(index ? (e) => addStartAndPauseTime(e, 'decisions', index) : (e) => addPauseTime(e, 'decisions', index))}
-                            placeholder="Enter the pause time (MM:SS or seconds) for these choices" />
+                            placeholder={ index ? "Enter the start and pause times [MM:SS, MM:SS]" : "Enter the pause time (MM:SS or seconds)" } />
                         </span> )
                 : <section onClick={() => handleEditMode('decisions', index)}>
                     <span className="breakpoint-type">{ index ? '(Decision) -' : '(Start) -' } { name } : [{index ? startTime : 0 }, {pauseTime}]</span>
-                    { pauseTime !== '' || <span> &#8592; Click here to set a { index ? 'start and' : '' } pause time - [startTime, pauseTime] </span> }
+                    { pauseTime !== '' || <span> &#8592; Click here to set a { index ? 'start and' : '' } pause time - [start time, pause time] </span> }
                 </section> }
             </section>
             <input type="button"

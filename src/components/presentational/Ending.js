@@ -26,16 +26,16 @@ const Ending = ({
                             className="choice-description-input choice-name"
                             onKeyPress={(e) => handleEndEditMode(e, 'endings', index)}
                             onChange={(e) => handlePropChange(e, 'endings', 'name', index)}
-                            placeholder="Breakpoint name" />
+                            placeholder="Ending title" />
                         <input type="text"
                             className="choice-description-input choice-pause"
                             onKeyPress={(e) => handleEndEditMode(e, 'endings', index)}
                             onChange={(e) => addStartAndPauseTime(e, 'endings', index)}
-                            placeholder="Enter the pause time (MM:SS or seconds) for these choices" />
+                            placeholder="Enter the start and pause times [MM:SS, MM:SS]" />
                         </span> )
                 : <section onClick={() => handleEditMode('endings', index)}>
-                    <span className="breakpoint-type">(Ending) - { name } : [{startTime}, {pauseTime}]</span>
-                    { pauseTime !== '' || <span> &#8592; Click here to set a start and pause time - [startTime, pauseTime] </span> }
+                    <span className="breakpoint-type">(Ending {(index + 1)}) - { name } : [{startTime}, {pauseTime}]</span>
+                    { pauseTime !== '' || <span> &#8592; Click here to set a start and pause time - [start time, pause time] </span> }
                 </section> }
             </section>
             <input type="button"

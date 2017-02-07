@@ -39,9 +39,13 @@ export default class Create extends Component {
     createAdventure(e) {
         e.preventDefault();
         if (this.state.name && this.state.author && this.state.description && this.state.youtubeId) {
+            const payload = {
+
+            };
+
             const opts = {
                 method: 'POST',
-                body: JSON.stringify({ }),
+                body: JSON.stringify({ data: payload }),
                 headers: { "Content-Type": "application/json",
                     "Accept": "application/json" }
             };
