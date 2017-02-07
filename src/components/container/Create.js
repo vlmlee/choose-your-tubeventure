@@ -3,7 +3,7 @@ import Header from '../presentational/Header.js';
 import AdventureForm from '../presentational/AdventureForm.js';
 import Decision from '../presentational/Decision.js';
 import Ending from '../presentational/Ending.js';
-import _ from 'underscore';
+import _ from 'lodash';
 import 'rc-collapse/assets/index.css';
 
 export default class Create extends Component {
@@ -12,8 +12,8 @@ export default class Create extends Component {
         this.state = {
             name: '',
             creator: '',
-            description: '',
             secret: '',
+            description: '',
             youtubeId: '',
             decisions: [],
             endings: [],
@@ -22,10 +22,8 @@ export default class Create extends Component {
         this.handleUserInfoChange = this.handleUserInfoChange.bind(this);
         this.createAdventure = this.createAdventure.bind(this);
         this.handleEditMode = this.handleEditMode.bind(this);
-
-        this.playtest = this.playtest.bind(this);
         this.autosave = this.autosave.bind(this);
-        this.throttleAutosave = this.throttleAutosave.bind(this);
+        this.playtest = this.playtest.bind(this);
 
         this.autosave();
     }
@@ -41,9 +39,7 @@ export default class Create extends Component {
     createAdventure(e) {
         e.preventDefault();
         if (this.state.name && this.state.author && this.state.description && this.state.youtubeId) {
-            const payload = {
-
-            };
+            const payload = _.clone
 
             const opts = {
                 method: 'POST',
@@ -95,7 +91,7 @@ export default class Create extends Component {
         if (~e.target.value.split('').indexOf(':')) {
             const time = e.target.value.split(/[\[,\]]/).filter(i => i !== '').map(i => i.split(':'));
             stateProps[index].startTime = parseInt(time[0][0], 10)*60 + parseInt(time[0][1], 10);
-            stateProps[index].pauseTime = parseInt(time[1][0], 10) *60 + parseInt(time[1][1], 10);
+            stateProps[index].pauseTime = parseInt(time[1][0], 10)*60 + parseInt(time[1][1], 10);
         } else {
             const time = e.target.value.split(/[\[,\]]/).filter(i => i !== '');
             stateProps[index].startTime = parseInt(time[0], 10);
@@ -161,7 +157,7 @@ export default class Create extends Component {
     }
 
     autosave() {
-        const stateClone = _.clone(this.state);
+        const stateClone = _.cloneDeep(this.state);
         const self = this;
         setTimeout(() => {
             const unchanged = _.isEqual(stateClone, this.state);
@@ -173,13 +169,7 @@ export default class Create extends Component {
                 console.log('unchanged');
                 self.autosave();
             }
-        }, 300000);
-    }
-
-    throttleAutosave() {
-        this.autosave = this.autosave || _.throttle(state => {
-            // save state with fetch();
-        }, 5000);
+        }, 3000);
     }
 
     render() {
@@ -236,8 +226,8 @@ export default class Create extends Component {
                                 removeChoice={this.removeChoice.bind(this)}
                                 handleChoiceChange={this.handleChoiceChange.bind(this)}
                                 handleEditMode={this.handleEditMode}
-                                handleEndEditMode={this.handleEndEditMode.bind(this)} />
-                        )))}
+                                handleEndEditMode={this.handleEndEditMode.bind(this)} /> ))
+                        )}
                 </section>
             </section>
         );
