@@ -14,6 +14,7 @@ export default class CreateEdit extends Component {
         this.state = {
             _id: '',
             name: '',
+            createdAt: '',
             creator: '',
             secret: '',
             description: '',
@@ -43,6 +44,8 @@ export default class CreateEdit extends Component {
             this.setState({
                 youtubeId: this.props.params,
                 _id: this.generateRandomId(),
+                createdAt: new Date(),
+                modal: 'hide',
             });
         } else {
             this.setState({
@@ -54,19 +57,19 @@ export default class CreateEdit extends Component {
     mountData() {
         if (this.props.pageId === 'edit') {
             fetch('http://localhost:9001/adventure/' + this.props.params)
-            .then(response => {
-                return response.json();
-            })
-            .then(responseJSON => {
-                const editState = Object.assign({}, responseJSON);
-                this.setState( editState, );
-                this.setState({
-                    allowed: false,
-                    magicword: '',
-                    modal: 'hide'
-                });
-            })
-            .catch(err => console.log(err.message));
+                .then(response => {
+                    return response.json();
+                })
+                .then(responseJSON => {
+                    const editState = Object.assign({}, responseJSON);
+                    this.setState( editState, );
+                    this.setState({
+                        allowed: false,
+                        magicword: '',
+                        modal: 'hide'
+                    });
+                })
+                .catch(err => console.log(err.message));
         }
     }
 
@@ -77,20 +80,35 @@ export default class CreateEdit extends Component {
     createAdventure() {
         const self = this;
         if (this.state.name && this.state.creator && this.state.description && this.state.youtubeId) {
-            const payload = _.cloneDeep(this.state);
+
+            // We only want to copy the states that
+            // are in the constructor.
+            const payload = {
+                _id: this.state._id,
+                name: this.state.name,
+                createdAt: this.state.createdAt,
+                creator: this.state.creator,
+                secret: this.state.secret,
+                description: this.state.description,
+                youtubeId: this.state.youtubeId,
+                decisions: this.state.decisions,
+                endings: this.state.endings,
+            };
+
             const opts = {
                 method: 'POST',
                 body: JSON.stringify({ data: payload }),
                 headers: { "Content-Type": "application/json",
                     "Accept": "application/json" }
             };
+
             fetch('http://localhost:9001/adventure/' + this.state._id, opts)
-            .then(response => response.json())
-            .then(responseJSON => {
-                console.log(responseJSON.message);
-                self.toggleModal();
-            })
-            .catch(err => console.log(err.message));
+                .then(response => response.json())
+                .then(responseJSON => {
+                    console.log(responseJSON.message);
+                    self.toggleModal();
+                })
+                .catch(err => console.log(err.message));
         }
     }
 
@@ -125,7 +143,7 @@ export default class CreateEdit extends Component {
             const timeInSeconds = parseInt(time[0], 10)*60 + parseInt(time[1], 10);
             stateProps[index].pauseTime = timeInSeconds;
         } else {
-            stateProps[index].pauseTime = e.target.value;
+            stateProps[index].pauseTime = parseInt(e.target.value, 10);
         }
     }
 
@@ -236,19 +254,19 @@ export default class CreateEdit extends Component {
             };
 
             fetch(`http://localhost:9001/validate/${this.props.params}`, opts)
-            .then(response => {
-                return response.json();
-            })
-            .then(responseJSON => {
-                if (responseJSON.allowed) {
-                    this.setState({ secret: '', allowed: true, error: '' });
-                } else {
-                    this.setState({ error: 'Looks like you have the wrong password!'});
-                }
-            })
-            .catch(err => {
-                this.setState({ error: err.message });
-            });
+                .then(response => {
+                    return response.json();
+                })
+                .then(responseJSON => {
+                    if (responseJSON.allowed) {
+                        this.setState({ secret: this.state.magicword, allowed: true, error: '' });
+                    } else {
+                        this.setState({ error: 'Looks like you have the wrong password!'});
+                    }
+                })
+                .catch(err => {
+                    this.setState({ error: err.message });
+                });
         } else {
             this.setState({ magicword: e.target.value });
         }

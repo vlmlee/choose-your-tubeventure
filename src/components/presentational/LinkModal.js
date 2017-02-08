@@ -8,27 +8,26 @@ export default class LinkModal extends Component {
 
         this.styles = {
             btn: {
-                margin: '1em auto',
-                padding: '1em 2em',
-                outline: 'none',
-                fontSize: 16,
-                fontWeight: '600',
-                background: '#C94E50',
-                color: '#FFFFFF',
-                border: 'none',
                 display: 'none',
             },
             container: {
-                padding: '2em',
+                padding: '0em',
                 textAlign: 'center'
             },
             title: {
                 margin: 0,
                 color: '#C94E50',
-                fontWeight: 400
-            }
+                fontWeight: 400,
+                fontSize: '20px',
+            },
+            modal: {
+                padding: '100px',
+                borderRadius: '5px',
+                border: '10px solid #eeeeee',
+            },
         };
 
+        this.getContent = this.getContent.bind(this);
         this.getModal = this.getModal.bind(this);
     }
 
@@ -43,18 +42,21 @@ export default class LinkModal extends Component {
     }
 
     getContent(modalName){
-        return <div style={this.styles.container}>
-        <h2 style={this.styles.title}><Link to={`/view/${this.props.id}`}>Play Test</Link></h2>
-        </div>
+        return (
+            <div style={this.styles.container}>
+                <h2 style={this.styles.title}><Link className="modal-link" to={`/view/${this.props.id}`}>Play Test</Link></h2>
+            </div>
+        );
     }
 
     getModal(modalName) {
         const Modal = Boron['DropModal'];
-        return ( <div>
-                    <button ref="modal-button" style={this.styles.btn} onClick={this.toggleDialog(modalName)}>Open {modalName}</button>
-                    <Modal ref={modalName}>{this.getContent(modalName)}</Modal>
-                </div>
-                );
+        return (
+            <div>
+                <button ref="modal-button" style={this.styles.btn} onClick={this.toggleDialog(modalName)}>Open {modalName}</button>
+                <Modal modalStyle={this.styles.modal} ref={modalName}>{this.getContent(modalName)}</Modal>
+            </div>
+        );
     }
 
     eventFire(el, etype){
@@ -77,5 +79,6 @@ export default class LinkModal extends Component {
 }
 
 LinkModal.propTypes = {
-
+    id: PropTypes.string.isRequired,
+    modal: PropTypes.string.isRequired,
 };

@@ -8,6 +8,6 @@ import './reset.css';
 import './index.css';
 
 ReactDOM.render(
-  <Routes history={browserHistory} />,
-  document.getElementById('root')
+    <Routes history={browserHistory} />,
+    document.getElementById('root')
 );

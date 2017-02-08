@@ -35,7 +35,7 @@ const AdventureForm = ({
             <input type="password"
                 className="adventure-form-input adventure-form-secret"
                 onChange={(e) => handleUserInfoChange(e, 'secret')}
-                placeholder="Enter a secret word" />
+                placeholder={ pageId === 'create' ? "Enter a secret word" : "Change your secret word" } />
         </section>
         <input type="button"
             className="adventure-form-submit"

@@ -52,11 +52,17 @@ app.get('/search/:name', (req, res, next) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         const regexpr = new RegExp('.*' + req.params.name + '.*', 'i');
-        db.collection('adventures').find({ name: regexpr })
-            .toArray((err, content) => {
-                if (err) return next(err);
-                res.json({ content: content });
-            });
+        db.collection('adventures').find({ name: regexpr }, {
+            fields: {
+                _id: 1,
+                name: 1,
+                description: 1
+            }
+        })
+        .toArray((err, content) => {
+            if (err) return next(err);
+            res.json({ content: content });
+        });
         db.close();
     });
 });
@@ -64,7 +70,7 @@ app.get('/search/:name', (req, res, next) => {
 app.get('/adventure/:id', (req, res, next) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
-        db.collection('adventures').find({ _id: req.params.id })
+        db.collection('adventures').find({ _id: req.params.id }, { fields: { secret: 0 } })
             .toArray((err, content) => {
                 if (err) return next(err);
                 res.json(content[0]);

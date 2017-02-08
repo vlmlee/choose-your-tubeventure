@@ -191,6 +191,10 @@ input::placeholder {
     border: 1px solid cornflowerblue;
 }
 
+.view-link {
+    display: flex;
+    justify-content: flex-end;
+}
 
 /***********
 *  CREATE  *
@@ -411,6 +415,17 @@ input::placeholder {
     margin-right: -50%;
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+/*
+*  MODAL
+*/
+
+.modal-link {
+    text-decoration: none;
+    border: 5px solid #eee;
+    padding: 16px 40px;
+    border-radius: 3px;
 }
 
 /*************
