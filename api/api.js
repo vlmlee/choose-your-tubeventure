@@ -51,7 +51,7 @@ app.post('/validate/:id', (req, res, next) => {
 app.get('/search/:name', (req, res, next) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
-        const regexpr = new RegExp('.*' + req.params.name + '.*');
+        const regexpr = new RegExp('.*' + req.params.name + '.*', 'i');
         db.collection('adventures').find({ name: regexpr })
             .toArray((err, content) => {
                 if (err) return next(err);
