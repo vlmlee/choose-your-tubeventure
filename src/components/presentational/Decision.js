@@ -44,7 +44,6 @@ const Decision = ({
                 onClick={() => addChoice('decisions', index)}
                 value="ADD CHOICE+" />
             <Collapse
-                style={{"border-radius": "5px 0 5px 5px"}}
                 className="collapse"
                 accordion={false}>
                 { choices.length >= 0 &&
