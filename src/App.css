@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400|Roboto:200');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400|Roboto:200|Karla:600|Source+Sans+Pro:600');
 
 @font-face {
     font-family: 'Quicksand-Light';
@@ -6,7 +6,7 @@
 }
 
 /*********
-*  MAIN  *
+*  HOME  *
 *********/
 
 .App {
@@ -26,6 +26,8 @@
     padding: 30px;
     text-align: center;
 }
+
+/* Header*/
 
 .home {
     position: absolute;
@@ -160,6 +162,30 @@ input::placeholder {
     border-bottom: 1px solid #e9e9e9;
 }
 
+/*
+*  FAQ
+*/
+
+.faq-section {
+    width: 73%;
+    margin: 60px auto;
+    font-family: 'Karla', 'Helvetica', 'Open Sans';
+}
+
+.faq-section h1 {
+    font-size: 30px;
+    color: #797979;
+    font-weight: 600;
+}
+
+.faq-section p {
+    margin: 20px 0 50px;
+    color: #2d2d2d;
+    font-family: 'Source Sans Pro', 'Karla', 'Helvetica', 'Open Sans';
+    letter-spacing: 0.75px;
+    line-height: 20px;
+}
+
 /*********
 *  VIEW  *
 *********/
@@ -262,6 +288,10 @@ input::placeholder {
     animation: wiggle 0.6s infinite;
 }
 
+.reset-link:hover {
+    animation: wiggle 0.6s infinite;
+}
+
 @keyframes wiggle {
     0% {
         transform: translateX(-1px);
@@ -356,25 +386,28 @@ input::placeholder {
     width: 120px;
     appearance: none;
     padding: 8px 14px;
-    margin-top: -10px;
+    margin-top: -5.8px;
     letter-spacing: 2.5px;
     font-size: 8px;
     font-family: 'Roboto';
     text-shadow: 1px 1px 1px #444444;
+    border-bottom: 1px solid #444;
     color: white;
     background-color: cornflowerblue;
     border: none;
-    border-radius: 6px;
+    border-radius: 6px 6px 0 0;
     outline: none;
     clear: right;
 }
 
 .choice-button-remove {
-    margin-top: 5px;
+    margin-top: 12px;
+    border-radius: 2px;
     background-color: #CF000F;
 }
 
-.choice-buttom-edit {
+.choice-button-edit {
+    border-radius: 2px;
     margin-top: 5px;
 }
 
@@ -464,6 +497,11 @@ input::placeholder {
 
 .collapse {
     margin: 30px auto 50px;
+    border-radius: 5px 0 0 0;
+}
+
+.rc-collapse {
+    border-radius: 0 0 0 0;
 }
 
 .panel {
