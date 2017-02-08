@@ -48,7 +48,7 @@ const AdventureForm = ({
         <input type="button"
             className="adventure-form-submit adventure-form-create"
             onClick={() => createAdventure()}
-            value={pageId === 'create' ? "CREATE ADVENTURE" : "EDIT ADVENTURE"} />
+            value={pageId === 'create' ? "CREATE ADVENTURE" : "SAVE CHANGES"} />
     </section>
 );
 

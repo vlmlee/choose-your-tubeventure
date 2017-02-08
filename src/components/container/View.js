@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import YouTube from 'react-youtube';
 import moment from 'moment';
 import classnames from 'classnames';
-import { Link } from 'react-router';
 import UserInfo from '../presentational/UserInfo.js';
 import Header from '../presentational/Header.js';
-import Footer from '../presentational/Footer.js';
 
 export default class View extends Component {
     constructor() {
@@ -126,11 +124,12 @@ export default class View extends Component {
     }
 
     resetVideo() {
-        this.state.YTplayer.seekTo(0);
+        this.state.YTplayer.seekTo(0).pauseVideo();
         this.setState({
             pauseAt: parseInt(this.state.start.pauseTime, 10),
             choices: this.state.start.choices,
             endTime: '',
+            hidden: true,
         });
     }
 
@@ -155,7 +154,7 @@ export default class View extends Component {
             }
         };
 
-        const classes = classnames('decisions', {
+        const classes = classnames('multiple-choices', {
             hidden: this.state.hidden,
         });
 
@@ -170,16 +169,12 @@ export default class View extends Component {
                     onPause={this.handleUserPause}
                     onEnd={this.cleanUp} />
 
-                <section className="adventure-info">
-                    <UserInfo
-                        name={this.state.name}
-                        creator={this.state.creator}
-                        createdAt={moment(this.state.createdAt).format('LLL')} />
-
-                    <Link className="view-link" to={`/edit/${this.props.params.id}`}>
-                        EDIT
-                    </Link>
-                </section>
+                <UserInfo
+                    id={this.props.params.id}
+                    name={this.state.name}
+                    creator={this.state.creator}
+                    createdAt={moment(this.state.createdAt).format('MMMM Do, YYYY')}
+                    resetVideo={this.resetVideo.bind(this)} />
 
                 <section className={classes}>
                     { this.state.choices ?
@@ -191,7 +186,6 @@ export default class View extends Component {
                                 value={i.description} />
                     )) : "" }
                 </section>
-                <Footer />
             </section>
         );
     }
