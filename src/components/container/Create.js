@@ -30,10 +30,22 @@ export default class Create extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            youtubeId: this.props.params.id,
-            _id: this.generateRandomId()
-        });
+        if (this.props.pageId === 'create') {
+            this.setState({
+                youtubeId: this.props.params.routeParams.id,
+                _id: this.generateRandomId()
+            });
+        } else if (this.props.pageId === 'edit') {
+            fetch('http://localhost:9001/adventure/' + this.props.params.routeParams.id)
+            .then(response => response.json())
+            .then(responseJSON => {
+                const editState = Object.assign({}, responseJSON);
+                this.replaceState(
+                    editState,
+                );
+            })
+            .catch(err => console.log(err.message));
+        }
     }
 
     handleUserInfoChange(e, stateProp) {
@@ -58,12 +70,12 @@ export default class Create extends Component {
     createBreakpoint(stateProp) {
         const stateProps = this.state[stateProp];
         stateProps.push({
-            id: _.uniqueId(),
+            id: this.generateRandomId(),
             name: '',
             startTime: '',
             pauseTime: '',
             choices: [{
-                id: _.uniqueId(),
+                id: this.generateRandomId(),
                 description: '',
                 editMode: false,
                 goto: '',
@@ -106,7 +118,7 @@ export default class Create extends Component {
     addChoice(stateProp, index) {
         const stateProps = this.state[stateProp];
         stateProps[index].choices.push({
-            id: _.uniqueId,
+            id: this.generateRandomId(),
             description: '',
             editMode: false,
             goto: '',
@@ -166,14 +178,12 @@ export default class Create extends Component {
         setTimeout(() => {
             const unchanged = _.isEqual(stateClone, this.state);
             if (!unchanged) {
-                // self.createAdventure();
-                console.log('changed');
+                self.createAdventure();
                 self.autosave();
             } else {
-                console.log('unchanged');
                 self.autosave();
             }
-        }, 300000);
+        }, 600000);
     }
 
     generateRandomId() {
@@ -194,7 +204,7 @@ export default class Create extends Component {
                     name={this.state.name}
                     creator={this.state.creator}
                     description={this.state.description}
-                    youtubeId={this.props.params.id}
+                    youtubeId={this.state.youtubeId}
                     handleUserInfoChange={this.handleUserInfoChange}
                     createAdventure={this.createAdventure.bind(this)}
                     createBreakpoint={this.createBreakpoint.bind(this)} />

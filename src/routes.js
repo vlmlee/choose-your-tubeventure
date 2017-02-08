@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Router, Route } from 'react-router';
 
 import App from './App.js';
@@ -12,9 +12,9 @@ const Routes = (props) => (
     <section>
         <Router {...props}>
             <Route path="/" component={App} />
-            <Route path="/edit/:id" component={Edit} />
+            <Route path="/create/:id" component={(params) => (<Create params={params} pageId="create" />)} />
+            <Route path="/edit/:id" component={(params) => (<Edit params={params} pageId="edit" />)} />
             <Route path="/view/:id" component={View} />
-            <Route path="/create/:id" component={Create} />
             <Route path="/faq" component={FAQ} />
             <Route path="*" component={NotFound} />
         </Router>
