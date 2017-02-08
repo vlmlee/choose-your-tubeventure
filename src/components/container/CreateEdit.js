@@ -6,7 +6,7 @@ import Ending from '../presentational/Ending.js';
 import _ from 'lodash';
 import 'rc-collapse/assets/index.css';
 
-export default class Create extends Component {
+export default class CreateEdit extends Component {
     constructor() {
         super();
         this.state = {
@@ -42,9 +42,8 @@ export default class Create extends Component {
             })
             .then(responseJSON => {
                 const editState = Object.assign({}, responseJSON);
-                this.setState(
-                    editState,
-                );
+                this.setState( editState, );
+                this.setState({ allowed: false });
             })
             .catch(err => console.log(err.message));
         }
@@ -171,10 +170,6 @@ export default class Create extends Component {
         }
     }
 
-    playtest() {
-
-    }
-
     autosave() {
         const stateClone = _.cloneDeep(this.state);
         const self = this;
@@ -198,12 +193,56 @@ export default class Create extends Component {
         return randomId;
     }
 
+    playtest() {
+
+    }
+
+    handleMagicWord(e) {
+        this.setState({ magicword: e.target.value });
+    }
+
+    tryMagicWord(e) {
+        if (this.state.magicword && e.key === 'Enter') {
+            const opts = {
+                method: 'POST',
+                body: JSON.stringify({ "secret" : this.state.magicword }),
+                headers: { "Content-Type": "application/json",
+                    "Accept": "application/json" }
+            };
+
+            fetch(`http://localhost:9001/validate/${this.props.params.id}`, opts)
+            .then(response => {
+                return response.json();
+            })
+            .then(responseJSON => {
+                if (responseJSON.allowed) {
+                    this.setState({ secret: '', allowed: true, error: '' });
+                } else {
+                    this.setState({ error: 'Looks like you have the wrong password! '});
+                }
+            })
+            .catch(err => {
+                this.setState({ error: err.message });
+            });
+        } else {
+            this.setState({ secret: e.target.value });
+        }
+    }
+
     render() {
         return (
             <section className="create-container">
                 <Header text="STORYBOARD" />
 
+                {/* this.props.pageId === 'edit'  ?
+                    <section className="edit-section" >
+                        { this.state.allowed ? ( )
+                            : ( <EditQuestion handleMagicWord={this.handleMagicWord}
+                                    tryMagicWord={this.tryMagicWord} /> ) }
+                    </section>*/}
+
                 <AdventureForm
+                    pageId={this.props.pageId}
                     name={this.state.name}
                     creator={this.state.creator}
                     description={this.state.description}

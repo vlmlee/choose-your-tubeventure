@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const AdventureForm = ({
+    pageId,
     name,
     creator,
     description,
@@ -47,11 +48,12 @@ const AdventureForm = ({
         <input type="button"
             className="adventure-form-submit adventure-form-create"
             onClick={() => createAdventure()}
-            value="CREATE ADVENTURE" />
+            value={pageId === 'create' ? "CREATE ADVENTURE" : "EDIT ADVENTURE"} />
     </section>
 );
 
 AdventureForm.propTypes = {
+    pageId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     creator: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
