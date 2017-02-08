@@ -35,7 +35,7 @@ const Ending = ({
                         </span> )
                 : <section onClick={() => handleEditMode('endings', index)}>
                     <span className="breakpoint-type">(Ending {(index + 1)}) - { name } : [{startTime}, {pauseTime}]</span>
-                    { pauseTime !== '' || <span> &#8594; Click here to set a start and pause time - [start time, pause time] </span> }
+                    { pauseTime !== '' || <span> &#8594; Click here to set a start and end time - [start time, pause time] </span> }
                 </section> }
             </section>
             <input type="button"
@@ -68,7 +68,7 @@ const Ending = ({
                                         className="choice-input"
                                         onKeyPress={(e) => handleEndEditMode(e, 'endings', index, j.id)}
                                         onChange={(e) => handleChoiceChange(e, index, j_index, 'endings', 'nextPauseTime')}
-                                        placeholder="Enter the next pause time"
+                                        placeholder="Enter the ending time"
                                         value={j.nextPauseTime} />
                                 </section> )
                             : ( <section className="choice-box"
@@ -85,7 +85,7 @@ const Ending = ({
                                     </div>
                                     <div className="choice-next-pausetime">
                                         <p>
-                                            <span className="choice-editable">Next pause time: </span>{j.nextPauseTime}
+                                            <span className="choice-editable">Ending time: </span>{j.nextPauseTime}
                                         </p>
                                     </div>
                                 </section> ) }
