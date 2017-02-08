@@ -32,13 +32,10 @@ app.use(function(req, res, next) {
 });
 
 app.post('/validate/:id', (req, res, next) => {
-    const id = new ObjectID(req.params.id);
-    console.log(req.body.secret);
-    // bcrypt req.body.secret and then compare
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         db.collection('adventures')
-            .find({ _id: id, secret: req.body.secret })
+            .find({ _id: req.params.id, secret: req.body.secret })
             .count()
             .then(count => {
                 if (count > 0) {
@@ -70,7 +67,6 @@ app.get('/adventure/:id', (req, res, next) => {
         db.collection('adventures').find({ _id: req.params.id })
             .toArray((err, content) => {
                 if (err) return next(err);
-                console.log(content);
                 res.json(content[0]);
             });
         db.close();

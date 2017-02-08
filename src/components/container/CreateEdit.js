@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../presentational/Header.js';
+import EditQuestion from '../presentational/EditQuestion.js';
 import AdventureForm from '../presentational/AdventureForm.js';
 import Decision from '../presentational/Decision.js';
 import Ending from '../presentational/Ending.js';
@@ -20,22 +21,32 @@ export default class CreateEdit extends Component {
             endings: [],
         };
 
+        this.mountData = this.mountData.bind(this);
         this.handleUserInfoChange = this.handleUserInfoChange.bind(this);
         this.handleEditMode = this.handleEditMode.bind(this);
-        this.autosave = this.autosave.bind(this);
         this.generateRandomId = this.generateRandomId.bind(this);
+        this.autosave = this.autosave.bind(this);
         this.playtest = this.playtest.bind(this);
+
+        this.changePageId = this.changePageId.bind(this);
+        this.handleMagicWord = this.handleMagicWord.bind(this);
+        this.tryMagicWord = this.tryMagicWord.bind(this);
 
         this.autosave();
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        this.pageId = this.props.pageId;
         if (this.props.pageId === 'create') {
             this.setState({
                 youtubeId: this.props.params,
                 _id: this.generateRandomId()
             });
-        } else if (this.props.pageId === 'edit') {
+        }
+    }
+
+    mountData() {
+        if (this.props.pageId === 'edit') {
             fetch('http://localhost:9001/adventure/' + this.props.params)
             .then(response => {
                 return response.json();
@@ -43,7 +54,7 @@ export default class CreateEdit extends Component {
             .then(responseJSON => {
                 const editState = Object.assign({}, responseJSON);
                 this.setState( editState, );
-                this.setState({ allowed: false });
+                this.setState({ allowed: false, magicword: '' });
             })
             .catch(err => console.log(err.message));
         }
@@ -210,7 +221,7 @@ export default class CreateEdit extends Component {
                     "Accept": "application/json" }
             };
 
-            fetch(`http://localhost:9001/validate/${this.props.params.id}`, opts)
+            fetch(`http://localhost:9001/validate/${this.props.params}`, opts)
             .then(response => {
                 return response.json();
             })
@@ -218,15 +229,19 @@ export default class CreateEdit extends Component {
                 if (responseJSON.allowed) {
                     this.setState({ secret: '', allowed: true, error: '' });
                 } else {
-                    this.setState({ error: 'Looks like you have the wrong password! '});
+                    this.setState({ error: 'Looks like you have the wrong password!'});
                 }
             })
             .catch(err => {
                 this.setState({ error: err.message });
             });
         } else {
-            this.setState({ secret: e.target.value });
+            this.setState({ magicword: e.target.value });
         }
+    }
+
+    changePageId() {
+        this.pageId = 'show';
     }
 
     render() {
@@ -234,66 +249,73 @@ export default class CreateEdit extends Component {
             <section className="create-container">
                 <Header text="STORYBOARD" />
 
-                {/* this.props.pageId === 'edit'  ?
+                { this.pageId === 'edit' ? (
                     <section className="edit-section" >
-                        { this.state.allowed ? ( )
-                            : ( <EditQuestion handleMagicWord={this.handleMagicWord}
-                                    tryMagicWord={this.tryMagicWord} /> ) }
-                    </section>*/}
+                        { (() => {
+                            if (this.state.allowed) {
+                                this.mountData();
+                                this.changePageId();
+                            } else {
+                                return <EditQuestion handleMagicWord={this.handleMagicWord}
+                                    tryMagicWord={this.tryMagicWord} />;
+                            }
+                        })() }
+                    </section> )
+                : (<div>
+                    <AdventureForm
+                        pageId={this.props.pageId}
+                        name={this.state.name}
+                        creator={this.state.creator}
+                        description={this.state.description}
+                        youtubeId={this.state.youtubeId}
+                        handleUserInfoChange={this.handleUserInfoChange}
+                        createAdventure={this.createAdventure.bind(this)}
+                        createBreakpoint={this.createBreakpoint.bind(this)} />
 
-                <AdventureForm
-                    pageId={this.props.pageId}
-                    name={this.state.name}
-                    creator={this.state.creator}
-                    description={this.state.description}
-                    youtubeId={this.state.youtubeId}
-                    handleUserInfoChange={this.handleUserInfoChange}
-                    createAdventure={this.createAdventure.bind(this)}
-                    createBreakpoint={this.createBreakpoint.bind(this)} />
+                    <section className="decisions-section">
+                        { this.state.decisions.length > 0 &&
+                            ( this.state.decisions.map((i, index) => (
+                                <Decision key={index}
+                                    index={index}
+                                    id={i.id}
+                                    name={i.name}
+                                    startTime={i.startTime}
+                                    pauseTime={i.pauseTime}
+                                    description={i.description}
+                                    editMode={i.editMode}
+                                    choices={i.choices}
+                                    addChoice={this.addChoice.bind(this)}
+                                    addPauseTime={this.addPauseTime.bind(this)}
+                                    addStartAndPauseTime={this.addStartAndPauseTime.bind(this)}
+                                    handlePropChange={this.handlePropChange.bind(this)}
+                                    removeChoice={this.removeChoice.bind(this)}
+                                    handleChoiceChange={this.handleChoiceChange.bind(this)}
+                                    handleEditMode={this.handleEditMode}
+                                    handleEndEditMode={this.handleEndEditMode.bind(this)} /> ))
+                            )}
 
-                <section className="decisions-section">
-                    { this.state.decisions.length > 0 &&
-                        ( this.state.decisions.map((i, index) => (
-                            <Decision key={index}
-                                index={index}
-                                id={i.id}
-                                name={i.name}
-                                startTime={i.startTime}
-                                pauseTime={i.pauseTime}
-                                description={i.description}
-                                editMode={i.editMode}
-                                choices={i.choices}
-                                addChoice={this.addChoice.bind(this)}
-                                addPauseTime={this.addPauseTime.bind(this)}
-                                addStartAndPauseTime={this.addStartAndPauseTime.bind(this)}
-                                handlePropChange={this.handlePropChange.bind(this)}
-                                removeChoice={this.removeChoice.bind(this)}
-                                handleChoiceChange={this.handleChoiceChange.bind(this)}
-                                handleEditMode={this.handleEditMode}
-                                handleEndEditMode={this.handleEndEditMode.bind(this)} /> ))
-                        )}
-
-                    {this.state.endings.length > 0 &&
-                        ( this.state.endings.map((i, index) => (
-                            <Ending key={index}
-                                index={index}
-                                id={i.id}
-                                name={i.name}
-                                startTime={i.startTime}
-                                pauseTime={i.pauseTime}
-                                description={i.description}
-                                editMode={i.editMode}
-                                choices={i.choices}
-                                addChoice={this.addChoice.bind(this)}
-                                addPauseTime={this.addPauseTime.bind(this)}
-                                addStartAndPauseTime={this.addStartAndPauseTime.bind(this)}
-                                handlePropChange={this.handlePropChange.bind(this)}
-                                removeChoice={this.removeChoice.bind(this)}
-                                handleChoiceChange={this.handleChoiceChange.bind(this)}
-                                handleEditMode={this.handleEditMode}
-                                handleEndEditMode={this.handleEndEditMode.bind(this)} /> ))
-                        )}
-                </section>
+                        {this.state.endings.length > 0 &&
+                            ( this.state.endings.map((i, index) => (
+                                <Ending key={index}
+                                    index={index}
+                                    id={i.id}
+                                    name={i.name}
+                                    startTime={i.startTime}
+                                    pauseTime={i.pauseTime}
+                                    description={i.description}
+                                    editMode={i.editMode}
+                                    choices={i.choices}
+                                    addChoice={this.addChoice.bind(this)}
+                                    addPauseTime={this.addPauseTime.bind(this)}
+                                    addStartAndPauseTime={this.addStartAndPauseTime.bind(this)}
+                                    handlePropChange={this.handlePropChange.bind(this)}
+                                    removeChoice={this.removeChoice.bind(this)}
+                                    handleChoiceChange={this.handleChoiceChange.bind(this)}
+                                    handleEditMode={this.handleEditMode}
+                                    handleEndEditMode={this.handleEndEditMode.bind(this)} /> ))
+                            )}
+                    </section>
+                </div>) }
             </section>
         );
     }
