@@ -32,15 +32,18 @@ export default class Create extends Component {
     componentDidMount() {
         if (this.props.pageId === 'create') {
             this.setState({
-                youtubeId: this.props.params.routeParams.id,
+                youtubeId: this.props.params,
                 _id: this.generateRandomId()
             });
         } else if (this.props.pageId === 'edit') {
-            fetch('http://localhost:9001/adventure/' + this.props.params.routeParams.id)
-            .then(response => response.json())
+            fetch('http://localhost:9001/adventure/' + this.props.params)
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
             .then(responseJSON => {
                 const editState = Object.assign({}, responseJSON);
-                this.replaceState(
+                this.setState(
                     editState,
                 );
             })

@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
     }
 });
 
-app.post('/validate/:id', (req, res) => {
+app.post('/validate/:id', (req, res, next) => {
     const id = new ObjectID(req.params.id);
     console.log(req.body.secret);
     // bcrypt req.body.secret and then compare
@@ -51,7 +51,7 @@ app.post('/validate/:id', (req, res) => {
     });
 });
 
-app.get('/search/:name', (req, res) => {
+app.get('/search/:name', (req, res, next) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         const regexpr = new RegExp('.*' + req.params.name + '.*');
@@ -64,19 +64,20 @@ app.get('/search/:name', (req, res) => {
     });
 });
 
-app.get('/adventure/:id', (req, res) => {
+app.get('/adventure/:id', (req, res, next) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
-        db.collection('adventures').find({ id: req.params.id })
+        db.collection('adventures').find({ _id: req.params.id })
             .toArray((err, content) => {
                 if (err) return next(err);
-                res.json({ content: content });
+                console.log(content);
+                res.json(content[0]);
             });
         db.close();
     });
 });
 
-app.post('/adventure/:id', (req, res) => {
+app.post('/adventure/:id', (req, res, next) => {
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         db.collection('adventures').findOneAndUpdate(
