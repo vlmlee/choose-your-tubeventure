@@ -4,6 +4,7 @@ import EditQuestion from '../presentational/EditQuestion.js';
 import AdventureForm from '../presentational/AdventureForm.js';
 import Decision from '../presentational/Decision.js';
 import Ending from '../presentational/Ending.js';
+import LinkModal from '../presentational/LinkModal.js';
 import _ from 'lodash';
 import 'rc-collapse/assets/index.css';
 
@@ -27,6 +28,7 @@ export default class CreateEdit extends Component {
         this.generateRandomId = this.generateRandomId.bind(this);
         this.autosave = this.autosave.bind(this);
         this.playtest = this.playtest.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
 
         this.changePageId = this.changePageId.bind(this);
         this.handleMagicWord = this.handleMagicWord.bind(this);
@@ -40,7 +42,11 @@ export default class CreateEdit extends Component {
         if (this.props.pageId === 'create') {
             this.setState({
                 youtubeId: this.props.params,
-                _id: this.generateRandomId()
+                _id: this.generateRandomId(),
+            });
+        } else {
+            this.setState({
+                modal: 'hide',
             });
         }
     }
@@ -54,7 +60,11 @@ export default class CreateEdit extends Component {
             .then(responseJSON => {
                 const editState = Object.assign({}, responseJSON);
                 this.setState( editState, );
-                this.setState({ allowed: false, magicword: '' });
+                this.setState({
+                    allowed: false,
+                    magicword: '',
+                    modal: 'hide'
+                });
             })
             .catch(err => console.log(err.message));
         }
@@ -65,6 +75,7 @@ export default class CreateEdit extends Component {
     }
 
     createAdventure() {
+        const self = this;
         if (this.state.name && this.state.creator && this.state.description && this.state.youtubeId) {
             const payload = _.cloneDeep(this.state);
             const opts = {
@@ -75,7 +86,10 @@ export default class CreateEdit extends Component {
             };
             fetch('http://localhost:9001/adventure/' + this.state._id, opts)
             .then(response => response.json())
-            .then(responseJSON => console.log(responseJSON.message))
+            .then(responseJSON => {
+                console.log(responseJSON.message);
+                self.toggleModal();
+            })
             .catch(err => console.log(err.message));
         }
     }
@@ -244,10 +258,24 @@ export default class CreateEdit extends Component {
         this.pageId = 'show';
     }
 
+    toggleModal() {
+        if (this.state.modal === 'hide') {
+            this.setState({ modal: 'show' });
+            return;
+        } else if (this.state.modal === 'show') {
+            this.setState({ modal: 'hide' });
+            return;
+        }
+    }
+
     render() {
         return (
             <section className="create-container">
                 <Header text="STORYBOARD" />
+
+                <LinkModal
+                    id={this.state._id}
+                    modal={this.state.modal} />
 
                 { this.pageId === 'edit' ? (
                     <section className="edit-section" >
