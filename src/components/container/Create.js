@@ -38,7 +38,6 @@ export default class Create extends Component {
         } else if (this.props.pageId === 'edit') {
             fetch('http://localhost:9001/adventure/' + this.props.params)
             .then(response => {
-                console.log(response);
                 return response.json();
             })
             .then(responseJSON => {
@@ -65,8 +64,9 @@ export default class Create extends Component {
                     "Accept": "application/json" }
             };
             fetch('http://localhost:9001/adventure/' + this.state._id, opts)
-            .then(response => console.log(response))
-            .catch(err => console.log(err));
+            .then(response => response.json())
+            .then(responseJSON => console.log(responseJSON.message))
+            .catch(err => console.log(err.message));
         }
     }
 

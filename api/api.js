@@ -86,7 +86,7 @@ app.post('/adventure/:id', (req, res, next) => {
             { upsert: true },
             (err, doc) => {
                 if (err) next(err);
-                res.send('Success');
+                res.json({message: 'Success'});
             }
         );
         db.close();

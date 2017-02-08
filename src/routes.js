@@ -2,7 +2,6 @@ import React from 'react';
 import { Router, Route } from 'react-router';
 
 import App from './App.js';
-import Edit from './components/container/Edit.js';
 import View from './components/container/View.js';
 import Create from './components/container/Create.js';
 import FAQ from './components/presentational/FAQ.js';
