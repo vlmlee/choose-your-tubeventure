@@ -351,8 +351,6 @@ export default class CreateEdit extends Component {
                                     description={i.description}
                                     editMode={i.editMode}
                                     choices={i.choices}
-                                    addChoice={this.addChoice.bind(this)}
-                                    addPauseTime={this.addPauseTime.bind(this)}
                                     addStartAndPauseTime={this.addStartAndPauseTime.bind(this)}
                                     handlePropChange={this.handlePropChange.bind(this)}
                                     removeChoice={this.removeChoice.bind(this)}
