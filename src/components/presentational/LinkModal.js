@@ -5,7 +5,6 @@ import Boron from 'boron';
 export default class LinkModal extends Component {
     constructor(props) {
         super(props);
-
         this.styles = {
             btn: {
                 display: 'none',
@@ -63,7 +62,7 @@ export default class LinkModal extends Component {
         if (el.fireEvent) {
             el.fireEvent('on' + etype);
         } else {
-            var evObj = document.createEvent('Events');
+            const evObj = document.createEvent('Events');
             evObj.initEvent(etype, true, false);
             el.dispatchEvent(evObj);
         }
@@ -72,7 +71,7 @@ export default class LinkModal extends Component {
     render() {
         return (
             <div style={this.styles.container}>
-                {(() => this.getModal('DropModal'))() }
+                { (() => this.getModal('DropModal'))() }
             </div>
         );
     }

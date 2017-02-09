@@ -8,8 +8,6 @@ import Header from '../presentational/Header.js';
 export default class View extends Component {
     constructor() {
         super();
-
-        // sample adventure
         this.state = {
             // adventure states, doesn't change while
             // the youtube video plays.
@@ -22,7 +20,7 @@ export default class View extends Component {
             decisions: [],
             endings: [],
 
-            // YTplayer states, will change as video plays
+            // YTplayer states, changes as video plays
             currentTime: 0,
             pauseAt: '',
             choices: '',

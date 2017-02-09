@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const CreateSection = ({handleLinkChange, youtubeId}) => (
+const CreateSection = ({ handleLinkChange, youtubeId }) => (
     <section className="create-section">
         <h1 className="create-section-h1">
             Create an Adventure

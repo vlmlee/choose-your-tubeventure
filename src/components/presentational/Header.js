@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-const Header = ({text}) => (
+const Header = ({ text }) => (
     <section className="header">
         <Link to={'/'}>
             <div className="home">

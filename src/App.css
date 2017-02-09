@@ -5,9 +5,9 @@
     src: url('../public/fonts/Quicksand-Light.otf');
 }
 
-/*********
-*  HOME  *
-*********/
+/*****************
+*  HOME - <APP>  *
+*****************/
 
 .App {
     display: flex;
@@ -146,25 +146,20 @@ input::placeholder {
     text-shadow: 1px 1px 1px #eee;
 }
 
-.search-results-heading {
-    text-decoration: underline;
-    margin-bottom: 20px;
-}
-
-.search-results {
-    margin: 10px auto;
+.search-links {
+    margin-top: 10px;
 }
 
 .search-link {
-    margin: 10px auto;
+    margin: 20px auto;
     text-decoration: none;
     padding: 20px;
     border-bottom: 1px solid #e9e9e9;
 }
 
-/*
-*  FAQ
-*/
+/********
+*  FAQ  *
+********/
 
 .faq-section {
     width: 73%;
@@ -257,7 +252,7 @@ input::placeholder {
 .user-date {
 }
 
-.reset-link {
+.user-reset-link {
     font-size: 12px;
     color: steelblue;
     background-image: url('../public/images/loop.svg');
@@ -270,7 +265,7 @@ input::placeholder {
     cursor: pointer;
 }
 
-.edit-link {
+.user-edit-link {
     float: right;
     text-align: right;
     margin-right: 5px;
@@ -284,18 +279,18 @@ input::placeholder {
     background-repeat: no-repeat;
 }
 
-.view-permalink {
+.user-permalink {
     float: left;
     margin-top: 5px;
     text-decoration: none;
     font-size: 12px;
 }
 
-.edit-link:hover {
+.user-edit-link:hover {
     animation: wiggle 0.6s infinite;
 }
 
-.reset-link:hover {
+.user-reset-link:hover {
     animation: wiggle 0.6s infinite;
 }
 

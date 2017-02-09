@@ -58,8 +58,7 @@ class App extends Component {
         const link = this.parseURL(this.state.youtubeId) || '';
         return (
             <section className="App">
-                <Header
-                    text="CHOOSE YOUR TUBEVENTURE"/>
+                <Header text="CHOOSE YOUR TUBEVENTURE"/>
 
                 <CreateInput
                     handleLinkChange={this.handleLinkChange}
@@ -74,17 +73,17 @@ class App extends Component {
 
                 { this.state.results ? (
                     <section className="search-results">
-                        <h1 className="search-input-h1 search-results-heading">Search Results</h1>
-                        { this.state.results.map(i => (
-                            <Link key={i._id}
-                                className="search-link"
-                                to={"/view/" + i._id}>
-                                {i.name}: {i.description}
-                            </Link>
-                        )) }
+                        <h1 className="search-input-h1">Search Results</h1>
+                        <section className="search-links">
+                            { this.state.results.map(i => (
+                                <Link key={i._id}
+                                    className="search-link"
+                                    to={"/view/" + i._id}>
+                                    {i.name}: {i.description}
+                                </Link> )) }
+                        </section>
                     </section>
                 ) : '' }
-
                 <Footer />
             </section>
         );

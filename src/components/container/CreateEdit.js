@@ -28,9 +28,7 @@ export default class CreateEdit extends Component {
         this.handleEditMode = this.handleEditMode.bind(this);
         this.generateRandomId = this.generateRandomId.bind(this);
         this.autosave = this.autosave.bind(this);
-        this.playtest = this.playtest.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-
         this.changePageId = this.changePageId.bind(this);
         this.handleMagicWord = this.handleMagicWord.bind(this);
         this.tryMagicWord = this.tryMagicWord.bind(this);
@@ -48,9 +46,7 @@ export default class CreateEdit extends Component {
                 modal: 'hide',
             });
         } else {
-            this.setState({
-                modal: 'hide',
-            });
+            this.setState({ modal: 'hide' });
         }
     }
 
@@ -234,10 +230,6 @@ export default class CreateEdit extends Component {
                 .charAt( Math.floor( Math.random() * (62) ));
         }
         return randomId;
-    }
-
-    playtest() {
-
     }
 
     handleMagicWord(e) {

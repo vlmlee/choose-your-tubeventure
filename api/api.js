@@ -92,7 +92,7 @@ app.post('/adventure/:id', (req, res, next) => {
             }
         );
         db.close();
-    })
+    });
 });
 
 app.use(function(req, res, next) {
