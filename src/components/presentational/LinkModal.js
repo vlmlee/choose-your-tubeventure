@@ -28,7 +28,7 @@ export default class LinkModal extends Component {
             link: {
                 position: 'fixed',
                 fontSize: '12px',
-                margin: '55px auto 0',
+                margin: '70px auto 0',
                 left: '0',
                 right: '0',
                 fontWeight: '500',

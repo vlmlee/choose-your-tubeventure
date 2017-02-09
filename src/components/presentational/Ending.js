@@ -38,10 +38,6 @@ const Ending = ({
                     { pauseTime !== '' || <span> &#8594; Click here to set a start and end time - [start time, end time] </span> }
                 </section> }
             </section>
-            <input type="button"
-                className="choice-button"
-                onClick={() => addChoice('endings', index)}
-                value="ADD CHOICE+" />
             <Collapse
                 className="collapse"
                 accordion={false}>
@@ -49,21 +45,15 @@ const Ending = ({
                     ( choices.map((j, j_index) => (
                         <Panel key={j_index}
                             className="panel"
-                            header={"Choice " + (j_index+1)}>
+                            header={"Ending"}>
                             { j.editMode === j.id ?
                                 ( <section className="choice-editable-box">
                                     <input type="text"
                                         className="choice-input"
                                         onKeyPress={(e) => handleEndEditMode(e, 'endings', index, j.id)}
                                         onChange={(e) => handleChoiceChange(e, index, j_index, 'endings', 'description')}
-                                        placeholder="Enter a description for this choice"
+                                        placeholder="Enter a description for this ending"
                                         value={j.description} />
-                                    <input type="text"
-                                        className="choice-input"
-                                        onKeyPress={(e) => handleEndEditMode(e, 'endings', index, j.id)}
-                                        onChange={(e) => handleChoiceChange(e, index, j_index, 'endings', 'goto')}
-                                        placeholder="Enter a time to go to"
-                                        value={j.goto} />
                                     <input type="text"
                                         className="choice-input"
                                         onKeyPress={(e) => handleEndEditMode(e, 'endings', index, j.id)}
@@ -71,16 +61,11 @@ const Ending = ({
                                         placeholder="Enter the ending time"
                                         value={j.nextPauseTime} />
                                 </section> )
-                            : ( <section className="choice-box"
+                            : ( <section className="choice-box choice-box-ending"
                                     onClick={() => handleEditMode('endings', index, j_index)}>
-                                    <div className="choice-description">
+                                    <div className="choice-description-ending">
                                         <p>
                                             <span className="choice-editable">Description: </span>{j.description}
-                                        </p>
-                                    </div>
-                                    <div className="choice-goto">
-                                        <p>
-                                            <span className="choice-editable">Go to: </span>{j.goto}
                                         </p>
                                     </div>
                                     <div className="choice-next-pausetime">
@@ -97,11 +82,11 @@ const Ending = ({
                             : ( <input type="button"
                                     className="choice-button choice-button-edit"
                                     onClick={() => handleEditMode('endings', index, j_index)}
-                                    value="EDIT CHOICE" /> ) }
+                                    value="EDIT ENDING" /> ) }
                             <input type="button"
                                 className="choice-button choice-button-remove"
                                 onClick={() => removeChoice('endings', index, j_index)}
-                                value="DELETE CHOICE&mdash;" />
+                                value="DELETE ENDING&mdash;" />
                         </Panel> ))
                 )}
             </Collapse>
