@@ -92,9 +92,9 @@ export default class View extends Component {
     }
 
     gotoVideo(time, nextPauseTime) {
-        const end = this.state.endings.find(i => i.pauseTime === time);
+        const end = this.state.endings.find(i => i.pauseTime === nextPauseTime);
         if (end) {
-            this.gotoEnding(time, end.endTime);
+            this.gotoEnding(time, end.pauseTime);
         } else {
             this.setState({
                 pauseAt: nextPauseTime,
@@ -157,7 +157,7 @@ export default class View extends Component {
         const classes = classnames('multiple-choices', {
             hidden: this.state.hidden,
         });
-
+        console.log(this.state);
         return (
             <section>
                 <Header text={this.state.name} />
