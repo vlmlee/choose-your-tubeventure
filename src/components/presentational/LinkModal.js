@@ -23,17 +23,8 @@ export default class LinkModal extends Component {
             modal: {
                 padding: '100px',
                 borderRadius: '5px',
-                border: '10px solid #eeeeee',
+                border: '10px solid cornflowerblue',
             },
-            link: {
-                position: 'fixed',
-                fontSize: '12px',
-                margin: '70px auto 0',
-                left: '0',
-                right: '0',
-                fontWeight: '500',
-                fontFamily: 'Karla'
-            }
         };
 
         this.getContent = this.getContent.bind(this);
@@ -54,7 +45,6 @@ export default class LinkModal extends Component {
         return (
             <div style={this.styles.container}>
                 <h2 style={this.styles.title}><Link className="modal-link" to={`/view/${this.props.id}`}>Play Test</Link></h2>
-                <p style={this.styles.link}>Permalink: <a href="http://www.chooseyourtubeventure.us/view/{this.props.id}"> http://www.chooseyourtubeventure.us/view/{this.props.id} </a></p>
             </div>
         );
     }

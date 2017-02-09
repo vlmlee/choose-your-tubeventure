@@ -157,7 +157,7 @@ export default class View extends Component {
         const classes = classnames('multiple-choices', {
             hidden: this.state.hidden,
         });
-        console.log(this.state);
+
         return (
             <section>
                 <Header text={this.state.name} />
