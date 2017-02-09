@@ -40,7 +40,7 @@ const Decision = ({
                 </section> }
             </section>
             <input type="button"
-                className="choice-button"
+                className="choice-button choice-add"
                 onClick={() => addChoice('decisions', index)}
                 value="ADD CHOICE+" />
             <Collapse

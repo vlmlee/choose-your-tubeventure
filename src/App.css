@@ -1,33 +1,52 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400|Roboto:200|Karla:600|Source+Sans+Pro:600');
-
 @font-face {
     font-family: 'Quicksand-Light';
     src: url('../public/fonts/Quicksand-Light.otf');
 }
 
+
 /*****************
 *  HOME - <APP>  *
 *****************/
 
+textarea,
+input,
+button {
+    outline: none;
+}
+
+:focus {
+    outline-color: transparent;
+    outline-style: none;
+}
+
 .App {
-    display: flex;
-    text-align: center;
-    flex-direction: column;
     color: #595959;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    text-align: center;
 }
 
 .header {
-    font-family: 'Quicksand-Light';
-    font-weight: 200;
-    font-size: 40px;
-    letter-spacing: 3px;
     background-color: cornflowerblue;
     color: white;
+    font-family: 'Quicksand-Light';
+    font-size: 40px;
+    font-weight: 200;
+    letter-spacing: 3px;
     padding: 30px;
     text-align: center;
 }
 
-/* Header*/
+
+/*************
+*  <HEADER>  *
+*************/
 
 .home {
     position: absolute;
@@ -51,7 +70,8 @@
 
 .faq {
     position: absolute;
-    right: 13%; /* 11% + width */
+    right: 13%;
+    /* 11% + width */
     top: 30px;
     background-size: 100% 100%;
     background-position: center center;
@@ -69,15 +89,22 @@
     font-weight: 800;
 }
 
-.home p:hover, .faq p:hover {
+.home p:hover,
+.faq p:hover {
     color: royalblue;
 }
 
 @media (max-width: 1200px) {
-    .home, .faq {
+    .home,
+    .faq {
         display: none;
     }
 }
+
+
+/*************************
+*  CREATE INPUT - <APP>  *
+*************************/
 
 .create-section {
     margin-top: 150px;
@@ -97,14 +124,27 @@
     font-size: 14px;
     font-style: bold;
     outline: none;
-    box-shadow: inset 0px 1px 1px #eeeeee,
-        inset 0px 1px 1px #dddddd,
-        0px 0px 0px 1000px #f2f2f2 inset;
+    box-shadow: inset 0px 1px 1px #eeeeee, inset 0px 1px 1px #dddddd, 0px 0px 0px 1000px #f2f2f2 inset;
     border: 3px solid cornflowerblue;
     border-radius: 8px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+}
+
+input::-webkit-input-placeholder {
+    color: #8f8f8f;
+    font-weight: 500;
+}
+
+input::-moz-placeholder {
+    color: #8f8f8f;
+    font-weight: 500;
+}
+
+input:-ms-input-placeholder {
+    color: #8f8f8f;
+    font-weight: 500;
 }
 
 input::placeholder {
@@ -127,10 +167,14 @@ input::placeholder {
     font-weight: 500;
     letter-spacing: 2.5px;
     text-shadow: 1px 1px 1px #444444;
+    -webkit-transition: -webkit-transform 0.2s ease-in;
+    transition: -webkit-transform 0.2s ease-in;
     transition: transform 0.2s ease-in;
+    transition: transform 0.2s ease-in, -webkit-transform 0.2s ease-in;
 }
 
 .create-link:hover {
+    -webkit-transform: scale(1.02, 1.02);
     transform: scale(1.02, 1.02);
 }
 
@@ -142,7 +186,6 @@ input::placeholder {
     margin-top: 40px;
     font-size: 28px;
     font-family: 'Karla', 'Roboto';
-    font-weight: 200;
     text-shadow: 1px 1px 1px #eee;
 }
 
@@ -157,9 +200,10 @@ input::placeholder {
     border-bottom: 1px solid #e9e9e9;
 }
 
-/********
-*  FAQ  *
-********/
+
+/**********
+*  <FAQ>  *
+**********/
 
 .faq-section {
     width: 73%;
@@ -182,13 +226,18 @@ input::placeholder {
     line-height: 20px;
 }
 
+
 /*********
-*  VIEW  *
+* <VIEW>  *
 *********/
 
 .YTplayer {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     margin: 50px auto;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
@@ -204,8 +253,13 @@ input::placeholder {
 .multiple-choices {
     width: 640px;
     margin: 100px auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
@@ -221,6 +275,7 @@ input::placeholder {
     width: 310px;
     height: 100px;
     font-size: 12px;
+    -webkit-transition: box-shadow 0.2s ease-in, font-size 0.2s ease-in;
     transition: box-shadow 0.2s ease-in, font-size 0.2s ease-in;
 }
 
@@ -232,6 +287,11 @@ input::placeholder {
 .hidden {
     display: none;
 }
+
+
+/***************
+*  <USERINFO>  *
+***************/
 
 .user-info {
     width: 640px;
@@ -249,20 +309,17 @@ input::placeholder {
     font-style: italic;
 }
 
-.user-date {
-}
-
 .user-reset-link {
+    float: right;
+    padding-right: 15px;
+    margin-right: 25px;
+    cursor: pointer;
     font-size: 12px;
     color: steelblue;
     background-image: url('../public/images/loop.svg');
     background-size: 90% 90%;
     background-position: 38px center;
     background-repeat: no-repeat;
-    padding-right: 15px;
-    margin-right: 25px;
-    float: right;
-    cursor: pointer;
 }
 
 .user-edit-link {
@@ -287,28 +344,49 @@ input::placeholder {
 }
 
 .user-edit-link:hover {
+    -webkit-animation: wiggle 0.6s infinite;
     animation: wiggle 0.6s infinite;
 }
 
 .user-reset-link:hover {
+    -webkit-animation: wiggle 0.6s infinite;
     animation: wiggle 0.6s infinite;
+}
+
+@-webkit-keyframes wiggle {
+    0% {
+        -webkit-transform: translateX(-1px);
+        transform: translateX(-1px);
+    }
+    50% {
+        -webkit-transform: translateX(1px);
+        transform: translateX(1px);
+    }
+    100% {
+        -webkit-transform: translateX(-1px);
+        transform: translateX(-1px);
+    }
 }
 
 @keyframes wiggle {
     0% {
+        -webkit-transform: translateX(-1px);
         transform: translateX(-1px);
     }
     50% {
+        -webkit-transform: translateX(1px);
         transform: translateX(1px);
     }
     100% {
+        -webkit-transform: translateX(-1px);
         transform: translateX(-1px);
     }
 }
 
-/***********
-*  CREATE  *
-***********/
+
+/********************
+*  <ADVENTUREFORM>  *
+********************/
 
 .create-container {
     min-width: 840px;
@@ -362,7 +440,10 @@ input::placeholder {
     font-weight: 500;
     letter-spacing: 2.5px;
     text-shadow: 1px 1px 1px #444444;
+    -webkit-transition: -webkit-transform 0.2s ease-in;
+    transition: -webkit-transform 0.2s ease-in;
     transition: transform 0.2s ease-in;
+    transition: transform 0.2s ease-in, -webkit-transform 0.2s ease-in;
 }
 
 .adventure-form-create {
@@ -370,11 +451,17 @@ input::placeholder {
 }
 
 .adventure-form-submit:hover {
+    -webkit-transform: scale(1.02, 1.02);
     transform: scale(1.02, 1.02);
 }
 
+
+/***************
+*  <DECISION>  *
+***************/
+
 .decisions-section {
-    width: 78%;
+    width: 640px;
     margin: 0 auto;
     font-family: system, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Lucida Grande';
     font-weight: 400;
@@ -385,20 +472,24 @@ input::placeholder {
     display: block;
     float: right;
     width: 120px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
     padding: 8px 14px;
-    margin-top: -8px;
     letter-spacing: 2.5px;
     font-size: 8px;
     font-family: 'Roboto';
     text-shadow: 1px 1px 1px #444444;
-    border-bottom: 1px solid #444;
     color: white;
     background-color: cornflowerblue;
     border: none;
     border-radius: 3px;
     outline: none;
     clear: right;
+}
+
+.choice-add {
+    margin-top: -12px;
 }
 
 .choice-button-remove {
@@ -428,6 +519,8 @@ input::placeholder {
 .choice-description-input {
     display: inline-block;
     outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
     border: 1px solid #e9e9e9;
     border-radius: 5px;
@@ -446,7 +539,7 @@ input::placeholder {
 }
 
 .decision-description {
-    margin-bottom: -24px;
+    margin-bottom: -22px;
     font-weight: 500;
     color: #666;
     cursor: pointer;
@@ -474,26 +567,19 @@ input::placeholder {
 .choice-editable-box {
     float: left;
     margin-bottom: 15px;
+    width: 450px;
 }
 
 .breakpoint-type {
     font-weight: 500;
     border-bottom: 1px solid white;
+    -webkit-transition: border 0.23s ease-in;
     transition: border 0.23s ease-in;
     padding-bottom: 2px;
 }
 
 .breakpoint-type:hover {
-    border-bottom: 1px solid red;
-}
-
-.hidden-help {
-    opacity: 0;
-    transition: opacity .24s ease-in-out;
-}
-
-.breakpoint-type:hover + .hidden-help {
-    opacity: 1;
+    border-bottom: 1px solid orangered;
 }
 
 .collapse {
@@ -501,22 +587,14 @@ input::placeholder {
     border-radius: 5px 0 0 0;
 }
 
-.rc-collapse {
-    border-radius: 0 0 0 0;
-}
-
-.panel {
-
-}
-
 .inner-text {
     margin-bottom: 20px;
 }
 
 
-/*********
-*  EDIT  *
-*********/
+/***********
+*  <EDIT>  *
+***********/
 
 .edit-question {
     font-family: 'Roboto';
@@ -530,39 +608,45 @@ input::placeholder {
     top: 45%;
     left: 50%;
     margin-right: -50%;
+    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
 }
 
-/*
-*  MODAL
-*/
+
+/****************
+*  <LINKMODAL>  *
+****************/
 
 .modal-link {
     text-decoration: none;
     border: 5px solid #d9d9d9;
     padding: 16px 40px;
     border-radius: 3px;
+    outline: none;
 }
 
-/*************
-*  NOTFOUND  *
-*************/
+
+/***************
+*  <NOTFOUND>  *
+***************/
 
 .not-found {
     position: absolute;
     top: 45%;
     left: 50%;
     margin-right: -50%;
+    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     font-family: 'Roboto';
     font-size: 40px;
     font-weight: 400;
 }
 
-/***********
-*  FOOTER  *
-***********/
+
+/*************
+*  <FOOTER>  *
+*************/
 
 footer {
     position: absolute;
