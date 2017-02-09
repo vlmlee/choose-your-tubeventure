@@ -36,7 +36,7 @@ const Decision = ({
                         </span> )
                 : <section onClick={() => handleEditMode('decisions', index)}>
                     <span className="breakpoint-type">{ index ? '(Decision) -' : '(Start) -' } { name } : [{index ? startTime : 0 }, {pauseTime}]</span>
-                    { pauseTime !== '' || <span> &#8594; Click here to set a { index ? 'start and' : '' } pause time - [start time, pause time] </span> }
+                    { pauseTime !== '' || <span> &#8594; Set a { index ? 'start and' : '' } pause time - [start time, pause time] </span> }
                 </section> }
             </section>
             <input type="button"

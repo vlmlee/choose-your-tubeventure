@@ -5,6 +5,7 @@ import AdventureForm from '../presentational/AdventureForm.js';
 import Decision from '../presentational/Decision.js';
 import Ending from '../presentational/Ending.js';
 import LinkModal from '../presentational/LinkModal.js';
+import AlertContainer from 'react-alert';
 import _ from 'lodash';
 import 'rc-collapse/assets/index.css';
 
@@ -23,15 +24,23 @@ export default class CreateEdit extends Component {
             endings: [],
         };
 
+        this.alertOptions = {
+            offset: 14,
+            position: 'bottom left',
+            theme: 'light',
+            time: 15000,
+            transition: 'scale'
+        };
+
         this.mountData = this.mountData.bind(this);
         this.handleUserInfoChange = this.handleUserInfoChange.bind(this);
         this.handleEditMode = this.handleEditMode.bind(this);
         this.generateRandomId = this.generateRandomId.bind(this);
-        this.autosave = this.autosave.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.changePageId = this.changePageId.bind(this);
         this.handleMagicWord = this.handleMagicWord.bind(this);
         this.tryMagicWord = this.tryMagicWord.bind(this);
+        this.alertMsg = this.alertMsg.bind(this);
 
         this.autosave();
     }
@@ -101,10 +110,18 @@ export default class CreateEdit extends Component {
             fetch('http://localhost:9001/adventure/' + this.state._id, opts)
                 .then(response => response.json())
                 .then(responseJSON => {
-                    console.log(responseJSON.message);
+                    self.alertMsg(responseJSON.message, 'success');
                     self.toggleModal();
                 })
-                .catch(err => console.log(err.message));
+                .catch(err => self.alertMsg(err.message, 'error'));
+        } else {
+            if (!this.state.name) {
+                this.alertMsg("Name field can't be empty!", 'error');
+            } else if (!this.state.creator) {
+                this.alertMsg("Created by field can't be empty!", 'error');
+            } else if (!this.state.description) {
+                this.alertMsg("Description field can't be empty!", 'error');
+            }
         }
     }
 
@@ -200,10 +217,18 @@ export default class CreateEdit extends Component {
     handleEndEditMode(e, stateProp, index, id, save) {
         if (save || e.key === 'Enter') {
             const stateProps = this.state[stateProp];
-            if (!id) {
-                stateProps[index].editMode = false;
-            } else {
+            if (id && index) {
+                if ( !stateProps[index].startTime && !stateProps[index].pauseTime ) {
+                    this.alertMsg("Start or pause times can't be empty! Use [ start, pause ] format!", 'error');
+                    return;
+                }
                 stateProps[index].choices.find(i => i.id === id).editMode = false;
+            } else {
+                if ( !stateProps[index].pauseTime ) {
+                    this.alertMsg("Pause time can't be empty!", 'error');
+                    return;
+                }
+                stateProps[index].editMode = false;
             }
             this.setState({ [stateProp]: stateProps });
         }
@@ -237,6 +262,7 @@ export default class CreateEdit extends Component {
     }
 
     tryMagicWord(e) {
+        const self = this;
         if (this.state.magicword && e.key === 'Enter') {
             const opts = {
                 method: 'POST',
@@ -251,13 +277,13 @@ export default class CreateEdit extends Component {
                 })
                 .then(responseJSON => {
                     if (responseJSON.allowed) {
-                        this.setState({ secret: this.state.magicword, allowed: true, error: '' });
+                        this.setState({ secret: this.state.magicword, allowed: true });
                     } else {
-                        this.setState({ error: 'Looks like you have the wrong password!'});
+                        self.alertMsg('Incorrect password!', 'error');
                     }
                 })
                 .catch(err => {
-                    this.setState({ error: err.message });
+                    self.alertMsg(err.message, 'error');
                 });
         } else {
             this.setState({ magicword: e.target.value });
@@ -278,6 +304,15 @@ export default class CreateEdit extends Component {
         }
     }
 
+    alertMsg(msg, type) {
+        const time = type === 'success' ? 2000 : 8000;
+        this.refs.alert.show(msg, {
+            time: time,
+            type: type,
+            icon: ''
+        });
+    }
+
     render() {
         return (
             <section className="create-container">
@@ -294,8 +329,10 @@ export default class CreateEdit extends Component {
                                 this.mountData();
                                 this.changePageId();
                             } else {
-                                return <EditQuestion handleMagicWord={this.handleMagicWord}
-                                    tryMagicWord={this.tryMagicWord} />;
+                                return ( <section><EditQuestion handleMagicWord={this.handleMagicWord}
+                                        tryMagicWord={this.tryMagicWord} />
+                                    </section>
+                                );
                             }
                         })() }
                     </section> )
@@ -352,6 +389,7 @@ export default class CreateEdit extends Component {
                             )}
                     </section>
                 </div>) }
+                <AlertContainer ref={'alert'} {...this.alertOptions} />
             </section>
         );
     }
