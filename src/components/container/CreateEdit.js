@@ -204,8 +204,6 @@ export default class CreateEdit extends Component {
         const stateProps = this.state[stateProp];
         if (flag) {
             stateProps[index].choices[j_index].editMode = false;
-            this.setState({ [stateProp]: stateProps });
-            return;
         } else if (j_index === undefined) {
             stateProps[index].editMode = stateProps[index].id;
         } else {
@@ -329,7 +327,8 @@ export default class CreateEdit extends Component {
                                 this.mountData();
                                 this.changePageId();
                             } else {
-                                return ( <section><EditQuestion handleMagicWord={this.handleMagicWord}
+                                return ( <section>
+                                    <EditQuestion handleMagicWord={this.handleMagicWord}
                                         tryMagicWord={this.tryMagicWord} />
                                     </section>
                                 );

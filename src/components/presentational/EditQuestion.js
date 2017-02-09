@@ -4,7 +4,7 @@ const EditQuestion = ({ handleMagicWord, tryMagicWord }) => (
     <section>
         <h1 className="edit-question">What's the magic word?</h1>
         <input type="password"
-            className="input"
+            className="create-input"
             onChange={handleMagicWord}
             onKeyPress={tryMagicWord}
             placeholder="" />

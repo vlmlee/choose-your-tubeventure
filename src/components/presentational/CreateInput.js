@@ -6,7 +6,7 @@ const CreateSection = ({ handleLinkChange, youtubeId }) => (
             Create an Adventure
         </h1>
         <input type="text"
-            className="input"
+            className="create-input"
             onChange={handleLinkChange}
             placeholder="Enter a youtube link"
             value={youtubeId} />

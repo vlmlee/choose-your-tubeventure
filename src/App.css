@@ -5,9 +5,9 @@
 }
 
 
-/*****************
-*  HOME - <APP>  *
-*****************/
+/***********
+*  <MAIN>  *
+************/
 
 textarea,
 input,
@@ -32,6 +32,11 @@ button {
     text-align: center;
 }
 
+
+/*************
+*  <HEADER>  *
+*************/
+
 .header {
     background-color: cornflowerblue;
     color: white;
@@ -42,11 +47,6 @@ button {
     padding: 30px;
     text-align: center;
 }
-
-
-/*************
-*  <HEADER>  *
-*************/
 
 .home {
     position: absolute;
@@ -102,9 +102,9 @@ button {
 }
 
 
-/*************************
-*  CREATE INPUT - <APP>  *
-*************************/
+/******************
+*  <CREATEINPUT>  *
+******************/
 
 .create-section {
     margin-top: 150px;
@@ -117,7 +117,7 @@ button {
     text-shadow: 1px 1px 1px #eee;
 }
 
-.input {
+.create-input {
     width: 47%;
     margin: 30px auto 20px;
     padding: 15px;
@@ -152,6 +152,11 @@ input::placeholder {
     font-weight: 500;
 }
 
+
+/**********
+*  <APP>  *
+**********/
+
 .create-link {
     text-decoration: none;
     margin-bottom: 30px;
@@ -168,8 +173,6 @@ input::placeholder {
     letter-spacing: 2.5px;
     text-shadow: 1px 1px 1px #444444;
     -webkit-transition: -webkit-transform 0.2s ease-in;
-    transition: -webkit-transform 0.2s ease-in;
-    transition: transform 0.2s ease-in;
     transition: transform 0.2s ease-in, -webkit-transform 0.2s ease-in;
 }
 
@@ -227,9 +230,19 @@ input::placeholder {
 }
 
 
-/*********
-* <VIEW>  *
-*********/
+/******************
+*  <CREATE-EDIT>  *
+******************/
+
+.create-container {
+    min-width: 840px;
+    margin-bottom: 100px;
+}
+
+
+/***********
+*  <VIEW>  *
+***********/
 
 .YTplayer {
     display: -webkit-box;
@@ -239,15 +252,6 @@ input::placeholder {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-}
-
-.decisions {
-    margin-top: 50px;
-    text-align: center;
-}
-
-.endings {
-    margin-top: 50px;
 }
 
 .multiple-choices {
@@ -388,11 +392,6 @@ input::placeholder {
 *  <ADVENTUREFORM>  *
 ********************/
 
-.create-container {
-    min-width: 840px;
-    margin-bottom: 100px;
-}
-
 .adventure-form {
     width: 80%;
     text-align: center;
@@ -441,8 +440,6 @@ input::placeholder {
     letter-spacing: 2.5px;
     text-shadow: 1px 1px 1px #444444;
     -webkit-transition: -webkit-transform 0.2s ease-in;
-    transition: -webkit-transform 0.2s ease-in;
-    transition: transform 0.2s ease-in;
     transition: transform 0.2s ease-in, -webkit-transform 0.2s ease-in;
 }
 
@@ -467,6 +464,18 @@ input::placeholder {
     font-weight: 400;
     font-size: 13px;
 }
+
+.decision-description {
+    margin-bottom: -22px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+}
+
+
+/*************
+*  <CHOICE>  *
+*************/
 
 .choice-button {
     display: block;
@@ -538,13 +547,6 @@ input::placeholder {
     width: 300px;
 }
 
-.decision-description {
-    margin-bottom: -22px;
-    font-weight: 500;
-    color: #666;
-    cursor: pointer;
-}
-
 .choice-box {
     margin-top: 10px;
     height: 80px;
@@ -587,10 +589,6 @@ input::placeholder {
     border-radius: 5px 0 0 0;
 }
 
-.inner-text {
-    margin-bottom: 20px;
-}
-
 
 /*******************
 *  <EDITQUESTION>  *
@@ -620,6 +618,7 @@ input::placeholder {
     text-align: center;
     color: red;
 }
+
 
 /****************
 *  <LINKMODAL>  *
