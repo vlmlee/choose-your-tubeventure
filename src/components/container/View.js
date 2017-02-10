@@ -91,8 +91,16 @@ export default class View extends Component {
 
     gotoVideo(time, nextPauseTime) {
         const end = this.state.endings.find(i => i.pauseTime === nextPauseTime);
-        if (end) {
+        if (this.state.endTime !== '' ) {
+            this.setState({
+                pauseAt: parseInt(this.state.start.pauseTime, 10),
+                choices: this.state.start.choices,
+                endTime: '',
+                hidden: true,
+            });
+        } else if (end) {
             this.gotoEnding(time, end.pauseTime);
+            return;
         } else {
             this.setState({
                 pauseAt: nextPauseTime,
@@ -101,8 +109,8 @@ export default class View extends Component {
                 )).choices,
                 hidden: true,
             });
-            this.state.YTplayer.seekTo(time, true).playVideo();
         }
+        this.state.YTplayer.seekTo(time, true).playVideo();
     }
 
     tick() {
@@ -118,6 +126,10 @@ export default class View extends Component {
         this.state.YTplayer.seekTo(time).playVideo();
         this.setState({
             endTime: endTime,
+            choices: this.state.endings.find(i => (
+                i.pauseTime === endTime
+            )).choices,
+            hidden: true,
         });
     }
 
@@ -132,12 +144,10 @@ export default class View extends Component {
     }
 
     cleanUp() {
-        clearInterval(this.timer);
-        this.state.YTplayer.stopVideo();
+        this.state.YTplayer.pauseVideo();
         this.setState({
             pauseAt: parseInt(this.state.start.pauseTime, 10),
-            choices: this.state.start.choices,
-            endTime: '',
+            hidden: false,
         });
     }
 
@@ -151,11 +161,9 @@ export default class View extends Component {
                 disablekb: 1,
             }
         };
-
         const classes = classnames('multiple-choices', {
             hidden: this.state.hidden,
         });
-
         return (
             <section>
                 <Header text={this.state.name} />

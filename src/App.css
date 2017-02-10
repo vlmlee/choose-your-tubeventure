@@ -71,7 +71,6 @@ button {
 .faq {
     position: absolute;
     right: 13%;
-    /* 11% + width */
     top: 30px;
     background-size: 100% 100%;
     background-position: center center;
@@ -209,26 +208,35 @@ input::placeholder {
 **********/
 
 .faq-section {
-    width: 73%;
-    margin: 60px auto;
+    width: 640px;
+    margin: 100px auto 50px;
     font-family: 'Karla', 'Helvetica', 'Open Sans';
 }
 
 .faq-section h1 {
     font-size: 30px;
-    color: #797979;
-    font-weight: 600;
-    box-shadow:
+    color: #555;
+    font-weight: 200;
+    text-shadow: 1px 0 0 #f9f9f9;
 }
 
-.faq-section p {
+.faq-section p, .faq-h2, .faq-steps {
     margin: 20px 0 50px;
-    color: #2d2d2d;
-    font-family: 'Source Sans Pro', 'Karla', 'Helvetica', 'Open Sans';
+    color: #808080;
     letter-spacing: 0.75px;
-    line-height: 20px;
+    line-height: 24px;
+    font-size: 18px;
 }
 
+.faq-steps {
+    color: #808080;
+}
+
+.faq-h2 {
+    margin: 25px 0 5px;
+    font-size: 22px;
+    color: #606060;
+}
 
 /******************
 *  <CREATE-EDIT>  *
@@ -342,7 +350,7 @@ input::placeholder {
 
 .user-permalink {
     float: left;
-    margin-top: 5px;
+    margin-top: 6px;
     text-decoration: none;
     font-size: 12px;
 }
@@ -544,7 +552,7 @@ input::placeholder {
 
 .choice-pause {
     padding: 8px;
-    width: 300px;
+    width: 275px;
 }
 
 .choice-box {

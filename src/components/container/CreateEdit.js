@@ -217,13 +217,13 @@ export default class CreateEdit extends Component {
             const stateProps = this.state[stateProp];
             if (id && index) {
                 if ( !stateProps[index].startTime && !stateProps[index].pauseTime ) {
-                    this.alertMsg("Start or pause times can't be empty! Use [ start, pause ] format!", 'error');
+                    this.alertMsg("Start or pause times can't be empty or 0! Use [ start, pause ] format!", 'error');
                     return;
                 }
                 stateProps[index].choices.find(i => i.id === id).editMode = false;
             } else {
                 if ( !stateProps[index].pauseTime ) {
-                    this.alertMsg("Pause time can't be empty!", 'error');
+                    this.alertMsg("Pause time can't be empty or 0!", 'error');
                     return;
                 }
                 stateProps[index].editMode = false;

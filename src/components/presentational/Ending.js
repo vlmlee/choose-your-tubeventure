@@ -33,7 +33,7 @@ const Ending = ({
                         </span> )
                 : <section onClick={() => handleEditMode('endings', index)}>
                     <span className="breakpoint-type">(Ending {(index + 1)}) - { name } : [{startTime}, {pauseTime}]</span>
-                    { pauseTime !== '' || <span> &#8594; Set a start and end time - [start time, end time] </span> }
+                    { pauseTime !== '' || <span> &#8594; Click to set a start and end time </span> }
                 </section> }
             </section>
             <Collapse
