@@ -7,7 +7,7 @@ const FAQ = () => (
         <section className="faq-section">
             <h1> What's this all about? </h1>
             <p>
-                This app allows you to easily create your own text-based,
+                This app enables you to easily create your own text-based,
                 audio-based, or video-based adventure game. You can even
                 use it to create your own visual novel!
             </p>
@@ -53,12 +53,14 @@ const FAQ = () => (
                 <div className="faq-h2">Step 9:</div>
                 Share the link to have others play your adventure!
             </section>
-            <h1> Do you have an example I can draw from? </h1>
+            <h1> Do you have an example I can look at? </h1>
             <p>
-                Sure! You can check out the example adventure
+                Sure! You can check out the example adventure “<a href="https://www.youtube.com/watch?v=TMuno5RZNeE">Uncle Bob's Serious Lecture</a>”.
             </p>
             <h1> I found a bug. How can I let you know?</h1>
             <p>
+                You can submit an issue <a href="https://github.com/vlmlee/choose-your-tubeventure/issues">here</a> and I'll fix it right away. This project is open
+                source (MIT License) so you can clone the repo, improve it, and do whatever you want with it!
             </p>
         </section>
     </section>

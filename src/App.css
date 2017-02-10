@@ -117,7 +117,7 @@ button {
 }
 
 .create-input {
-    width: 47%;
+    width: 640px;
     margin: 30px auto 20px;
     padding: 15px;
     font-size: 14px;
@@ -192,7 +192,7 @@ input::placeholder {
 }
 
 .search-links {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .search-link {
