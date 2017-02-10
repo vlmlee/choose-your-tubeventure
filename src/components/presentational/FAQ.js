@@ -60,7 +60,7 @@ const FAQ = () => (
             <h1> I found a bug. How can I let you know?</h1>
             <p>
                 You can submit an issue <a href="https://github.com/vlmlee/choose-your-tubeventure/issues">here</a> and I'll fix it right away. This project is open
-                source (MIT License) so you can clone the repo, improve it, and do whatever you want with it!
+                source (MIT License) so you can clone the repo and do whatever you want with it!
             </p>
         </section>
     </section>

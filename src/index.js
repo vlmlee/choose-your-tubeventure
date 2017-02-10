@@ -14,6 +14,6 @@ function logPageView() {
 }
 
 ReactDOM.render(
-    <Routes history={browserHistory}  onUpdate={logPageView} />,
+    <Routes history={browserHistory} onUpdate={logPageView} />,
     document.getElementById('root')
 );
