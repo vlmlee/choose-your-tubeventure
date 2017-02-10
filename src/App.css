@@ -330,7 +330,7 @@ input::placeholder {
     color: steelblue;
     background-image: url('../public/images/loop.svg');
     background-size: 90% 90%;
-    background-position: 38px center;
+    background-position: 40px center;
     background-repeat: no-repeat;
 }
 
@@ -344,7 +344,7 @@ input::placeholder {
     color: steelblue;
     background-image: url('../public/images/edit.svg');
     background-size: 90% 90%;
-    background-position: 45px 0;
+    background-position: 48px 0;
     background-repeat: no-repeat;
 }
 
