@@ -4,6 +4,10 @@ Ever want to create your own text-based adventure game
 but wanted something more interactive? This react app
 allows you to do just that!
 
+### About:
+
+This project was inspired mostly by [Adventure Call](https://www.youtube.com/watch?v=xfKhDiUNOG0) from Limmy's Show.
+
 ### You will need:
 
 * A youtube video.
@@ -37,9 +41,5 @@ Create the adventure and play test it! If you decide you want to continue editin
 
 #### Step 9:
 Share the link to have others play your adventure!
-
-### About:
-
-This project was inspired mostly by [Adventure Call](https://www.youtube.com/watch?v=xfKhDiUNOG0) from Limmy's Show.
 
 ### License: MIT
