@@ -295,7 +295,7 @@ export default class CreateEdit extends Component {
     toggleModal() {
         if (this.state.modal === 'hide') {
             this.setState({ modal: 'show' });
-            return;
+            return; // short circuit to guarantee no weirdness
         } else if (this.state.modal === 'show') {
             this.setState({ modal: 'hide' });
             return;

@@ -100,7 +100,7 @@ export default class View extends Component {
             });
         } else if (end) {
             this.gotoEnding(time, end.pauseTime);
-            return;
+            return; // prevents seekTo below
         } else {
             this.setState({
                 pauseAt: nextPauseTime,
