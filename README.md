@@ -1,6 +1,6 @@
 # Choose your tubeventure!
 
-Ever want to create your own text-based adventure game
+Ever wanted to create your own text-based adventure game
 but wanted something more interactive? This react app
 allows you to do just that!
 
