@@ -40,7 +40,7 @@ export default class View extends Component {
     componentDidMount() {
         // fetch video id, first pause break,
         // and gotos. Something like..
-        fetch(`http://localhost:9001/adventure/${this.props.params.id}`)
+        fetch(`http://www.chooseyourtubeventure.site:9001/adventure/${this.props.params.id}`)
             .then(response => {
                 return response.json();
             })

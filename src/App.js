@@ -31,7 +31,7 @@ class App extends Component {
 
     handleSearchAdventure(e) {
         if (e.key === 'Enter') {
-            fetch(`http://localhost:9001/search/${this.state.searchTerm}`)
+            fetch(`http://www.chooseyourtubeventure.site:9001/search/${this.state.searchTerm}`)
                 .then(response => {
                     return response.json();
                 })
