@@ -55,7 +55,7 @@ const FAQ = () => (
             </section>
             <h1> Do you have an example I can look at? </h1>
             <p>
-                Sure! You can check out the example adventure “<a href="http://www.chooseyourtubeventure.us/view/i1upyvGQHdgf9JiF">Limmy's Adventure Call</a>”.
+                Sure! You can check out the example adventure “<a href="http://www.chooseyourtubeventure.site/view/i1upyvGQHdgf9JiF">Limmy's Adventure Call</a>”.
             </p>
             <h1> I found a bug. How can I let you know?</h1>
             <p>
