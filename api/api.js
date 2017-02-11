@@ -80,8 +80,9 @@ app.get('/adventure/:id', (req, res, next) => {
 });
 
 app.post('/adventure/:id', (req, res, next) => {
-    if (req.params.id === 'TV9LjVGXti6LxtFz') {
-        return res.json({message: 'Cannot edit example adventure!'});
+    if (req.params.id === 'TV9LjVGXti6LxtFz' || req.body.data._id === "TV9LjVGXti6LxtFz" || req.body.data.name === "Limmy's Adventure Call") {
+        res.json({message: 'Cannot edit example adventure!'});
+        return;
     }
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
