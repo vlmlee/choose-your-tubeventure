@@ -12,7 +12,7 @@ const UserInfo = ({ id, creator, createdAt, resetVideo }) => (
             Edit Adventure
         </Link>
         <span className="user-reset-link" onClick={resetVideo}>Reset Video</span>
-        <p className="user-permalink">Permalink: <a href={"http://www.chooseyourtubeventure.site/view/" + id}> http://www.chooseyourtubeventure.site/view/{id} </a></p>
+        <p className="user-permalink">Permalink: <a href={`http://www.chooseyourtubeventure.site/view/${id}`}> http://www.chooseyourtubeventure.site/view/{id} </a></p>
     </section>
 );
 
