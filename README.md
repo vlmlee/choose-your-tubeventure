@@ -11,7 +11,7 @@ This project was inspired mostly by [Adventure Call](https://www.youtube.com/wat
 ### You will need:
 
 * A youtube video.
-* A weekend.
+* A weekend (or less).
 
 ### To create, follow these steps:
 

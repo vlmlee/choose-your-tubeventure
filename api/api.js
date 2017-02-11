@@ -80,6 +80,9 @@ app.get('/adventure/:id', (req, res, next) => {
 });
 
 app.post('/adventure/:id', (req, res, next) => {
+    if (req.params.id === 'i1upyvGQHdgf9JiF') {
+        return res.json({ message: 'Cannot edit example adventure!'});
+    }
     MongoClient.connect(url, (err, db) => {
         if (err) return next(err);
         db.collection('adventures').findOneAndUpdate(
