@@ -107,7 +107,7 @@ export default class CreateEdit extends Component {
                     "Accept": "application/json" }
             };
 
-            fetch('http://www.chooseyourtubeventure.site/adventure/' + this.state._id, opts)
+            fetch('http://www.chooseyourtubeventure.site:9001/adventure/' + this.state._id, opts)
                 .then(response => response.json())
                 .then(responseJSON => {
                     self.alertMsg(responseJSON.message, 'success');
@@ -269,7 +269,7 @@ export default class CreateEdit extends Component {
                     "Accept": "application/json" }
             };
 
-            fetch(`http://www.chooseyourtubeventure.site/validate/${this.props.params}`, opts)
+            fetch(`http://www.chooseyourtubeventure.site:9001/validate/${this.props.params}`, opts)
                 .then(response => {
                     return response.json();
                 })
