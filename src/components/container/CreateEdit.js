@@ -110,8 +110,12 @@ export default class CreateEdit extends Component {
             fetch('http://www.chooseyourtubeventure.site:9001/adventure/' + this.state._id, opts)
                 .then(response => response.json())
                 .then(responseJSON => {
-                    self.alertMsg(responseJSON.message, 'success');
-                    self.toggleModal();
+                    if (responseJSON.message === 'SUCCESS') {
+                        self.alertMsg(responseJSON.message, 'success');
+                        self.toggleModal();
+                    } else {
+                        self.alertMsg(responseJSON.message, 'error');
+                    }
                 })
                 .catch(err => self.alertMsg(err.message, 'error'));
         } else {
