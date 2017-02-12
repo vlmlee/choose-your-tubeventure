@@ -26,7 +26,7 @@ const FAQ = () => (
                 that you can input a start time, a pause time, and choices that will be shown to the player.
 
                 <div className="faq-h2">Step 4:</div>
-                Enter a title for the breakpoint and a start and pause time. The start time indicates
+                Click on the moving display text that says "Click me to set... " and enter a title for the breakpoint and a start and pause time. The start time indicates
                 when the video should start and the pause time indicates when to pause and show the player
                 choices to choose from. This forms an interval [start time, pause time] for which
                 the video can deliver an exposition.
