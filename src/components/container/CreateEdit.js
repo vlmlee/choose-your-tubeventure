@@ -219,10 +219,19 @@ export default class CreateEdit extends Component {
     handleEndEditMode(e, stateProp, index, id, save) {
         if (save || e.key === 'Enter') {
             const stateProps = this.state[stateProp];
-            if (id && index) {
+            const choice = stateProps[index].choices.find(i => i.id === id);
+            if (id) {
                 if ( !stateProps[index].startTime && !stateProps[index].pauseTime ) {
                     this.alertMsg("Start or pause times can't be empty or 0! Use [ start, pause ] format!", 'error');
                     return;
+                }
+                if (~choice.goto.split('').indexOf(':')) {
+                    const time = choice.goto.split(':').filter(i => i !== '');
+                    stateProps[index].choices.find(i => i.id === id).goto = parseInt(time[0], 10)*60 + parseInt(time[1], 10) + '';
+                }
+                if (~choice.nextPauseTime.split('').indexOf(':')) {
+                    const time = choice.nextPauseTime.split(':').filter(i => i !== '');
+                    stateProps[index].choices.find(i => i.id === id).nextPauseTime = parseInt(time[0], 10)*60 + parseInt(time[1], 10) + '';
                 }
                 stateProps[index].choices.find(i => i.id === id).editMode = false;
             } else {

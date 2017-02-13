@@ -105,7 +105,7 @@ export default class View extends Component {
             this.setState({
                 pauseAt: nextPauseTime,
                 choices: this.state.decisions.find(i => (
-                    i.pauseTime === nextPauseTime
+                    parseInt(i.pauseTime, 10) === nextPauseTime
                 )).choices,
                 hidden: true,
             });
@@ -127,7 +127,7 @@ export default class View extends Component {
         this.setState({
             endTime: endTime,
             choices: this.state.endings.find(i => (
-                i.pauseTime === endTime
+                parseInt(i.pauseTime, 10) === endTime
             )).choices,
             hidden: true,
         });

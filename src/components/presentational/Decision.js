@@ -92,7 +92,7 @@ const Decision = ({
                         { j.editMode === j.id ?
                             ( <input type="button"
                                     className="choice-button choice-button-edit"
-                                    onClick={() => handleEditMode('decisions', index, j_index, true)}
+                                    onClick={(e) => handleEndEditMode(e, 'decisions', index, j.id, true)}
                                     value="SAVE" /> )
                         : ( <input type="button"
                                 className="choice-button choice-button-edit"
