@@ -79,7 +79,7 @@ class App extends Component {
                                 <Link key={i._id}
                                     className="search-link"
                                     to={"/view/" + i._id}>
-                                    {i.name}: {i.description}
+                                    <p>{i.name}: {i.description}</p>
                                 </Link> )) }
                         </section>
                     </section>
