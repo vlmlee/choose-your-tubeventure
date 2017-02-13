@@ -55,7 +55,7 @@ const FAQ = () => (
             </section>
             <h1> Do you have an example I can look at? </h1>
             <p>
-                Sure! You can check out the example adventure “<a href="http://www.chooseyourtubeventure.site/view/TV9LjVGXti6LxtFz">Limmy's Adventure Call</a>”.
+                Sure! You can check out the example adventure “<a href="http://www.chooseyourtubeventure.site/view/TV9LjVGXti6LxtFz">Limmy's Adventure Call</a>”. The secret word is "test" for you check it out in edit mode. You will not be able to make any changes though.
             </p>
             <h1> I found a bug. How can I let you know?</h1>
             <p>
