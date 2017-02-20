@@ -193,6 +193,7 @@ input::placeholder {
 
 .search-links {
     margin-top: 20px;
+    height: auto;
 }
 
 .search-link {
